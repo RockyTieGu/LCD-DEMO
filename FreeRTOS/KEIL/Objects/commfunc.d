@@ -1,0 +1,16 @@
+.\objects\commfunc.o: ..\middleWare\src\CommFunc.c
+.\objects\commfunc.o: C:\ARM\ADSv1_2\INCLUDE\stdio.h
+.\objects\commfunc.o: ..\System\include\wb_reg.h
+.\objects\commfunc.o: d:\Keil_v5\ARM\Inc\Toshiba\TMPA900.H
+.\objects\commfunc.o: ..\middleWare\include\blt.h
+.\objects\commfunc.o: ..\System\include\wbio.h
+.\objects\commfunc.o: ..\System\include\wbtypes.h
+.\objects\commfunc.o: ..\middleWare\include\DrvBlt.h
+.\objects\commfunc.o: ..\System\include\wb_include.h
+.\objects\commfunc.o: ..\System\include\wberrcode.h
+.\objects\commfunc.o: ..\System\include\wblib.h
+.\objects\commfunc.o: ..\drivers\include\wb_gpio.h
+.\objects\commfunc.o: ..\System\include\wb_include.h
+.\objects\commfunc.o: ..\drivers\include\wb_gpio.h
+.\objects\commfunc.o: ..\middleWare\include\Fi.h
+.\objects\commfunc.o: ..\middleWare\include\midd_comm.h

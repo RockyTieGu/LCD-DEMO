@@ -1,0 +1,13 @@
+.\objects\heap_4.o: ..\Source\portable\MemMang\heap_4.c
+.\objects\heap_4.o: C:\ARM\ADSv1_2\INCLUDE\stdlib.h
+.\objects\heap_4.o: ..\Source\include\FreeRTOS.h
+.\objects\heap_4.o: C:\ARM\ADSv1_2\INCLUDE\stddef.h
+.\objects\heap_4.o: C:\ARM\ADSv1_2\INCLUDE\stdint.h
+.\objects\heap_4.o: ..\Startup\FreeRTOSConfig.h
+.\objects\heap_4.o: ..\Source\include\projdefs.h
+.\objects\heap_4.o: ..\Source\include\portable.h
+.\objects\heap_4.o: ..\Source\include\deprecated_definitions.h
+.\objects\heap_4.o: ..\Source\portable\RVDS\ARM9_N329x\portmacro.h
+.\objects\heap_4.o: ..\Source\include\mpu_wrappers.h
+.\objects\heap_4.o: ..\Source\include\task.h
+.\objects\heap_4.o: ..\Source\include\list.h

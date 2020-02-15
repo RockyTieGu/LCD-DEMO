@@ -1,0 +1,14 @@
+.\objects\spi.o: ..\drivers\src\spi.c
+.\objects\spi.o: C:\ARM\ADSv1_2\INCLUDE\stdio.h
+.\objects\spi.o: C:\ARM\ADSv1_2\INCLUDE\stdlib.h
+.\objects\spi.o: C:\ARM\ADSv1_2\INCLUDE\string.h
+.\objects\spi.o: ..\System\include\wb_include.h
+.\objects\spi.o: ..\System\include\wbtypes.h
+.\objects\spi.o: ..\System\include\wbio.h
+.\objects\spi.o: ..\System\include\wb_reg.h
+.\objects\spi.o: ..\System\include\wberrcode.h
+.\objects\spi.o: ..\System\include\wblib.h
+.\objects\spi.o: ..\drivers\include\wb_gpio.h
+.\objects\spi.o: ..\System\include\wb_include.h
+.\objects\spi.o: ..\drivers\include\wb_gpio.h
+.\objects\spi.o: ..\drivers\include\w55fa93_spi.h

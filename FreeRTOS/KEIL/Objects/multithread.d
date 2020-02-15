@@ -1,0 +1,14 @@
+.\objects\multithread.o: ..\Startup\multithread.c
+.\objects\multithread.o: ..\Source\include\FreeRTOS.h
+.\objects\multithread.o: C:\ARM\ADSv1_2\INCLUDE\stddef.h
+.\objects\multithread.o: C:\ARM\ADSv1_2\INCLUDE\stdint.h
+.\objects\multithread.o: ..\Startup\FreeRTOSConfig.h
+.\objects\multithread.o: ..\Source\include\projdefs.h
+.\objects\multithread.o: ..\Source\include\portable.h
+.\objects\multithread.o: ..\Source\include\deprecated_definitions.h
+.\objects\multithread.o: ..\Source\portable\RVDS\ARM9_N329x\portmacro.h
+.\objects\multithread.o: ..\Source\include\mpu_wrappers.h
+.\objects\multithread.o: ..\Source\include\task.h
+.\objects\multithread.o: ..\Source\include\list.h
+.\objects\multithread.o: ..\Source\include\semphr.h
+.\objects\multithread.o: ..\Source\include\queue.h

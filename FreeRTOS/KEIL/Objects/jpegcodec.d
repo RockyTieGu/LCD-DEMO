@@ -1,0 +1,11 @@
+.\objects\jpegcodec.o: ..\app\src\jpegcodec.c
+.\objects\jpegcodec.o: C:\ARM\ADSv1_2\INCLUDE\stdio.h
+.\objects\jpegcodec.o: C:\ARM\ADSv1_2\INCLUDE\stdlib.h
+.\objects\jpegcodec.o: C:\ARM\ADSv1_2\INCLUDE\string.h
+.\objects\jpegcodec.o: ..\System\include\wbio.h
+.\objects\jpegcodec.o: ..\System\include\wbtypes.h
+.\objects\jpegcodec.o: ..\System\include\wblib.h
+.\objects\jpegcodec.o: ..\System\include\wb_reg.h
+.\objects\jpegcodec.o: ..\System\include\wberrcode.h
+.\objects\jpegcodec.o: ..\app\include\jpegcodec.h
+.\objects\jpegcodec.o: ..\app\include\jpeg.h

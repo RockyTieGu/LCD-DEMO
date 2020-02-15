@@ -1,0 +1,21 @@
+--cpu ARM926EJ-S
+".\objects\wb_init.o"
+".\objects\standalone.o"
+".\objects\multithread.o"
+".\objects\main.o"
+".\objects\pollq_n329.o"
+".\objects\blockq_n329.o"
+".\objects\semtest_n329.o"
+".\objects\dynamic_n329.o"
+"..\..\..\System\W55FA93_syslib_freertos.lib"
+".\objects\tasks.o"
+".\objects\list.o"
+".\objects\queue.o"
+".\objects\port.o"
+".\objects\portasm.o"
+".\objects\heap_4.o"
+--strict --scatter "..\..\..\N32905\N32905.sct"
+
+--entry 0 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Objects\RTOSDemo.map" -o .\Objects\RTOSDemo.axf

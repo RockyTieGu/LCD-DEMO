@@ -1,0 +1,14 @@
+.\objects\i2c.o: ..\drivers\src\i2c.c
+.\objects\i2c.o: C:\ARM\ADSv1_2\INCLUDE\stdio.h
+.\objects\i2c.o: C:\ARM\ADSv1_2\INCLUDE\string.h
+.\objects\i2c.o: ..\System\include\wb_include.h
+.\objects\i2c.o: ..\System\include\wbtypes.h
+.\objects\i2c.o: ..\System\include\wbio.h
+.\objects\i2c.o: ..\System\include\wb_reg.h
+.\objects\i2c.o: ..\System\include\wberrcode.h
+.\objects\i2c.o: ..\System\include\wblib.h
+.\objects\i2c.o: ..\drivers\include\wb_gpio.h
+.\objects\i2c.o: ..\System\include\wb_include.h
+.\objects\i2c.o: ..\drivers\include\wb_gpio.h
+.\objects\i2c.o: ..\drivers\include\w55fa93_i2c.h
+.\objects\i2c.o: ..\middleWare\include\DrvI2CH.h

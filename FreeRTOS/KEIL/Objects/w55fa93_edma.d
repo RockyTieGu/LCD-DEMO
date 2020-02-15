@@ -1,0 +1,16 @@
+.\objects\w55fa93_edma.o: ..\middleWare\src\w55fa93_edma.c
+.\objects\w55fa93_edma.o: C:\ARM\ADSv1_2\INCLUDE\stdlib.h
+.\objects\w55fa93_edma.o: C:\ARM\ADSv1_2\INCLUDE\stdio.h
+.\objects\w55fa93_edma.o: C:\ARM\ADSv1_2\INCLUDE\string.h
+.\objects\w55fa93_edma.o: ..\System\include\wb_include.h
+.\objects\w55fa93_edma.o: ..\System\include\wbtypes.h
+.\objects\w55fa93_edma.o: ..\System\include\wbio.h
+.\objects\w55fa93_edma.o: ..\System\include\wb_reg.h
+.\objects\w55fa93_edma.o: ..\System\include\wberrcode.h
+.\objects\w55fa93_edma.o: ..\System\include\wblib.h
+.\objects\w55fa93_edma.o: ..\drivers\include\wb_gpio.h
+.\objects\w55fa93_edma.o: ..\System\include\wb_include.h
+.\objects\w55fa93_edma.o: ..\drivers\include\wb_gpio.h
+.\objects\w55fa93_edma.o: ..\middleWare\include\w55fa93_edma.h
+.\objects\w55fa93_edma.o: ..\System\include\wb_include.h
+.\objects\w55fa93_edma.o: ..\middleWare\include\DrvEDMA.h
