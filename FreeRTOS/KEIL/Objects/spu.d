@@ -1,0 +1,14 @@
+.\objects\spu.o: ..\middleWare\src\SPU.c
+.\objects\spu.o: C:\ARM\ADSv1_2\INCLUDE\string.h
+.\objects\spu.o: C:\ARM\ADSv1_2\INCLUDE\stdlib.h
+.\objects\spu.o: ..\System\include\wb_reg.h
+.\objects\spu.o: ..\middleWare\include\spu.h
+.\objects\spu.o: ..\System\include\wb_include.h
+.\objects\spu.o: ..\System\include\wbtypes.h
+.\objects\spu.o: ..\System\include\wbio.h
+.\objects\spu.o: ..\System\include\wberrcode.h
+.\objects\spu.o: ..\System\include\wblib.h
+.\objects\spu.o: ..\drivers\include\wb_gpio.h
+.\objects\spu.o: ..\System\include\wb_include.h
+.\objects\spu.o: ..\drivers\include\wb_gpio.h
+.\objects\spu.o: ..\middleWare\include\DrvSPU.h

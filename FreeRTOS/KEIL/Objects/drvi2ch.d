@@ -1,0 +1,13 @@
+.\objects\drvi2ch.o: ..\middleWare\src\DrvI2CH.c
+.\objects\drvi2ch.o: C:\ARM\ADSv1_2\INCLUDE\stdio.h
+.\objects\drvi2ch.o: C:\ARM\ADSv1_2\INCLUDE\string.h
+.\objects\drvi2ch.o: ..\System\include\wb_include.h
+.\objects\drvi2ch.o: ..\System\include\wbtypes.h
+.\objects\drvi2ch.o: ..\System\include\wbio.h
+.\objects\drvi2ch.o: ..\System\include\wb_reg.h
+.\objects\drvi2ch.o: ..\System\include\wberrcode.h
+.\objects\drvi2ch.o: ..\System\include\wblib.h
+.\objects\drvi2ch.o: ..\drivers\include\wb_gpio.h
+.\objects\drvi2ch.o: ..\System\include\wb_include.h
+.\objects\drvi2ch.o: ..\drivers\include\wb_gpio.h
+.\objects\drvi2ch.o: ..\middleWare\include\DrvI2CH.h

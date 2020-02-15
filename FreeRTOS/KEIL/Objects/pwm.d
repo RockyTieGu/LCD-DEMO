@@ -1,0 +1,14 @@
+.\objects\pwm.o: ..\drivers\src\PWM.c
+.\objects\pwm.o: C:\ARM\ADSv1_2\INCLUDE\stdio.h
+.\objects\pwm.o: C:\ARM\ADSv1_2\INCLUDE\stdlib.h
+.\objects\pwm.o: C:\ARM\ADSv1_2\INCLUDE\string.h
+.\objects\pwm.o: ..\System\include\wb_include.h
+.\objects\pwm.o: ..\System\include\wbtypes.h
+.\objects\pwm.o: ..\System\include\wbio.h
+.\objects\pwm.o: ..\System\include\wb_reg.h
+.\objects\pwm.o: ..\System\include\wberrcode.h
+.\objects\pwm.o: ..\System\include\wblib.h
+.\objects\pwm.o: ..\drivers\include\wb_gpio.h
+.\objects\pwm.o: ..\System\include\wb_include.h
+.\objects\pwm.o: ..\drivers\include\wb_gpio.h
+.\objects\pwm.o: ..\drivers\include\PWM.h

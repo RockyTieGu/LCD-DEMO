@@ -1,0 +1,17 @@
+.\objects\spiflash.o: ..\drivers\src\spiflash.c
+.\objects\spiflash.o: C:\ARM\ADSv1_2\INCLUDE\stdio.h
+.\objects\spiflash.o: C:\ARM\ADSv1_2\INCLUDE\stdlib.h
+.\objects\spiflash.o: C:\ARM\ADSv1_2\INCLUDE\string.h
+.\objects\spiflash.o: ..\System\include\wb_include.h
+.\objects\spiflash.o: ..\System\include\wbtypes.h
+.\objects\spiflash.o: ..\System\include\wbio.h
+.\objects\spiflash.o: ..\System\include\wb_reg.h
+.\objects\spiflash.o: ..\System\include\wberrcode.h
+.\objects\spiflash.o: ..\System\include\wblib.h
+.\objects\spiflash.o: ..\drivers\include\wb_gpio.h
+.\objects\spiflash.o: ..\System\include\wb_include.h
+.\objects\spiflash.o: ..\drivers\include\wb_gpio.h
+.\objects\spiflash.o: ..\drivers\include\w55fa93_spi.h
+.\objects\spiflash.o: ..\middleWare\include\w55fa93_edma.h
+.\objects\spiflash.o: ..\System\include\wb_include.h
+.\objects\spiflash.o: ..\middleWare\include\DrvEDMA.h

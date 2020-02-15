@@ -1,0 +1,12 @@
+.\objects\mass.o: ..\app\src\mass.c
+.\objects\mass.o: C:\ARM\ADSv1_2\INCLUDE\stdio.h
+.\objects\mass.o: C:\ARM\ADSv1_2\INCLUDE\stdlib.h
+.\objects\mass.o: C:\ARM\ADSv1_2\INCLUDE\string.h
+.\objects\mass.o: ..\app\include\mass.h
+.\objects\mass.o: ..\middleWare\include\usbd.h
+.\objects\mass.o: ..\middleWare\include\w55fa93_sic.h
+.\objects\mass.o: ..\middleWare\include\w55fa93_gnand.h
+.\objects\mass.o: ..\middleWare\include\nvtfat.h
+.\objects\mass.o: ..\middleWare\include\nvtfat_fat.h
+.\objects\mass.o: ..\System\include\wbtypes.h
+.\objects\mass.o: ..\middleWare\include\nvtfat.h

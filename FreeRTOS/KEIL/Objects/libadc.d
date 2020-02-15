@@ -1,0 +1,15 @@
+.\objects\libadc.o: ..\drivers\src\libadc.c
+.\objects\libadc.o: ..\drivers\include\W55fa93_adc.h
+.\objects\libadc.o: C:\ARM\ADSv1_2\INCLUDE\stdio.h
+.\objects\libadc.o: C:\ARM\ADSv1_2\INCLUDE\string.h
+.\objects\libadc.o: C:\ARM\ADSv1_2\INCLUDE\stdlib.h
+.\objects\libadc.o: ..\System\include\wb_include.h
+.\objects\libadc.o: ..\System\include\wbtypes.h
+.\objects\libadc.o: ..\System\include\wbio.h
+.\objects\libadc.o: ..\System\include\wb_reg.h
+.\objects\libadc.o: ..\System\include\wberrcode.h
+.\objects\libadc.o: ..\System\include\wblib.h
+.\objects\libadc.o: ..\drivers\include\wb_gpio.h
+.\objects\libadc.o: ..\System\include\wb_include.h
+.\objects\libadc.o: ..\drivers\include\wb_gpio.h
+.\objects\libadc.o: ..\System\include\wb_include.h

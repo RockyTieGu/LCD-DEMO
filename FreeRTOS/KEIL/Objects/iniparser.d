@@ -1,0 +1,11 @@
+.\objects\iniparser.o: ..\app\src\iniparser.c
+.\objects\iniparser.o: C:\ARM\ADSv1_2\INCLUDE\ctype.h
+.\objects\iniparser.o: ..\app\include\iniparser.h
+.\objects\iniparser.o: C:\ARM\ADSv1_2\INCLUDE\stdio.h
+.\objects\iniparser.o: C:\ARM\ADSv1_2\INCLUDE\stdlib.h
+.\objects\iniparser.o: C:\ARM\ADSv1_2\INCLUDE\string.h
+.\objects\iniparser.o: ..\app\include\dictionary.h
+.\objects\iniparser.o: ..\middleWare\include\Nvtfat.h
+.\objects\iniparser.o: ..\middleWare\include\nvtfat_fat.h
+.\objects\iniparser.o: ..\System\include\wbtypes.h
+.\objects\iniparser.o: ..\middleWare\include\nvtfat.h

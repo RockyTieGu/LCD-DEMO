@@ -1,0 +1,14 @@
+.\objects\drvspu.o: ..\middleWare\src\DrvSPU.c
+.\objects\drvspu.o: C:\ARM\ADSv1_2\INCLUDE\string.h
+.\objects\drvspu.o: C:\ARM\ADSv1_2\INCLUDE\stdlib.h
+.\objects\drvspu.o: ..\System\include\wb_reg.h
+.\objects\drvspu.o: ..\middleWare\include\spu.h
+.\objects\drvspu.o: ..\System\include\wb_include.h
+.\objects\drvspu.o: ..\System\include\wbtypes.h
+.\objects\drvspu.o: ..\System\include\wbio.h
+.\objects\drvspu.o: ..\System\include\wberrcode.h
+.\objects\drvspu.o: ..\System\include\wblib.h
+.\objects\drvspu.o: ..\drivers\include\wb_gpio.h
+.\objects\drvspu.o: ..\System\include\wb_include.h
+.\objects\drvspu.o: ..\drivers\include\wb_gpio.h
+.\objects\drvspu.o: ..\middleWare\include\DrvSPU.h
