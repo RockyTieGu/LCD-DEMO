@@ -10,6 +10,7 @@
 .\objects\task_lcd_test_app.o: ..\drivers\include\wb_gpio.h
 .\objects\task_lcd_test_app.o: ..\System\include\wb_include.h
 .\objects\task_lcd_test_app.o: ..\drivers\include\wb_gpio.h
+.\objects\task_lcd_test_app.o: ..\drivers\include\PWM.h
 .\objects\task_lcd_test_app.o: ..\middleWare\include\avilib.h
 .\objects\task_lcd_test_app.o: ..\middleWare\include\avifile.h
 .\objects\task_lcd_test_app.o: ..\Source\include\FreeRTOS.h

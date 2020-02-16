@@ -4,3 +4,9 @@
 .\objects\lcd_power.o: ..\System\include\wbio.h
 .\objects\lcd_power.o: ..\System\include\wbtypes.h
 .\objects\lcd_power.o: ..\System\include\wb_reg.h
+.\objects\lcd_power.o: ..\System\include\wb_include.h
+.\objects\lcd_power.o: ..\System\include\wberrcode.h
+.\objects\lcd_power.o: ..\System\include\wblib.h
+.\objects\lcd_power.o: ..\drivers\include\wb_gpio.h
+.\objects\lcd_power.o: ..\System\include\wb_include.h
+.\objects\lcd_power.o: ..\drivers\include\wb_gpio.h

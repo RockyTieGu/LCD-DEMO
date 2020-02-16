@@ -10,4 +10,5 @@
 .\objects\drvi2ch.o: ..\drivers\include\wb_gpio.h
 .\objects\drvi2ch.o: ..\System\include\wb_include.h
 .\objects\drvi2ch.o: ..\drivers\include\wb_gpio.h
+.\objects\drvi2ch.o: ..\drivers\include\PWM.h
 .\objects\drvi2ch.o: ..\middleWare\include\DrvI2CH.h

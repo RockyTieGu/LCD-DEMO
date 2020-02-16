@@ -18,5 +18,6 @@
 .\objects\lcdconf.o: ..\drivers\include\wb_gpio.h
 .\objects\lcdconf.o: ..\System\include\wb_include.h
 .\objects\lcdconf.o: ..\drivers\include\wb_gpio.h
+.\objects\lcdconf.o: ..\drivers\include\PWM.h
 .\objects\lcdconf.o: ..\middleWare\include\midd_comm.h
 .\objects\lcdconf.o: ..\middleWare\include\dx_lcdconfig.h

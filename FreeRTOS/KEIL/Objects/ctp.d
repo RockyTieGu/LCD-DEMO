@@ -10,6 +10,7 @@
 .\objects\ctp.o: ..\drivers\include\wb_gpio.h
 .\objects\ctp.o: ..\System\include\wb_include.h
 .\objects\ctp.o: ..\drivers\include\wb_gpio.h
+.\objects\ctp.o: ..\drivers\include\PWM.h
 .\objects\ctp.o: ..\drivers\include\w55fa93_i2c.h
 .\objects\ctp.o: ..\middleWare\include\DrvI2CH.h
 .\objects\ctp.o: ..\app\include\ctp.h

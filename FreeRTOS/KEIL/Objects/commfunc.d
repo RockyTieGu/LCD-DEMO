@@ -12,5 +12,6 @@
 .\objects\commfunc.o: ..\drivers\include\wb_gpio.h
 .\objects\commfunc.o: ..\System\include\wb_include.h
 .\objects\commfunc.o: ..\drivers\include\wb_gpio.h
+.\objects\commfunc.o: ..\drivers\include\PWM.h
 .\objects\commfunc.o: ..\middleWare\include\Fi.h
 .\objects\commfunc.o: ..\middleWare\include\midd_comm.h

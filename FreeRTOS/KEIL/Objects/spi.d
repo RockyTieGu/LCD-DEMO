@@ -11,4 +11,5 @@
 .\objects\spi.o: ..\drivers\include\wb_gpio.h
 .\objects\spi.o: ..\System\include\wb_include.h
 .\objects\spi.o: ..\drivers\include\wb_gpio.h
+.\objects\spi.o: ..\drivers\include\PWM.h
 .\objects\spi.o: ..\drivers\include\w55fa93_spi.h

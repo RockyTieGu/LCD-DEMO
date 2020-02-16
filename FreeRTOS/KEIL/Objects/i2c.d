@@ -10,5 +10,6 @@
 .\objects\i2c.o: ..\drivers\include\wb_gpio.h
 .\objects\i2c.o: ..\System\include\wb_include.h
 .\objects\i2c.o: ..\drivers\include\wb_gpio.h
+.\objects\i2c.o: ..\drivers\include\PWM.h
 .\objects\i2c.o: ..\drivers\include\w55fa93_i2c.h
 .\objects\i2c.o: ..\middleWare\include\DrvI2CH.h

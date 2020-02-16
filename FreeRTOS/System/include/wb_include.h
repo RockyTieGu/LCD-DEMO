@@ -4,6 +4,7 @@
 #include "wberrcode.h"
 #include "wblib.h"
 #include "wb_gpio.h"
+#include "PWM.h"
 
 #define GPIO_PORTA		1
 #define GPIO_PORTB		2

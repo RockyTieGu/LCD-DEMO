@@ -7,7 +7,7 @@ void  Task6_Key_Fun (void *pvParameters)
 	static int key = 0;
 	mainMenuIndex = MENU_IDLE;
 	
-	sysprintf("%s task has creation\r\n", pvParameters);
+	sysprintf("Task6_Key_Fun task has creation\r\n");
 	while (1) 
 	{                                             
 		key = boardKeyMSG_handle();

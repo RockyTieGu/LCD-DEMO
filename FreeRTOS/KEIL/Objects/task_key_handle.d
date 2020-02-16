@@ -10,6 +10,7 @@
 .\objects\task_key_handle.o: ..\drivers\include\wb_gpio.h
 .\objects\task_key_handle.o: ..\System\include\wb_include.h
 .\objects\task_key_handle.o: ..\drivers\include\wb_gpio.h
+.\objects\task_key_handle.o: ..\drivers\include\PWM.h
 .\objects\task_key_handle.o: ..\middleWare\include\avilib.h
 .\objects\task_key_handle.o: ..\middleWare\include\avifile.h
 .\objects\task_key_handle.o: ..\Source\include\FreeRTOS.h

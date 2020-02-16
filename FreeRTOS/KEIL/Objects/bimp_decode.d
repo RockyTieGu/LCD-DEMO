@@ -11,6 +11,7 @@
 .\objects\bimp_decode.o: ..\drivers\include\wb_gpio.h
 .\objects\bimp_decode.o: ..\System\include\wb_include.h
 .\objects\bimp_decode.o: ..\drivers\include\wb_gpio.h
+.\objects\bimp_decode.o: ..\drivers\include\PWM.h
 .\objects\bimp_decode.o: ..\middleWare\include\midd_comm.h
 .\objects\bimp_decode.o: ..\middleWare\include\dx_lcdconfig.h
 .\objects\bimp_decode.o: ..\middleWare\include\Nvtfat.h

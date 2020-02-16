@@ -27,5 +27,6 @@
 .\objects\guidrv_template.o: ..\drivers\include\wb_gpio.h
 .\objects\guidrv_template.o: ..\System\include\wb_include.h
 .\objects\guidrv_template.o: ..\drivers\include\wb_gpio.h
+.\objects\guidrv_template.o: ..\drivers\include\PWM.h
 .\objects\guidrv_template.o: ..\middleWare\include\midd_comm.h
 .\objects\guidrv_template.o: ..\middleWare\include\dx_lcdconfig.h

@@ -240,7 +240,7 @@ void Task3_Play_Music_Contrl(void *p_arg)
 {
 	static unsigned int key=0;
 	
-	sysprintf("%s task creation\r\n",p_arg);
+	sysprintf("%s task creation\r\n", (char *)p_arg);
 	while(1)
 	{
 		if(PlayMusicMenu_Key_Queue != NULL)
@@ -304,7 +304,7 @@ void Task_Play_Music(void *p_arg)
 {
 	static char RxFileName[80];
 
-	sysprintf("%s task creation\r\n",p_arg);
+	sysprintf("Task_Play_Music task creation\r\n");
 	while(1)
 	{
 		if(xQueueReceive(PlayMusicName_Message,RxFileName,portMAX_DELAY))

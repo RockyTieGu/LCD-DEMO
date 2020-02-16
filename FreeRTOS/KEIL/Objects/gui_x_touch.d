@@ -12,6 +12,7 @@
 .\objects\gui_x_touch.o: ..\drivers\include\wb_gpio.h
 .\objects\gui_x_touch.o: ..\System\include\wb_include.h
 .\objects\gui_x_touch.o: ..\drivers\include\wb_gpio.h
+.\objects\gui_x_touch.o: ..\drivers\include\PWM.h
 .\objects\gui_x_touch.o: ..\thirdLib\emWin\GUI\Include\GUI.h
 .\objects\gui_x_touch.o: ..\thirdLib\emWin\GUI\Include\GUI_ConfDefaults.h
 .\objects\gui_x_touch.o: ..\thirdLib\emWin\Config\GUIConf.h

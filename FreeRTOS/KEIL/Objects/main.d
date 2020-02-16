@@ -9,6 +9,7 @@
 .\objects\main.o: ..\drivers\include\wb_gpio.h
 .\objects\main.o: ..\System\include\wb_include.h
 .\objects\main.o: ..\drivers\include\wb_gpio.h
+.\objects\main.o: ..\drivers\include\PWM.h
 .\objects\main.o: ..\app\include\Board_bsp.h
 .\objects\main.o: ..\thirdLib\emWin\GUI\Include\GUI.h
 .\objects\main.o: ..\thirdLib\emWin\GUI\Include\GUI_ConfDefaults.h

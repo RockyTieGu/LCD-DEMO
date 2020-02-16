@@ -11,6 +11,7 @@
 .\objects\blitalpha.o: ..\drivers\include\wb_gpio.h
 .\objects\blitalpha.o: ..\System\include\wb_include.h
 .\objects\blitalpha.o: ..\drivers\include\wb_gpio.h
+.\objects\blitalpha.o: ..\drivers\include\PWM.h
 .\objects\blitalpha.o: ..\middleWare\include\Fi.h
 .\objects\blitalpha.o: ..\middleWare\include\midd_comm.h
 .\objects\blitalpha.o: ..\middleWare\include\w55fa93_vpost.h

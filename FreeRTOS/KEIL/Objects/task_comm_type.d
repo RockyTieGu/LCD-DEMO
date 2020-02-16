@@ -9,6 +9,7 @@
 .\objects\task_comm_type.o: ..\drivers\include\wb_gpio.h
 .\objects\task_comm_type.o: ..\System\include\wb_include.h
 .\objects\task_comm_type.o: ..\drivers\include\wb_gpio.h
+.\objects\task_comm_type.o: ..\drivers\include\PWM.h
 .\objects\task_comm_type.o: ..\middleWare\include\avilib.h
 .\objects\task_comm_type.o: ..\middleWare\include\avifile.h
 .\objects\task_comm_type.o: ..\Source\include\FreeRTOS.h

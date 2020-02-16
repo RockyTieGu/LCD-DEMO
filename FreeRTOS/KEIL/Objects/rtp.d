@@ -13,6 +13,7 @@
 .\objects\rtp.o: ..\drivers\include\wb_gpio.h
 .\objects\rtp.o: ..\System\include\wb_include.h
 .\objects\rtp.o: ..\drivers\include\wb_gpio.h
+.\objects\rtp.o: ..\drivers\include\PWM.h
 .\objects\rtp.o: ..\middleWare\include\w55fa93_vpost.h
 .\objects\rtp.o: ..\System\include\wb_include.h
 .\objects\rtp.o: ..\middleWare\include\midd_comm.h

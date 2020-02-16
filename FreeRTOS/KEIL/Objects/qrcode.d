@@ -9,6 +9,7 @@
 .\objects\qrcode.o: ..\drivers\include\wb_gpio.h
 .\objects\qrcode.o: ..\System\include\wb_include.h
 .\objects\qrcode.o: ..\drivers\include\wb_gpio.h
+.\objects\qrcode.o: ..\drivers\include\PWM.h
 .\objects\qrcode.o: ..\middleWare\include\midd_comm.h
 .\objects\qrcode.o: ..\middleWare\include\dx_lcdconfig.h
 .\objects\qrcode.o: ..\drivers\include\W55fa93_spi.h

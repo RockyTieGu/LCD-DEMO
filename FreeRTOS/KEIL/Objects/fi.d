@@ -8,6 +8,7 @@
 .\objects\fi.o: ..\drivers\include\wb_gpio.h
 .\objects\fi.o: ..\System\include\wb_include.h
 .\objects\fi.o: ..\drivers\include\wb_gpio.h
+.\objects\fi.o: ..\drivers\include\PWM.h
 .\objects\fi.o: ..\middleWare\include\blt.h
 .\objects\fi.o: ..\middleWare\include\DrvBlt.h
 .\objects\fi.o: ..\System\include\wb_include.h

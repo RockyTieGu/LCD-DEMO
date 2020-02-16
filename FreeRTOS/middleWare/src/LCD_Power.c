@@ -1,4 +1,14 @@
 #include "LCD_Power.h"
+#include "wb_include.h"
+
+void BackLightOFF(void)
+{
+	outpw(REG_GPDFUN, inpw(REG_GPDFUN) & 0xFFFFFFFC);
+	gpio_setportdir(GPIO_PORTD,	BIT0, BIT0);
+	gpio_setportpull(GPIO_PORTD, BIT0, BIT0);		/*Set GPIOD-0 to pull LOW*/	
+	gpio_setportval(GPIO_PORTD, BIT0, 0);
+}
+
 
 void BackLightAdj(unsigned char ulight)
 {

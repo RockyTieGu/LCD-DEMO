@@ -12,6 +12,7 @@
 .\objects\w55fa93_vpost_driver.o: ..\drivers\include\wb_gpio.h
 .\objects\w55fa93_vpost_driver.o: ..\System\include\wb_include.h
 .\objects\w55fa93_vpost_driver.o: ..\drivers\include\wb_gpio.h
+.\objects\w55fa93_vpost_driver.o: ..\drivers\include\PWM.h
 .\objects\w55fa93_vpost_driver.o: ..\middleWare\include\w55fa93_vpost_driver.h
 .\objects\w55fa93_vpost_driver.o: ..\middleWare\include\w55fa93_vpost.h
 .\objects\w55fa93_vpost_driver.o: ..\System\include\wb_include.h

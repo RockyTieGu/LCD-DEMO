@@ -12,4 +12,5 @@
 .\objects\libadc.o: ..\drivers\include\wb_gpio.h
 .\objects\libadc.o: ..\System\include\wb_include.h
 .\objects\libadc.o: ..\drivers\include\wb_gpio.h
+.\objects\libadc.o: ..\drivers\include\PWM.h
 .\objects\libadc.o: ..\System\include\wb_include.h
