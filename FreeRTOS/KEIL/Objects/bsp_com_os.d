@@ -10,6 +10,7 @@
 .\objects\bsp_com_os.o: ..\drivers\include\wb_gpio.h
 .\objects\bsp_com_os.o: ..\System\include\wb_include.h
 .\objects\bsp_com_os.o: ..\drivers\include\wb_gpio.h
+.\objects\bsp_com_os.o: ..\drivers\include\PWM.h
 .\objects\bsp_com_os.o: ..\middleWare\include\avilib.h
 .\objects\bsp_com_os.o: ..\middleWare\include\avifile.h
 .\objects\bsp_com_os.o: ..\Source\include\FreeRTOS.h
@@ -29,3 +30,4 @@
 .\objects\bsp_com_os.o: task_play_video_app.h
 .\objects\bsp_com_os.o: task_main_menu_app.h
 .\objects\bsp_com_os.o: task_key_handle.h
+.\objects\bsp_com_os.o: ..\app\include\ctp.h

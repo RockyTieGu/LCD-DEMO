@@ -10,6 +10,7 @@
 .\objects\blitop.o: ..\drivers\include\wb_gpio.h
 .\objects\blitop.o: ..\System\include\wb_include.h
 .\objects\blitop.o: ..\drivers\include\wb_gpio.h
+.\objects\blitop.o: ..\drivers\include\PWM.h
 .\objects\blitop.o: ..\middleWare\include\Fi.h
 .\objects\blitop.o: ..\middleWare\include\midd_comm.h
 .\objects\blitop.o: ..\middleWare\include\palette.h

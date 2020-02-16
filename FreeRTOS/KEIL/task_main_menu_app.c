@@ -123,7 +123,6 @@ static void Menu_Dealkey(unsigned short input)
 					AUDIO_FILE_LIST.nandflash_audioFile_curPos = AUDIO_FILE_LIST.sd_audioFile_curPos = 0;
 					Select_File((FILE_LIST *)(&AUDIO_FILE_LIST));
 				}
-
 			}
 			else if(cur_item == 3)
 			{
@@ -157,7 +156,7 @@ void Task1_Main_Menu(void *p_arg)
 	_ShowXBF();
 	DrawMenu(cur_item);
 	
-	sysprintf("%s task creation\r\n",p_arg);
+	sysprintf("Task1_Main_Menu task creation\r\n");
 	
 	while(1)
 	{

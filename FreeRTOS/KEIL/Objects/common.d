@@ -11,6 +11,7 @@
 .\objects\common.o: ..\drivers\include\wb_gpio.h
 .\objects\common.o: ..\System\include\wb_include.h
 .\objects\common.o: ..\drivers\include\wb_gpio.h
+.\objects\common.o: ..\drivers\include\PWM.h
 .\objects\common.o: ..\app\include\jpegcodec.h
 .\objects\common.o: ..\middleWare\include\nvtfat.h
 .\objects\common.o: ..\middleWare\include\nvtfat_fat.h

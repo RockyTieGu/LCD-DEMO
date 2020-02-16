@@ -11,6 +11,7 @@
 .\objects\spiflash.o: ..\drivers\include\wb_gpio.h
 .\objects\spiflash.o: ..\System\include\wb_include.h
 .\objects\spiflash.o: ..\drivers\include\wb_gpio.h
+.\objects\spiflash.o: ..\drivers\include\PWM.h
 .\objects\spiflash.o: ..\drivers\include\w55fa93_spi.h
 .\objects\spiflash.o: ..\middleWare\include\w55fa93_edma.h
 .\objects\spiflash.o: ..\System\include\wb_include.h

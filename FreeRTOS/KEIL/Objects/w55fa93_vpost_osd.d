@@ -8,6 +8,7 @@
 .\objects\w55fa93_vpost_osd.o: ..\drivers\include\wb_gpio.h
 .\objects\w55fa93_vpost_osd.o: ..\System\include\wb_include.h
 .\objects\w55fa93_vpost_osd.o: ..\drivers\include\wb_gpio.h
+.\objects\w55fa93_vpost_osd.o: ..\drivers\include\PWM.h
 .\objects\w55fa93_vpost_osd.o: ..\middleWare\include\w55fa93_vpost.h
 .\objects\w55fa93_vpost_osd.o: ..\System\include\wb_include.h
 .\objects\w55fa93_vpost_osd.o: ..\middleWare\include\midd_comm.h

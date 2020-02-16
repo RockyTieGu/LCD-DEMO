@@ -9,6 +9,7 @@
 .\objects\board_bsp.o: ..\drivers\include\wb_gpio.h
 .\objects\board_bsp.o: ..\System\include\wb_include.h
 .\objects\board_bsp.o: ..\drivers\include\wb_gpio.h
+.\objects\board_bsp.o: ..\drivers\include\PWM.h
 .\objects\board_bsp.o: ..\middleWare\include\midd_comm.h
 .\objects\board_bsp.o: ..\middleWare\include\dx_lcdconfig.h
 .\objects\board_bsp.o: ..\middleWare\include\w55fa93_sic.h
@@ -17,6 +18,7 @@
 .\objects\board_bsp.o: ..\System\include\wb_include.h
 .\objects\board_bsp.o: ..\middleWare\include\DrvEDMA.h
 .\objects\board_bsp.o: ..\middleWare\include\w55fa93_osd.h
+.\objects\board_bsp.o: ..\drivers\include\w55fa93_spi.h
 .\objects\board_bsp.o: ..\middleWare\include\Nvtfat.h
 .\objects\board_bsp.o: ..\middleWare\include\nvtfat_fat.h
 .\objects\board_bsp.o: ..\middleWare\include\nvtfat.h
@@ -37,3 +39,5 @@
 .\objects\board_bsp.o: ..\middleWare\include\RTP.h
 .\objects\board_bsp.o: ..\middleWare\include\Midd_uart.h
 .\objects\board_bsp.o: ..\app\include\Board_bsp.h
+.\objects\board_bsp.o: ..\middleWare\include\LCD_Power.h
+.\objects\board_bsp.o: ..\middleWare\include\key.h

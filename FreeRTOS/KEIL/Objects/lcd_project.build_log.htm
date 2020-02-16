@@ -21,19 +21,25 @@ Target DLL:      Segger\JLTAgdi.dll V1.59.0.0
 Dialog DLL:      TARMATS9.DLL V1.19
  
 <h2>Project:</h2>
-F:\program_file\work\shenxian\LCD DEMO\FreeRTOS\KEIL\RTOSDemo.uvproj
-Project File Date:  02/11/2020
+F:\git Item\LCD DEMO\LCD-DEMO\FreeRTOS\KEIL\RTOSDemo.uvproj
+Project File Date:  02/15/2020
 
 <h2>Output:</h2>
 Build target 'RTOSDemo_ARM'
-compiling task_main_menu_app.c...
-task_play_video_app.h(5): warning:  #1295-D: Deprecated declaration loadPlayVideo_Menu - give arg types
-  void loadPlayVideo_Menu();
-task_main_menu_app.c: 1 warning, 0 errors
+compiling Board_bsp.c...
+..\app\src\Board_bsp.c(39): warning:  #177-D: variable "uart" was declared but never referenced
+        WB_UART_T uart;
+..\app\src\Board_bsp.c(40): warning:  #177-D: variable "sInitTime" was declared but never referenced
+        RTC_TIME_DATA_T sInitTime;
+..\app\src\Board_bsp.c(41): warning:  #177-D: variable "lcdformatex" was declared but never referenced
+        LCDFORMATEX lcdformatex;
+..\app\src\Board_bsp.c(42): warning:  #177-D: variable "osdFormat" was declared but never referenced
+        OSDFORMATEX osdFormat;
+..\app\src\Board_bsp.c: 4 warnings, 0 errors
 linking...
-Program Size: Code=457780 RO-data=804844 RW-data=11008 ZI-data=20862212  
+Program Size: Code=458096 RO-data=804844 RW-data=11008 ZI-data=20861896  
 After Build - User command #1: fromelf.exe --bin --output output\conprog.bin Objects\lcd_project.axf
-".\Objects\lcd_project.axf" - 0 Error(s), 1 Warning(s).
+".\Objects\lcd_project.axf" - 0 Error(s), 4 Warning(s).
 </pre>
 </body>
 </html>

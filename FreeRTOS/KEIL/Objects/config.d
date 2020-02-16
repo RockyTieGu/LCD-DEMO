@@ -8,6 +8,7 @@
 .\objects\config.o: ..\drivers\include\wb_gpio.h
 .\objects\config.o: ..\System\include\wb_include.h
 .\objects\config.o: ..\drivers\include\wb_gpio.h
+.\objects\config.o: ..\drivers\include\PWM.h
 .\objects\config.o: ..\middleWare\include\Nvtfat.h
 .\objects\config.o: ..\middleWare\include\nvtfat_fat.h
 .\objects\config.o: ..\middleWare\include\nvtfat.h

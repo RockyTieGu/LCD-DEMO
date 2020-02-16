@@ -11,6 +11,7 @@
 .\objects\jpegdec.o: ..\drivers\include\wb_gpio.h
 .\objects\jpegdec.o: ..\System\include\wb_include.h
 .\objects\jpegdec.o: ..\drivers\include\wb_gpio.h
+.\objects\jpegdec.o: ..\drivers\include\PWM.h
 .\objects\jpegdec.o: ..\app\include\jpegcodec.h
 .\objects\jpegdec.o: ..\middleWare\include\nvtfat.h
 .\objects\jpegdec.o: ..\middleWare\include\nvtfat_fat.h

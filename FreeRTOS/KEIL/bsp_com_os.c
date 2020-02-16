@@ -4,7 +4,7 @@
 #include "task_main_menu_app.h"
 #include "task_key_handle.h"
 #include "task_comm_type.h"
-
+#include "ctp.h"
 
 //任务函数
 static void start_task(void *pvParameters);
@@ -76,7 +76,7 @@ static void start_task(void *pvParameters)
 	PlayMusicName_Message=xQueueCreate(KEYMSG_Q_NUM,80);  //创建Demo music演示按键消息队列
 	PlayVideoName_Message=xQueueCreate(KEYMSG_Q_NUM,80);  //创建Demo video演示按键消息队列
    	//任务句柄
-	sysprintf("%s task creat!\r\n", pvParameters);
+	sysprintf("start_task task creation!\r\n");
 	
 	//创建按键任务
     xTaskCreate((TaskFunction_t )Task6_Key_Fun,             
@@ -180,8 +180,9 @@ void Task_Create(void)
                 (uint16_t       )START_STK_SIZE,        //任务堆栈大小
                 (void*          )NULL,                  //传递给任务函数的参数
                 (UBaseType_t    )START_TASK_PRIO,       //任务优先级
-                (TaskHandle_t*  )&StartTask_Handler);   //任务句柄   
-	
+                (TaskHandle_t*  )&StartTask_Handler);   //任务句柄   v
+
+	BackLightAdj(50);
 	vTaskStartScheduler();	
 }
 

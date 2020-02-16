@@ -9,3 +9,4 @@
 .\objects\midd_uart.o: ..\drivers\include\wb_gpio.h
 .\objects\midd_uart.o: ..\System\include\wb_include.h
 .\objects\midd_uart.o: ..\drivers\include\wb_gpio.h
+.\objects\midd_uart.o: ..\drivers\include\PWM.h

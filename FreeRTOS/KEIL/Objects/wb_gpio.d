@@ -7,3 +7,4 @@
 .\objects\wb_gpio.o: ..\System\include\wberrcode.h
 .\objects\wb_gpio.o: ..\System\include\wblib.h
 .\objects\wb_gpio.o: ..\drivers\include\wb_gpio.h
+.\objects\wb_gpio.o: ..\drivers\include\PWM.h

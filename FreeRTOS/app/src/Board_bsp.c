@@ -4,6 +4,7 @@
 #include "W55FA93_gnand.h"
 #include "w55fa93_edma.h"
 #include "w55fa93_osd.h"
+#include "w55fa93_spi.h"
 #include "DrvEDMA.h"
 #include "Nvtfat.h"
 #include "jpegcodec.h"
@@ -25,6 +26,8 @@
 #include "RTP.h"
 #include "Midd_uart.h"
 #include "Board_bsp.h"
+#include "LCD_Power.h"
+#include "key.h"
 
 __align(32) unsigned short LCDOSDBuffer1[_LCD_HEIGHT][_LCD_WIDTH];
 __align(32) unsigned short LCDOSDBuffer2[_LCD_HEIGHT][_LCD_WIDTH];
@@ -42,7 +45,10 @@ void systemInit(void)
 	sysEnableCache(CACHE_WRITE_BACK);
 	UART_Init(LOW_UART_232);
 	//UART_Init(HIGHT_UART_485);
-	
+	BackLightOFF();
+	sysprintf("\r\nCENTRY LCD_DEMO HW Version: %s\r\n",CENTRY_LCD_HW_VERSION);
+	sysprintf("CENTRY LCD_DEMO SW Version: %s\r\n",CENTRY_LCD_SW_VERSION);
+	sysprintf("CENTRY CURRENT LCD TYPE: %s\r\n",CENTRY_LCD_TYPE);
 #if 0
 	_VpostFrameBuffer = (unsigned short *)((unsigned int)_VpostFrameBufferPool | 0x80000000);
 	lcdformatex.ucVASrcFormat = DRVVPOST_FRAME_RGB565;
@@ -51,11 +57,9 @@ void systemInit(void)
 #endif
 	RTC_Init();					
 	EDMA_Init();
-	sysprintf("systemInit exe 1!\n");
 	fsInitFileSystem();
 	spiFlashInit();
 	NVT_MountMem();
-	sysprintf("systemInit exe 2!\n");
 	jpegOpen();
 //	FreeTypeFontInit();
 	if(RTC_Read(RTC_CURRENT_TIME, &sCurTime) == E_RTC_SUCCESS )
@@ -80,6 +84,7 @@ void sys_Init(void)
 						 60000);		//unsigned int u32ApbKHz	
 
 	systemInit();
+	sysprintf("sys_Init !\n");
 }
 
 void OtherPeripheral_Init(void)
@@ -88,16 +93,13 @@ void OtherPeripheral_Init(void)
 	sysStartTimer(TIMER0, 50000, PERIODIC_MODE);	//100us
 	//sysSetTimerReferenceClock (TIMER0, 12000000);
 	//sysStartTimer(TIMER0, 100, PERIODIC_MODE);
-	
+	PWM_Open();
 	spuOpen(eDRVSPU_FREQ_8000);
-	sysprintf("hello,world!");
 	//RTP_Init();
 	MP3Control_Init();
 	//ADCKEY_Init();
 	//CTP_Init();
 	boardKey_Init();
-	PWM_Open();
-	BackLightAdj(50);
-	sysprintf("OtherPeripheral_Init exe !\n");
+	sysprintf("OtherPeripheral_Init finish !\n");
 }
 

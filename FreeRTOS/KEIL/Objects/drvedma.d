@@ -10,4 +10,5 @@
 .\objects\drvedma.o: ..\drivers\include\wb_gpio.h
 .\objects\drvedma.o: ..\System\include\wb_include.h
 .\objects\drvedma.o: ..\drivers\include\wb_gpio.h
+.\objects\drvedma.o: ..\drivers\include\PWM.h
 .\objects\drvedma.o: ..\middleWare\include\DrvEDMA.h

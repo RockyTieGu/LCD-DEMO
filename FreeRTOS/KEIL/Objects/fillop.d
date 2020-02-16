@@ -11,6 +11,7 @@
 .\objects\fillop.o: ..\drivers\include\wb_gpio.h
 .\objects\fillop.o: ..\System\include\wb_include.h
 .\objects\fillop.o: ..\drivers\include\wb_gpio.h
+.\objects\fillop.o: ..\drivers\include\PWM.h
 .\objects\fillop.o: ..\middleWare\include\Fi.h
 .\objects\fillop.o: ..\middleWare\include\midd_comm.h
 .\objects\fillop.o: ..\middleWare\include\w55fa93_vpost.h

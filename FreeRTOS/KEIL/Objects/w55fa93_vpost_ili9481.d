@@ -10,6 +10,7 @@
 .\objects\w55fa93_vpost_ili9481.o: ..\drivers\include\wb_gpio.h
 .\objects\w55fa93_vpost_ili9481.o: ..\System\include\wb_include.h
 .\objects\w55fa93_vpost_ili9481.o: ..\drivers\include\wb_gpio.h
+.\objects\w55fa93_vpost_ili9481.o: ..\drivers\include\PWM.h
 .\objects\w55fa93_vpost_ili9481.o: ..\middleWare\include\w55fa93_vpost_driver.h
 .\objects\w55fa93_vpost_ili9481.o: ..\middleWare\include\w55fa93_vpost.h
 .\objects\w55fa93_vpost_ili9481.o: ..\System\include\wb_include.h

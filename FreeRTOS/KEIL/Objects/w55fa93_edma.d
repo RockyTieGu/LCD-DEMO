@@ -11,6 +11,7 @@
 .\objects\w55fa93_edma.o: ..\drivers\include\wb_gpio.h
 .\objects\w55fa93_edma.o: ..\System\include\wb_include.h
 .\objects\w55fa93_edma.o: ..\drivers\include\wb_gpio.h
+.\objects\w55fa93_edma.o: ..\drivers\include\PWM.h
 .\objects\w55fa93_edma.o: ..\middleWare\include\w55fa93_edma.h
 .\objects\w55fa93_edma.o: ..\System\include\wb_include.h
 .\objects\w55fa93_edma.o: ..\middleWare\include\DrvEDMA.h

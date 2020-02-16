@@ -82,9 +82,10 @@ void TestPhoto_Dealkey(unsigned short input)
 
 void Task2_LCD_Test(void *pvParameters)
 {
-	BaseType_t err;
 	static unsigned char key=0;
+	BaseType_t err;
 	
+	sysprintf("Task2_LCD_Test task has creation\r\n");
 	while(1)
 	{
 		if(LcdTestMenu_Key_Queue != NULL)

@@ -12,6 +12,7 @@
 .\objects\aviplay.o: ..\drivers\include\wb_gpio.h
 .\objects\aviplay.o: ..\System\include\wb_include.h
 .\objects\aviplay.o: ..\drivers\include\wb_gpio.h
+.\objects\aviplay.o: ..\drivers\include\PWM.h
 .\objects\aviplay.o: ..\app\include\jpegsample.h
 .\objects\aviplay.o: ..\middleWare\include\w55fa93_vpost.h
 .\objects\aviplay.o: ..\System\include\wb_include.h

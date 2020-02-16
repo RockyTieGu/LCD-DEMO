@@ -12,3 +12,4 @@
 .\objects\dictionary.o: ..\drivers\include\wb_gpio.h
 .\objects\dictionary.o: ..\System\include\wb_include.h
 .\objects\dictionary.o: ..\drivers\include\wb_gpio.h
+.\objects\dictionary.o: ..\drivers\include\PWM.h

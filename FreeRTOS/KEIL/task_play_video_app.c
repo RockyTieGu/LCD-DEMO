@@ -235,7 +235,7 @@ void Task4_Play_Video_Contrl(void *p_arg)
 {
 	static unsigned int key=0;
 	
-	sysprintf("%s task creation\r\n",p_arg); 
+	sysprintf("Task4_Play_Video_Contrl task creation\r\n"); 
 	while(1)
 	{
 		if(PlayVideoMenu_Key_Queue != NULL)
@@ -253,7 +253,7 @@ void Task_Play_Video(void *p_arg)
 {
 	static char RxFileName[MESSAGE_FILE_NAME_LEN];
 
-	sysprintf("%s task creation\r\n",p_arg); 
+	sysprintf("Task_Play_Video task creation\r\n"); 
 	while(1)
 	{
 		if(xQueueReceive(PlayVideoName_Message,RxFileName,portMAX_DELAY))

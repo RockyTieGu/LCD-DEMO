@@ -11,4 +11,5 @@
 .\objects\rtc.o: ..\drivers\include\wb_gpio.h
 .\objects\rtc.o: ..\System\include\wb_include.h
 .\objects\rtc.o: ..\drivers\include\wb_gpio.h
+.\objects\rtc.o: ..\drivers\include\PWM.h
 .\objects\rtc.o: ..\middleWare\include\RTC.h
