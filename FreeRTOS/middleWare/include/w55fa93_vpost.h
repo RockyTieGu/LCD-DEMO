@@ -422,8 +422,8 @@ void vpostSetMPULCM_TimingConfig(volatile S_DRVVPOST_MPULCM_TIMING *psTiming);
 void vpostSetMPULCM_ImageWindow(volatile S_DRVVPOST_MPULCM_WINDOW *psWindow);
 void vpostSetYUVEndianSelect(E_DRVVPOST_ENDIAN eEndian);
 /*********************************************************/
-int vpostLCMInit_S050WQ01(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf);
-int vpostLCMDeinit_S050WQ01(void);
+int vpostLCMInit_CENTRY(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf);
+int vpostLCMDeinit_CENTRY(void);
 void *vpostGetFrameBuffer(void);
 int vpostLCMDeinit(void);
 int vpostLCMInit(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf);

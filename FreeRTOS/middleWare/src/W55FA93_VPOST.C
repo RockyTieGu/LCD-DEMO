@@ -318,13 +318,13 @@ unsigned char  const fix_ascii[]=
 };
 int vpostLCMInit(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf)
 {
-	return vpostLCMInit_S050WQ01(plcdformatex, pFramebuf);
+	return vpost_LCMInit_CENTRY(plcdformatex, pFramebuf);
 }
 
 int vpostLCMDeinit(void)
 {
 	fsCloseFile(rsFil);
-	return vpostLCMDeinit_S050WQ01();
+	return vpostLCMDeinit_CENTRY();
 }
 
 void* vpostGetFrameBuffer(void)

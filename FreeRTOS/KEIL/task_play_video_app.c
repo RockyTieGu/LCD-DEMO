@@ -16,7 +16,7 @@ void videoPlay_BackGround(void)
 	
 	GUI_SetBkColor(GUI_BLUE);
 	GUI_Clear();
-	GUI_SetFont(GUI_FONT_32B_ASCII); //GUI_Font32B_1  
+	GUI_SetFont(GUI_FONT_20B_ASCII); //GUI_Font32B_1  
 	GUI_SetColor(GUI_WHITE);
 	GUI_DrawLine(0,_LCD_HEIGHT/5, _LCD_WIDTH, _LCD_HEIGHT/5);
 	GUI_DrawLine(0,_LCD_HEIGHT*4/5, _LCD_WIDTH, _LCD_HEIGHT*4/5);
@@ -67,7 +67,7 @@ static void startPlayMP4(char * audioFileName)
 	MP3Control_En();
 	GUI_SetBkColor(GUI_BLUE);								//…Ë÷√±≥æ∞—’…´ GUI_LIGHTBLUE
 	GUI_SetColor(GUI_WHITE);
-	GUI_SetFont(GUI_FONT_24B_ASCII);
+	GUI_SetFont(GUI_FONT_16_ASCII);
 	memset(suFileName,0,sizeof(suFileName));
 	if(VIDEO_FILE_LIST.diskMode == NANDFLASH_MODE)
 	{	

@@ -212,29 +212,18 @@ void _ShowXBF(void)
 	UINT8 *_acBuffer;
 	
 	_acBuffer=(UINT8 *)EXT_SRAM_ADDR;
-	#if 0
-	fsAsciiToUnicode("c:\\Font\\song24.xbf", suFileName, TRUE);
-	handle = fsOpenFile(suFileName, "song24.xbf",O_RDONLY);
-	#else
-	fsAsciiToUnicode("c:\\Font\\song20.sif", suFileName, TRUE);
+
+	fsAsciiToUnicode("c:\\Font\\song16.sif", suFileName, TRUE);
 	handle = fsOpenFile(suFileName, "",O_RDONLY);
-	#endif
-	if (handle < 0) 
+
+	if (handle <= 0) 
 	{
 		sysprintf("open %s file fail! handle:0x%x\r\n", suFileName, handle);
 		return ;
 	}
 		
-	#if 0
-	GUI_XBF_CreateFont(&XBF_Font,       
-					 &XBF_Data,        
-					 GUI_XBF_TYPE_PROP, 
-					 _cbGetData,      
-					 &handle); 
-	#else
 	fsReadFile(handle, _acBuffer, fsGetFileSize(handle), &bw);
 	GUI_SIF_CreateFont(_acBuffer, SIF_Font_song20, GUI_SIF_TYPE_PROP);	
-	#endif
 }
 
 GUI_FONT * SetFont_Xbf(void)

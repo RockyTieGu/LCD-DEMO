@@ -434,6 +434,7 @@ static void _Main(void) {
     (*_GUIDemoConfig.apFunc[_iDemo])();
     _iDemoMinor = 0;
     _Pressed    = 0;
+	  vTaskDelay(50);
   }
   _iDemo = 0;
   //
@@ -748,7 +749,11 @@ void GUIDEMO_Main(void) {
   int                     NumFreeBytes;
   int                     BitsPerPixel;
 #endif
-
+  int xSize,ySize;
+	
+  xSize           = LCD_GetXSize();
+  ySize           = LCD_GetYSize();
+	
   GUI_MEMDEV_SetAnimationCallback(_cbEffect, (void *)&_Pressed);
   WM_SetCallback(WM_HBKWIN, _cbBk);
   BUTTON_SetReactOnLevel();
@@ -796,7 +801,7 @@ void GUIDEMO_Main(void) {
 	GUI_Clear();
 	GUI_SetColor(GUI_BLUE);
 	GUI_SetFont(GUI_FONT_24B_ASCII); 
-	GUI_DispStringAt("emWin After the demo", 480/2 - 100, 270/2);
+	GUI_DispStringHCenterAt("emWin After the demo",xSize/2,ySize/2);
 }
 
 /*************************** End of file ****************************/

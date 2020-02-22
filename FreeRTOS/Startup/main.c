@@ -98,8 +98,8 @@
 #include <stdlib.h>
 
 /* Scheduler includes. */
-//#include "FreeRTOS.h"
-//#include "task.h"
+#include "FreeRTOS.h"
+#include "task.h"
 
 /* Nuvoton includes. */
 #include "wblib.h"
@@ -111,8 +111,8 @@
 #include "GUIDEMO.h"
 #include "RTP.h"
 #include "Midd_uart.h"
-#include "hmi.h"
 
+#include "w55fa93_vpost.h"
 
 //extern	unsigned short   *_VpostFrameBuffer;
 /*-----------------------------------------------------------*/

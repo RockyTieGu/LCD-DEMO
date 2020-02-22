@@ -5,7 +5,7 @@
 #include "task_key_handle.h"
 #include "task_comm_type.h"
 #include "ctp.h"
-
+#include "w55fa93_vpost.h"
 //任务函数
 static void start_task(void *pvParameters);
 
@@ -144,7 +144,7 @@ void Task_Create(void)
 	char ListNameBuff[30];
 	char *p = NULL;
 	int i;
-	
+
 #if 0
 	sysprintf("print music file!\r\n");
 	for(i = 0; i < AUDIO_FILE_LIST.nandflash_audio_file_num;i++)
@@ -183,6 +183,11 @@ void Task_Create(void)
                 (TaskHandle_t*  )&StartTask_Handler);   //任务句柄   v
 
 	BackLightAdj(50);
+
+//	LCD_Clear(LCD_GUI_RED, BUFF0);
+//	LCDUpdateScreen(BUFF0);
+//	sysprintf("jdslfjkaslfr\r\n");
+		
 	vTaskStartScheduler();	
 }
 

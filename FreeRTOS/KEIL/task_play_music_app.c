@@ -19,7 +19,7 @@ static void musicPlay_BackGround(void)
 	
 	GUI_SetBkColor(GUI_BLUE);
 	GUI_Clear();
-	GUI_SetFont(GUI_FONT_32B_ASCII); //GUI_Font32B_1  
+	GUI_SetFont(GUI_FONT_20B_ASCII); //GUI_Font32B_1   GUI_FONT_32B_ASCII
 	GUI_SetColor(GUI_WHITE);
 	GUI_DrawLine(0,_LCD_HEIGHT/5, _LCD_WIDTH, _LCD_HEIGHT/5);
 	GUI_DrawLine(0,_LCD_HEIGHT*4/5, _LCD_WIDTH, _LCD_HEIGHT*4/5);
@@ -40,7 +40,7 @@ void Audio_AdjustVolume(void)
 	
 	GUI_SetBkColor(GUI_BLUE);								//设置背景颜色 GUI_LIGHTBLUE
 	GUI_SetColor(GUI_WHITE);
-	GUI_SetFont(GUI_FONT_24B_ASCII);
+	GUI_SetFont(GUI_FONT_16_ASCII);//GUI_FONT_24B_ASCII
 	GUI_ClearRect(0, _LCD_HEIGHT*4/5 + 1, _LCD_WIDTH/4 - 1, _LCD_HEIGHT);	 //清除Nanflash音频文件显示区域
 	sprintf(volumBuff, "Volum:%d", nAudioPlayVolume);
 	GUI_DispStringHCenterAt(volumBuff, _LCD_WIDTH/8 , _LCD_HEIGHT*4/5 + _LCD_HEIGHT/10);
@@ -50,7 +50,7 @@ void UpdateMusicPlayStatus(PLAY_CTRL_E status, BOOL updateFlag)
 {
 	GUI_SetBkColor(GUI_BLUE);								//设置背景颜色 GUI_LIGHTBLUE
 	GUI_SetColor(GUI_WHITE);
-	GUI_SetFont(GUI_FONT_24B_ASCII);
+	GUI_SetFont(GUI_FONT_16_ASCII);//GUI_FONT_24B_ASCII
 	
 	taskENTER_CRITICAL();
 	if(updateFlag == TRUE)
@@ -87,8 +87,9 @@ void  mp3_play_callback(MV_CFG_T *ptMvCfg)
 					ptMvInfo->uMovieLength / 6000, (ptMvInfo->uMovieLength / 100) % 60);
 		last_time = sysGetTicks(TIMER0);
 		GUI_DispStringAt(buffer,_LCD_WIDTH*3/4,_LCD_HEIGHT*4/5 + _LCD_HEIGHT/10);
-		vTaskDelay(5);
+		
 	}
+	vTaskDelay(5);
 }
 
 static void MP3_Dealkey(unsigned short input)
@@ -262,7 +263,7 @@ static void startPlayMP3(char * audioFileName)
 
 	GUI_SetBkColor(GUI_BLUE);								//设置背景颜色 GUI_LIGHTBLUE
 	GUI_SetColor(GUI_WHITE);
-	GUI_SetFont(GUI_FONT_24B_ASCII);
+	GUI_SetFont(GUI_FONT_16_ASCII);//GUI_FONT_24B_ASCII
 	memset(suFileName,0,sizeof(suFileName));
 	if(AUDIO_FILE_LIST.diskMode == NANDFLASH_MODE)
 	{	

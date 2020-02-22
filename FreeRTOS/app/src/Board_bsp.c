@@ -33,7 +33,7 @@ __align(32) unsigned short LCDOSDBuffer1[_LCD_HEIGHT][_LCD_WIDTH];
 __align(32) unsigned short LCDOSDBuffer2[_LCD_HEIGHT][_LCD_WIDTH];
 __align(32) unsigned short OSD_FrameRGB565[_LCD_HEIGHT*_LCD_WIDTH*2];
 extern __align(256) unsigned short  _VpostFrameBufferPool[VPOST_FRAME_BUFSZ];
-
+extern unsigned short   *_VpostFrameBuffer;
 void systemInit(void)
 {	
 	WB_UART_T uart;
@@ -82,7 +82,6 @@ void sys_Init(void)
 						120000,		//unsigned int u32CpuKHz,
 						120000,		//unsigned int u32HclkKHz,
 						 60000);		//unsigned int u32ApbKHz	
-
 	systemInit();
 	sysprintf("sys_Init !\n");
 }

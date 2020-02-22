@@ -109,29 +109,15 @@ void lcd_init(void)
 {  
 	LCDFORMATEX lcdformatex;
 	OSDFORMATEX osdFormat;
- /*   BT=(unsigned short*)((UINT32)LCDbuff | 0x80000000);//от╢Ф;	
-    lcdFormat.ucVASrcFormat = DRVVPOST_FRAME_RGB565;
-    lcdFormat.nScreenWidth = 480;
-	lcdFormat.nScreenHeight = 272;
 
-    vpostLCMInit(&lcdFormat, (UINT32*)(BT)) ;
-*/
     lcdformatex.ucVASrcFormat = DRVVPOST_FRAME_RGB565;
-    lcdformatex.nScreenWidth = 800;
-	lcdformatex.nScreenHeight = 480;
+    lcdformatex.nScreenWidth = XSIZE_PHYS;
+	lcdformatex.nScreenHeight = YSIZE_PHYS;
 	_VpostFrameBuffer = (unsigned short *)((unsigned int)_VpostFrameBufferPool | 0x80000000);
 	lcdformatex.ucVASrcFormat = DRVVPOST_FRAME_RGB565;
 	vpostLCMInit(&lcdformatex, (unsigned int *)_VpostFrameBuffer);
 	sysprintf("_VpostFrameBuffer:%x \r\n", _VpostFrameBuffer);
-#if 0
-	osdFormat.ucOSDSrcFormat = DRVVPOST_OSD_RGB565;
-	osdFormat.nOSDScreenWidth = _LCD_WIDTH;
-	osdFormat.nOSDScreenHeight = _LCD_HEIGHT;	
-	osdFormat.nOSDX1StartPixel = 0;		
-	osdFormat.nOSDY1StartPixel = 0;		
-	vpostOSDInit(&osdFormat, (unsigned int*)OSD_FrameRGB565);			
-	vpostOSDControl(eOSD_SHOW, 0);
-#endif
+
 	//EDMA_Init();
 }		
 	

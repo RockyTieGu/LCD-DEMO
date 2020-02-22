@@ -4,7 +4,7 @@
 #include "graph.h"
 #include "GUI.h"
 
-#define MAX_PHOTO_NUM	(9)
+#define MAX_PHOTO_NUM	(14)
 
 void Test_LCDMENU(char n)
 {
@@ -36,7 +36,17 @@ void Test_LCDMENU(char n)
 		case 8:JpegDecTest("C:\\photo\\2.jpg", VPOST);
 				break;
 		case 9:JpegDecTest("C:\\photo\\3.jpg", VPOST);
-				break;		
+				break;	
+		case 10:JpegDecTest("C:\\photo\\4.jpg", VPOST);
+				break;
+		case 11:JpegDecTest("C:\\photo\\5.jpg", VPOST);
+				break;
+		case 12:JpegDecTest("C:\\photo\\6.jpg", VPOST);
+				break;	
+		case 13:JpegDecTest("C:\\photo\\7.jpg", VPOST);
+				break;
+		case 14:JpegDecTest("C:\\photo\\8.jpg", VPOST);	
+				break;
 		default:break;
 
 	}
