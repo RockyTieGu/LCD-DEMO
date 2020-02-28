@@ -206,22 +206,33 @@ int _cbGetData(U32 Off, U16 NumBytes, void * pVoid, void * pBuffer)
 
 }
 
+static UINT8 *_acBuffer = NULL;
 void _ShowXBF(void) 
 {
 	CHAR		suFileName[128];
-	UINT8 *_acBuffer;
+
 	
-	_acBuffer=(UINT8 *)EXT_SRAM_ADDR;
+	//_acBuffer=(UINT8 *)EXT_SRAM_ADDR;
 
 	fsAsciiToUnicode("c:\\Font\\song16.sif", suFileName, TRUE);
 	handle = fsOpenFile(suFileName, "",O_RDONLY);
 
 	if (handle <= 0) 
 	{
-		sysprintf("open %s file fail! handle:0x%x\r\n", suFileName, handle);
+		sysprintf("open %s file fail! handle:0x%x\r\n", "c:\\Font\\song16.sif", handle);
 		return ;
 	}
-		
+	else
+	{
+		sysprintf("success open %s file \r\n", "c:\\Font\\song16.sif");
+	}
+	
+	_acBuffer = (unsigned char *)malloc(sizeof(CHAR) * fsGetFileSize(handle));
+	if(_acBuffer == NULL)
+	{
+		sysprintf("Malloc %d bytes fail for %s font \r\n", fsGetFileSize(handle),"c:\\Font\\song16.sif");
+		return ;
+	}
 	fsReadFile(handle, _acBuffer, fsGetFileSize(handle), &bw);
 	GUI_SIF_CreateFont(_acBuffer, SIF_Font_song20, GUI_SIF_TYPE_PROP);	
 }
@@ -232,7 +243,7 @@ GUI_FONT * SetFont_Xbf(void)
 
 }
 
-char T[300]={0};  //最大256字	
+static char T[300]={0};  //最大256字	
 char * zh(char * pText)
 {
 	char * pT;

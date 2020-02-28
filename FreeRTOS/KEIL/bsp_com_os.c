@@ -6,6 +6,7 @@
 #include "task_comm_type.h"
 #include "ctp.h"
 #include "w55fa93_vpost.h"
+#include "semphr.h"
 //任务函数
 static void start_task(void *pvParameters);
 
@@ -37,19 +38,31 @@ TaskHandle_t Task4PlayVideoContrl_Handler;
 //播放视频任务句柄
 TaskHandle_t Task4PlayVideo_Handler;
 
+ SemaphoreHandle_t osMutex;
+#if 0
 //任务堆栈大小	
-#define START_STK_SIZE 						(1024)
+#define START_STK_SIZE 						(1024*20)
 #define APP_MAIN_MENU_STK_SIZE        		(1024*20)	
 #define APP_LCD_TEST_STK_SIZE         		(1024)
-#define APP_PLAY_VIDEO_CONTROL_STK_SIZE     (1024*10)
-#define APP_PLAY_VIDEO_STK_SIZE          	(1024*10)
-#define APP_PLAY_MUSIC_CONTROL_STK_SIZE     (1024*10)
-#define APP_PLAY_MUSIC_STK_SIZE          	(1024*10)
+#define APP_PLAY_VIDEO_CONTROL_STK_SIZE     (1024*30)
+#define APP_PLAY_VIDEO_STK_SIZE          	(1024*30)
+#define APP_PLAY_MUSIC_CONTROL_STK_SIZE     (1024*30)
+#define APP_PLAY_MUSIC_STK_SIZE          	(1024*30)
+#define	APP_DEMO_PROGRAM_STK_SIZE          	(1024)
+#else
+//任务堆栈大小	
+#define START_STK_SIZE 						(1024)
+#define APP_MAIN_MENU_STK_SIZE        		(1024*30)	
+#define APP_LCD_TEST_STK_SIZE         		(1024)
+#define APP_PLAY_VIDEO_CONTROL_STK_SIZE     (1024*15)
+#define APP_PLAY_VIDEO_STK_SIZE          	(1024*15)
+#define APP_PLAY_MUSIC_CONTROL_STK_SIZE     (1024*15)
+#define APP_PLAY_MUSIC_STK_SIZE          	(1024*15)
 #define	APP_DISPLAY_PHOTO_STK_SIZE          (1024)
 #define	APP_DEMO_PROGRAM_STK_SIZE          	(1024)
-
+#endif
 //按键任务堆栈大小	
-#define APP_KEY_FUN_STK_SIZE          		(1024)
+#define APP_KEY_FUN_STK_SIZE          		(1024*6)
 
 #define APP_MAIN_MENU_PRIORITY        		 (10)
 #define APP_LCD_TEST_PRIORITY                (8)
@@ -66,6 +79,7 @@ TaskHandle_t Task4PlayVideo_Handler;
 static void start_task(void *pvParameters)
 {
 	taskENTER_CRITICAL();		//临界区
+	
 	
 	MenuKey_Queue=xQueueCreate(KEYMSG_Q_NUM,sizeof(unsigned char));        	//创建主页按键消息队列
 	LcdTestMenu_Key_Queue=xQueueCreate(KEYMSG_Q_NUM,sizeof(unsigned char));   //创建测试LCD按键消息队列
@@ -173,6 +187,11 @@ void Task_Create(void)
 	{
 		sysprintf("%d ,%s\r\n", i, VIDEO_FILE_LIST.sd_audio_name[i]);
 	}
+#else
+	sysprintf("Search NandFlash audio file % .SD Audio file %d \r\n", AUDIO_FILE_LIST.nandflash_audio_file_num,AUDIO_FILE_LIST.sd_audio_file_num);
+	sysprintf("AUDIO NandFlash curPos % .SD curPos %d \r\n", AUDIO_FILE_LIST.nandflash_audioFile_curPos,AUDIO_FILE_LIST.sd_audioFile_curPos);
+	sysprintf("Search NandFlash Video file % .SD Video file %d \r\n", VIDEO_FILE_LIST.nandflash_audio_file_num,VIDEO_FILE_LIST.sd_audio_file_num);
+	sysprintf("Video NandFlash curPos % .SD Video %d \r\n", VIDEO_FILE_LIST.nandflash_audioFile_curPos,VIDEO_FILE_LIST.sd_audioFile_curPos);
 #endif
 	//创建开始任务
     xTaskCreate((TaskFunction_t )start_task,            //任务函数

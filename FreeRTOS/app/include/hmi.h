@@ -17,7 +17,7 @@ void TestPhoto_Dealkey(unsigned short input);
 
 void Menu_Dealkey(unsigned short input);
 void CreatAllTask(void);
-void Task_Create(void);
+
 int ReadImageDirectory_Path(char * directName);
-int  SearcheSpecifiedDirectory_filePath(char *suDirName);
+
 #endif

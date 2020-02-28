@@ -71,13 +71,15 @@ void  mp3_play_callback(MV_CFG_T *ptMvCfg)
 {
 	MV_INFO_T 	*ptMvInfo;
 	static INT	last_time = 0;
-	char buffer[50];
+	char buffer[50];//_LCD_HEIGHT/10
+	GUI_RECT Rect = {_LCD_WIDTH*3/4,_LCD_HEIGHT*4/5 + 16,_LCD_WIDTH,_LCD_HEIGHT};
 	
 	mflGetMovieInfo(ptMvCfg, &ptMvInfo);
 
 	if ((sysGetTicks(TIMER0) - last_time > 500) &&
 		ptMvInfo->uAuTotalFrames)
 	{
+		memset(buffer, 0 , sizeof(buffer));
 //		sprintf(buffer,"T=%d, Progress = %02d:%02d / %02d:%02d\n", 
 //					sysGetTicks(TIMER0) / 100,
 //					ptMvInfo->uPlayCurTimePos / 6000, (ptMvInfo->uPlayCurTimePos / 100) % 60,
@@ -86,10 +88,14 @@ void  mp3_play_callback(MV_CFG_T *ptMvCfg)
 					ptMvInfo->uPlayCurTimePos / 6000, (ptMvInfo->uPlayCurTimePos / 100) % 60,
 					ptMvInfo->uMovieLength / 6000, (ptMvInfo->uMovieLength / 100) % 60);
 		last_time = sysGetTicks(TIMER0);
+	//	GUI_FillRectEx(&Rect);
+		GUI_ClearRectEx(&Rect);
+		//GUI_DispStringInRectEx(buffer,&Rect,GUI_TA_HCENTER | GUI_TA_VCENTER,strlen(buffer),GUI_ROTATE_0);
+	//	GUI_DispStringAt("        ",_LCD_WIDTH*3/4,_LCD_HEIGHT*4/5 + _LCD_HEIGHT/10);
 		GUI_DispStringAt(buffer,_LCD_WIDTH*3/4,_LCD_HEIGHT*4/5 + _LCD_HEIGHT/10);
-		
+		vTaskDelay(5);
 	}
-	vTaskDelay(5);
+	
 }
 
 static void MP3_Dealkey(unsigned short input)
@@ -183,7 +189,7 @@ static void MP3_Dealkey(unsigned short input)
 				{
 					memset(audioFilePath, 0, sizeof(audioFilePath));
 					//sprintf(audioFilePath, "%s%s", AUDIO_FILE_NANDFLASH_PATH, AUDIO_FILE_LIST.nandflash_audio_name[AUDIO_FILE_LIST.nandflash_audioFile_curPos]);
-					sysprintf("play music nandflash:%s\r\n",AUDIO_FILE_LIST.nandflash_audio_name[AUDIO_FILE_LIST.nandflash_audioFile_curPos]);
+					//sysprintf("play music nandflash:%s\r\n",AUDIO_FILE_LIST.nandflash_audio_name[AUDIO_FILE_LIST.nandflash_audioFile_curPos]);
 					ptr = (char *)AUDIO_FILE_LIST.nandflash_audio_name[AUDIO_FILE_LIST.nandflash_audioFile_curPos];
 					num = GUI_UC_ConvertUTF82UC((const char *)ptr, strlen(ptr), (U16 * )audioFilePath, 80/2);
 					sysprintf("NandFlash num:%d [0]:%x [1]:%x [2]:%x [3]:%x [4]:%x [5]:%x [6]:%x [7]:%x [8]:%x [9]:%x [10]:%x [11]:%x [12]:%x [13]:%x [14]:%x\r\n", \
@@ -198,7 +204,7 @@ static void MP3_Dealkey(unsigned short input)
 					memset(audioFilePath, 0, sizeof(audioFilePath));
 					ptr = (char *)AUDIO_FILE_LIST.sd_audio_name[AUDIO_FILE_LIST.sd_audioFile_curPos];
 					num = GUI_UC_ConvertUTF82UC((const char *)ptr, strlen(ptr), (U16 * )audioFilePath, 80/2);
-					sysprintf("SD num:%d [0]:%x [1]:%x [2]:%x [3]:%x [4]:%x [5]:%x [6]:%x [7]:%x [8]:%x [9]:%x [10]:%x [11]:%x [12]:%x [13]:%x [14]:%x\r\n", \
+				//	sysprintf("SD num:%d [0]:%x [1]:%x [2]:%x [3]:%x [4]:%x [5]:%x [6]:%x [7]:%x [8]:%x [9]:%x [10]:%x [11]:%x [12]:%x [13]:%x [14]:%x\r\n", \
 					num, p[0],p[1],p[2],p[3],p[4],p[5],p[6],p[7],p[8],p[9],p[10],p[11],p[12],p[13],p[14]);
 					if (xQueueSend(PlayMusicName_Message,audioFilePath,strlen(audioFilePath) + 1) == errQUEUE_FULL)
 					{
@@ -222,6 +228,7 @@ static void MP3_Dealkey(unsigned short input)
 				
 				mflPlayControl(&_tMvCfg,PLAY_CTRL_STOP,1);
 				sysprintf("MP3 PLAY_CTRL_STOP\r\n");
+//				sysStopTimer(TIMER0);
 				DrawMenu((char )cur_item);
 				mainMenuIndex = MENU_IDLE;
 			}
@@ -241,7 +248,7 @@ void Task3_Play_Music_Contrl(void *p_arg)
 {
 	static unsigned int key=0;
 	
-	sysprintf("%s task creation\r\n", (char *)p_arg);
+	sysprintf("%s task creation\r\n", (char *)Task3_Play_Music_Contrl);
 	while(1)
 	{
 		if(PlayMusicMenu_Key_Queue != NULL)

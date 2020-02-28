@@ -2,6 +2,7 @@
 #include "stdlib.h"
 #include "wb_include.h"
 #include "w55fa93_vpost_driver.h"
+#include "dx_lcdconfig.h"
 #include "FreeRTOS.h"
 #include "task.h"
 extern void LCDDelay(unsigned int nCount);
@@ -210,7 +211,7 @@ void SPI_INIT_LCD(void)
 	LCD_CELL_INIT();
 }
 
-int vpost_LCMInit_CENTRY(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf)
+int vpostLCMInit_CENTRY(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf)
 {
 	S_DRVVPOST_SYNCLCM_WINDOW sWindow = {_LCD_WIDTH,_LCD_HEIGHT,_LCD_WIDTH};	
 	S_DRVVPOST_SYNCLCM_HTIMING sHTiming = {LCD_RGB_HPW ,LCD_RGB_HBP ,LCD_RGB_HFP };
@@ -220,7 +221,7 @@ int vpost_LCMInit_CENTRY(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf)
 
 	LCD_Control_En();
 	LCDDelay(500);
-	SPI_INIT_LCD();
+	//SPI_INIT_LCD();
 	// VPOST clock control
 	outpw(REG_AHBCLK, inpw(REG_AHBCLK) | VPOST_CKE | HCLK4_CKE);
 	outpw(REG_AHBIPRST, inpw(REG_AHBIPRST) | VPOSTRST);
@@ -244,10 +245,11 @@ int vpost_LCMInit_CENTRY(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf)
 	vpostVAStopTrigger();	
 
 	// Enable VPOST function pins
-#ifdef	OPT_24BIT_MODE		
-	vpostSetDataBusPin(eDRVVPOST_DATA_24BITS);
-#else
-//	vpostSetDataBusPin(eDRVVPOST_DATA_8BITS);	
+#if (LCD_BITS_MODE == 18)			
+	vpostSetDataBusPin(eDRVVPOST_DATA_18BITS);
+#elif (LCD_BITS_MODE == 16)  
+	vpostSetDataBusPin(eDRVVPOST_DATA_16BITS);	
+#else	
 	vpostSetDataBusPin(eDRVVPOST_DATA_16BITS);	
 #endif	  
 	// LCD image source select
@@ -259,11 +261,12 @@ int vpost_LCMInit_CENTRY(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf)
 	// configure LCD timing sync or async with TV timing	
 	vpostsetLCM_TimingType(eDRVVPOST_ASYNC_TV);
 	
-#ifdef	OPT_24BIT_MODE		
-    vpostSetParalelSyncLCM_Interface(eDRVVPOST_PRGB_24BITS);
-#else    
-//    vpostSetParalelSyncLCM_Interface(eDRVVPOST_PRGB_16BITS);
+#if(LCD_BITS_MODE == 18)		
+    vpostSetParalelSyncLCM_Interface(eDRVVPOST_PRGB_18BITS);
+#elif (LCD_BITS_MODE == 16)   
     vpostSetParalelSyncLCM_Interface(eDRVVPOST_PRGB_16BITS);    
+#else
+	 vpostSetParalelSyncLCM_Interface(eDRVVPOST_PRGB_16BITS);   
 #endif    
 	// MPU LCM initial 	
 	
@@ -275,25 +278,23 @@ int vpost_LCMInit_CENTRY(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf)
 	vpostSetSyncLCM_ImageWindow(&sWindow);
 	vpostSetSyncLCM_SignalPolarity(&sPolarity);  	
     
-#if 0
-	vpostSetFrameBuffer_BaseAddress(pFramebuf);
-#else    
+  	sysprintf("Lcd init step 1.0\n");
     // set frambuffer base address
 	if(pFramebuf != NULL) {
 		vpostAllocVABufferFromAP(pFramebuf);
 	} else {
     	if( vpostAllocVABuffer(plcdformatex, nBytesPixel)==FALSE)
     		return ERR_NULL_BUF;
-	}
-#endif    
-	
+	} 
+		sysprintf("Lcd init step 1.1\n");
 	// set frame buffer data format
 	vpostSetFrameBuffer_DataType((E_DRVVPOST_FRAME_DATA_TYPE)(plcdformatex->ucVASrcFormat));
-	
+	sysprintf("Lcd init step 1.2\n");
 	vpostSetYUVEndianSelect(eDRVVPOST_YUV_LITTLE_ENDIAN);
-	
+	sysprintf("Lcd init step 1.3\n");
 	// enable MPU LCD controller
 	vpostVAStartTrigger();
+	sysprintf("Lcd init step 1.4\n");
 	return 0;
 }
 

@@ -404,11 +404,15 @@ static void _Main(void) {
   int xSize;
   int ySize;
 
+	//	sysprintf("_Main aaa!\n");
   WM_SelectWindow(WM_HBKWIN);
+	//		sysprintf("_Main aadddda!\n");
   GUI_Clear();
+	//		sysprintf("_Main 113aaa!\n");
   #if (GUI_SUPPORT_CURSOR | GUI_SUPPORT_TOUCH)
     GUI_CURSOR_Show();
   #endif
+//	sysprintf("_Main a!\n");
   //
   // Create and configure Control and Information window
   //
@@ -416,18 +420,22 @@ static void _Main(void) {
   ySize           = LCD_GetYSize();
   _hDialogControl = GUI_CreateDialogBox(_aFrameWinControl, GUI_COUNTOF(_aFrameWinControl), &_cbFrameWinControl, WM_HBKWIN, xSize - CONTROL_SIZE_X, ySize - CONTROL_SIZE_Y);
   _hDialogInfo    = GUI_CreateDialogBox(_aFrameWinInfo,    GUI_COUNTOF(_aFrameWinInfo),    &_cbFrameWinInfo,    WM_HBKWIN, (xSize >> 1) - 1,       0);
-  WM_HideWindow(_hDialogInfo);
+//	sysprintf("_Main b!\n");
+	WM_HideWindow(_hDialogInfo);
+	//sysprintf("_Main c!\n");
   //
   // Show Intro
   //
   WM_InvalidateWindow(_hDialogControl);
   WM_DisableMemdev(WM_HBKWIN);
+  //	sysprintf("_Main d!\n");
   GUI_Exec();
   WM_EnableMemdev(WM_HBKWIN);
   GUIDEMO_Intro();
   //
   // Run the demos
   //
+    //	sysprintf("_Main f!\n");
   for (_iDemo = 0; _GUIDemoConfig.apFunc[_iDemo]; _iDemo++) {
     _ClearHalt();
     GUIDEMO_UpdateControlText();
@@ -753,10 +761,11 @@ void GUIDEMO_Main(void) {
 	
   xSize           = LCD_GetXSize();
   ySize           = LCD_GetYSize();
-	
+//	sysprintf("enWin a!\n");
   GUI_MEMDEV_SetAnimationCallback(_cbEffect, (void *)&_Pressed);
   WM_SetCallback(WM_HBKWIN, _cbBk);
   BUTTON_SetReactOnLevel();
+	sysprintf("enWin b!\n");
   FRAMEWIN_GetSkinFlexProps(&Framewin_Props, FRAMEWIN_SKINFLEX_PI_ACTIVE);
   Framewin_Props.Radius = 0;
   FRAMEWIN_SetSkinFlexProps(&Framewin_Props, FRAMEWIN_SKINFLEX_PI_ACTIVE);
@@ -793,11 +802,13 @@ void GUIDEMO_Main(void) {
     {
       _pfDrawBk = _DrawBkSimple;
     }
+	//	sysprintf("enWin 1!\n");
   GUIDEMO_SetDrawLogo(1);
+	//	sysprintf("enWin 2!\n");
  // while (1) {
     _Main();
  // }
-	sysprintf("enWin end!\n");
+//	sysprintf("enWin end!\n");
 	GUI_Clear();
 	GUI_SetColor(GUI_BLUE);
 	GUI_SetFont(GUI_FONT_24B_ASCII); 

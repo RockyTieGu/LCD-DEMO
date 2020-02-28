@@ -34,7 +34,7 @@ void videoPlay_BackGround(void)
 void loadPlayVideo_Menu()
 {
 	videoPlay_BackGround();
-	Select_File(&VIDEO_FILE_LIST);
+	Select_File((FILE_LIST *)(&VIDEO_FILE_LIST));
 	Audio_AdjustVolume();
 }
 
@@ -62,7 +62,7 @@ static void startPlayMP4(char * audioFileName)
 {
 	int			nStatus;
 	char		suFileName[256] ;
-	char 		assicFilName[128];
+	//char 		assicFilName[128];
 	
 	MP3Control_En();
 	GUI_SetBkColor(GUI_BLUE);								//…Ë÷√±≥æ∞—’…´ GUI_LIGHTBLUE
@@ -84,6 +84,7 @@ static void startPlayMP4(char * audioFileName)
 		sysprintf("AUDIO_FILE_LIST.diskMode error!\r\n");
 		return; 
 	}
+	sysprintf("startPlayMP4 %s\r\n", suFileName);
 	AVI_play(suFileName);//AVI_play("D:\\girlMV.avi");
  // fsAsciiToUnicode("D:\\1.avi", suFileName, TRUE);
 //if (aviPlayFile(suFileName, 0, 0, 1, avi_play_control) < 0)
@@ -224,6 +225,7 @@ static void MP4_Dealkey(unsigned short input)
 				vTaskResume(Task3PlayMusic_Handler);
 				vTaskResume(Task3PlayMusicContrl_Handler);
 				sysprintf("MP4 PLAY_CTRL_STOP\r\n");
+//				sysStopTimer(TIMER0);
 				DrawMenu(cur_item);
 				mainMenuIndex = MENU_IDLE;
 			}

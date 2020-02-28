@@ -83,6 +83,8 @@ static void Menu_Dealkey(unsigned short input)
 				vTaskSuspend(Task2LCDTest_Handler);
 				vTaskSuspend(Task3PlayMusic_Handler);
 				vTaskSuspend(Task3PlayMusicContrl_Handler);
+//				sysSetTimerReferenceClock (TIMER0, 12000000);
+//				sysStartTimer(TIMER0, 5000, PERIODIC_MODE);
 				mainMenuIndex = MENU_PLAY_VIDEO;
 				loadPlayVideo_Menu();
 				if(VIDEO_FILE_LIST.diskMode == NANDFLASH_MODE)
@@ -107,6 +109,8 @@ static void Menu_Dealkey(unsigned short input)
 				vTaskSuspend(Task2LCDTest_Handler);
 				vTaskSuspend(Task4PlayVideoContrl_Handler);
 				vTaskSuspend(Task4PlayVideo_Handler);
+//				sysSetTimerReferenceClock (TIMER0, 12000000);
+//				sysStartTimer(TIMER0, 5000, PERIODIC_MODE);
 				mainMenuIndex = MENU_PLAY_MUSIC;
 				loadPlayMusic_Menu();
 				if(AUDIO_FILE_LIST.diskMode == NANDFLASH_MODE)
@@ -139,7 +143,6 @@ static void Menu_Dealkey(unsigned short input)
 				vTaskResume(Task4PlayVideoContrl_Handler);
 				vTaskResume(Task4PlayVideo_Handler);
 			}
-			
 			break;
 		case BUTTON_RETURN:
 				mainMenuIndex = MENU_IDLE;

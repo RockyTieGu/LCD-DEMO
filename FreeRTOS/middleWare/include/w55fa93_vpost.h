@@ -42,11 +42,11 @@
 
 //#define	_LCD_WIDTH	800
 //#define	_LCD_HEIGHT	480
-#define _LCD_BPP	16				// 16BIT 18BIT 24BIT
-#define VPOST_FRAME_BUFSZ			(_LCD_HEIGHT*_LCD_WIDTH*2) 
+#define _LCD_BPP	LCD_BITS_MODE	// 16BIT 18BIT 24BIT
+#define VPOST_FRAME_BUFSZ			(_LCD_HEIGHT*_LCD_WIDTH*sizeof(DX_LCD_COLOR)) 
 #define	FLASH_VIDEO_ADDR	0x500000
 #define	FLASH_VIDEO_SIZE	0x200000
-typedef __align(32) unsigned short  (*LCDBUFFSRC)[_LCD_WIDTH];
+typedef __align(32) DX_LCD_COLOR  (*LCDBUFFSRC)[_LCD_WIDTH];
 // Define one bit mask
 #define BIT0		0x00000001
 #define BIT1		0x00000002
@@ -390,9 +390,9 @@ typedef int (*PFN_DRVVPOST_int_CALLBACK)(unsigned char*, unsigned int);
 extern void* g_VAFrameBuf;
 extern void* g_VAOrigFrameBuf;
 extern unsigned short POint_COLOR,BACK_COLOR;
-extern unsigned short __align(32) LCDOSDBuffer1[_LCD_HEIGHT][_LCD_WIDTH];
-extern unsigned short __align(32) LCDOSDBuffer2[_LCD_HEIGHT][_LCD_WIDTH];
-extern __align(32) unsigned short OSD_FrameRGB565[_LCD_HEIGHT*_LCD_WIDTH*2];
+extern DX_LCD_COLOR __align(32) LCDOSDBuffer1[_LCD_HEIGHT][_LCD_WIDTH];
+extern DX_LCD_COLOR __align(32) LCDOSDBuffer2[_LCD_HEIGHT][_LCD_WIDTH];
+extern __align(32) DX_LCD_COLOR OSD_FrameRGB565[_LCD_HEIGHT*_LCD_WIDTH];
 void systemInit(void);
 /*********************************************************/
 void vpostVAStartTrigger(void);
@@ -422,6 +422,7 @@ void vpostSetMPULCM_TimingConfig(volatile S_DRVVPOST_MPULCM_TIMING *psTiming);
 void vpostSetMPULCM_ImageWindow(volatile S_DRVVPOST_MPULCM_WINDOW *psWindow);
 void vpostSetYUVEndianSelect(E_DRVVPOST_ENDIAN eEndian);
 /*********************************************************/
+
 int vpostLCMInit_CENTRY(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf);
 int vpostLCMDeinit_CENTRY(void);
 void *vpostGetFrameBuffer(void);

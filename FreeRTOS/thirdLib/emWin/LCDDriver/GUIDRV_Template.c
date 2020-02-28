@@ -42,7 +42,7 @@ Purpose     : Template driver, could be used as starting point for new
 #include "w55fa93_vpost.h"
 //#include "lcd9341.h"
 
-extern unsigned short   *_VpostFrameBuffer;
+extern DX_LCD_COLOR  *_VpostFrameBuffer;
 /*********************************************************************
 *
 *       Defines
@@ -222,7 +222,7 @@ static void _FillRect(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1) {
 //  int x;
   UINT32  i,l,x,y;
 
-	 unsigned short *T_BT;
+	DX_LCD_COLOR *T_BT;
 	
   PixelIndex = LCD__GetColorIndex();
  if (GUI_pContext->DrawMode & LCD_DRAWMODE_XOR) 
@@ -513,7 +513,7 @@ static void _DrawBitLine16BPP(GUI_DEVICE * pDevice, int x, int y, U16 const * p,
 //  }
 	
 int i;
-unsigned short *T_BT ; 
+DX_LCD_COLOR *T_BT ; 
 	
 	T_BT = _VpostFrameBuffer+y*_LCD_WIDTH+x;
 	

@@ -322,7 +322,16 @@ void AVI_play(char *FilePath)
 
 			if(ParsingOldJPEG((unsigned char *)((unsigned int)g_pu8JpegBuffer | 0x80000000), Strsize, &u32Width, &u32Height, &u32Format, TRUE) == ERR_MODE){
 				sysprintf("\tNot Support the JPEG sampling\n");	
-		    		goto END_ERROR_FORMAT;
+				free(g_pu8JpegBuffer);
+				fsCloseFile(fil);
+				fsCloseFile(wrFile);
+				spuEqClose();	
+				spuClose();
+				sysprintf("Exit video play!\n");
+			//	vTaskDelay(5);
+				return ;
+				
+		    	//goto END_ERROR_FORMAT;
 			}
 
 			/* JPEG Init */
@@ -330,10 +339,12 @@ void AVI_play(char *FilePath)
 			
 			/* Set Bit stream Address */   
 			jpegIoctl(JPEG_IOCTL_SET_BITSTREAM_ADDR,(unsigned int) g_pu8JpegBuffer| 0x80000000, 0);	
-		          
+#if (LCD_BITS_MODE == 16)		          
 			/* Decode mode */	
 			jpegIoctl(JPEG_IOCTL_SET_DECODE_MODE, JPEG_DEC_PRIMARY_PACKET_RGB565, 0);	
-			
+#elif ((LCD_BITS_MODE == 18) || (LCD_BITS_MODE == 24)) 
+			jpegIoctl(JPEG_IOCTL_SET_DECODE_MODE, JPEG_DEC_PRIMARY_PACKET_RGB888, 0);	
+#endif			
 			/* Set JPEG Header Decode End Call Back Function */
 			jpegIoctl(JPEG_IOCTL_SET_HEADERDECODE_CALBACKFUN, (unsigned int) JpegOldDecHeaderComplete, 0);	
 			

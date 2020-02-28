@@ -6,7 +6,7 @@
 #include "w55fa93_vpost.h"
 
 #define RECT_TEST_STEP_SIZE 1
-extern volatile unsigned short   *_VpostFrameBuffer;
+extern volatile DX_LCD_COLOR   *_VpostFrameBuffer;
 
 void ClearFrameBuffer(void)
 {

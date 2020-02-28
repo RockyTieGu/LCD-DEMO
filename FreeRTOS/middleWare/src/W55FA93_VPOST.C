@@ -19,7 +19,7 @@ void * g_VAOrigFrameBuf = NULL;
 unsigned short POint_COLOR,BACK_COLOR;
 int g_VdmaCh = 0;
 static volatile BOOL g_bEdmaInt = FALSE;
-extern volatile unsigned short   *_VpostFrameBuffer;
+extern volatile DX_LCD_COLOR   *_VpostFrameBuffer;
 unsigned char	Font_Hspace=2;
 unsigned char	Font_Vspace=0;
 int	rsFil;
@@ -318,7 +318,7 @@ unsigned char  const fix_ascii[]=
 };
 int vpostLCMInit(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf)
 {
-	return vpost_LCMInit_CENTRY(plcdformatex, pFramebuf);
+	return vpostLCMInit_CENTRY(plcdformatex, pFramebuf);
 }
 
 int vpostLCMDeinit(void)
@@ -370,11 +370,11 @@ void LCDUpdateScreen(unsigned short	buff)
 	//taskENTER_CRITICAL();
 	g_VdmaCh = VDMA_FindandRequest();
 	EDMA_SetDirection(g_VdmaCh , eDRVEDMA_DIRECTION_INCREMENTED, eDRVEDMA_DIRECTION_INCREMENTED);
-	EDMA_SetupSingle(g_VdmaCh, src_addr, dest_addr, _LCD_WIDTH*_LCD_HEIGHT*2);
+	EDMA_SetupSingle(g_VdmaCh, src_addr, dest_addr, _LCD_WIDTH*_LCD_HEIGHT*sizeof(DX_LCD_COLOR));
 	EDMA_SetupHandlers(g_VdmaCh, eDRVEDMA_BLKD_FLAG, EdmaIrqHandler, 0);
 	EDMA_Trigger(g_VdmaCh);
 	#else
-	memcpy((UINT8 *)dest_addr, (UINT8 *)src_addr, _LCD_WIDTH*_LCD_HEIGHT*4);
+	memcpy((UINT8 *)dest_addr, (UINT8 *)src_addr, _LCD_WIDTH*_LCD_HEIGHT*sizeof(DX_LCD_COLOR));
 	#endif
 	//taskEXIT_CRITICAL();
 	sysprintf("8.0\n");
@@ -396,7 +396,7 @@ void LCDQuickUpdateScreen(unsigned short	buff)
 
 	g_VdmaCh = VDMA_FindandRequest();
 	EDMA_SetDirection(g_VdmaCh , eDRVEDMA_DIRECTION_INCREMENTED, eDRVEDMA_DIRECTION_INCREMENTED);
-	EDMA_SetupSingle(g_VdmaCh, src_addr, dest_addr, _LCD_WIDTH*_LCD_HEIGHT*2);
+	EDMA_SetupSingle(g_VdmaCh, src_addr, dest_addr, _LCD_WIDTH*_LCD_HEIGHT*sizeof(DX_LCD_COLOR));
 	EDMA_SetupHandlers(g_VdmaCh, eDRVEDMA_BLKD_FLAG, EdmaIrqHandler, 0);
 	EDMA_Trigger(g_VdmaCh);
 	//while(g_bEdmaInt == FALSE);	
@@ -1161,12 +1161,34 @@ void lcd_gay(void)
 {
 	UINT32 i,j;
 	UINT32 gapv;//, gaph;
-	UINT16 k;//,color;
+	UINT8 k;//,color;
 //	UINT16 colorBar_with ;
 	
 //	colorBar_with = _LCD_WIDTH/3;
 	
-	#if 1
+	#if (LCD_BITS_MODE == 18)
+		gapv = _LCD_HEIGHT/64;
+		for(i=0;i<_LCD_WIDTH;i++)////display  blue color
+	    {
+			k = i/gapv+1;
+			for(j=0;j<(_LCD_HEIGHT/3);j++)
+				LCDOSDBuffer1[j][i] = k;
+		}
+		gapv = _LCD_HEIGHT/64;
+		for(i=0;i<_LCD_WIDTH;i++)
+	    {
+			k = i/gapv+1;
+			for(j= (_LCD_HEIGHT/3);j < (_LCD_HEIGHT*2/3);j++)
+				LCDOSDBuffer1[j][i] = k << 8;
+		}
+		gapv = _LCD_HEIGHT/64;
+		for(i=0;i<_LCD_WIDTH;i++)	//display red color
+	    {
+			k = i/gapv+1;
+			for(j=_LCD_HEIGHT*2/3;j<_LCD_HEIGHT;j++)
+				LCDOSDBuffer1[j][i] = k << 16;
+		}
+	#elif (LCD_BITS_MODE == 16)
 		gapv = _LCD_HEIGHT/64;
 		for(i=0;i<_LCD_WIDTH;i++)
 	    {
@@ -1188,15 +1210,6 @@ void lcd_gay(void)
 			for(j=_LCD_HEIGHT*2/3;j<_LCD_HEIGHT;j++)
 				LCDOSDBuffer1[j][i] = k << 11;
 		}
-	#else
-		gapv = _LCD_WIDTH/32;
-		for(i=0;i<_LCD_WIDTH;i++)
-	    {
-			k = i/gapv+1;
-			for(j=0;j<_LCD_HEIGHT;j++)
-				LCDOSDBuffer1[j][i] = (k <<11)|(k<<5) | (k);
-		}
-
 	#endif
 
 //	LCDQuickUpdateScreen(BUFF0);	

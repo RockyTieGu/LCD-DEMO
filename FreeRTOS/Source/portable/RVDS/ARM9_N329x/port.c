@@ -248,7 +248,6 @@ void vPortEndScheduler( void )
 
 #endif
 /*-----------------------------------------------------------*/
-
 static void prvSetupTimerInterrupt( void )
 {
 uint32_t ulCompareMatch;
