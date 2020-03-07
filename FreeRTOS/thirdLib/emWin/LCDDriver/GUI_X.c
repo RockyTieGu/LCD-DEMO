@@ -167,7 +167,7 @@ void GUI_X_ExecIdle(void)
  
 unsigned long GUI_X_GetTaskId(void)
  { 
-	return 0;
+	//return 0;
 	return ((uint32_t)xTaskGetCurrentTaskHandle()); 	//获取任务ID
  }
  

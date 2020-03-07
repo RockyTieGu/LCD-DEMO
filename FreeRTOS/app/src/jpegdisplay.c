@@ -80,10 +80,10 @@ static int JpegGetData(void * p, const unsigned char ** ppData, unsigned NumByte
 		OS_CRITICAL_ENTER();	//进入临界区
 	#endif
 		
-	f_lseek(phFile,readaddress); 
+	//f_lseek(phFile,readaddress); 
 	
 	//读取数据到缓冲区中
-	f_read(phFile,jpegBuffer,NumBytesReq,&NumBytesRead);
+	//f_read(phFile,jpegBuffer,NumBytesReq,&NumBytesRead);
 	
 	#if SYSTEM_SUPPORT_OS
 		OS_CRITICAL_EXIT();//退出临界区

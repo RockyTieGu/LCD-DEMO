@@ -18,7 +18,7 @@
   
 CHAR g_u8String[100];
 unsigned int g_u32StringIndex;
-extern DX_LCD_COLOR  *_VpostFrameBuffer;
+extern volatile DX_LCD_COLOR  *_VpostFrameBuffer;
 extern __align(32) DX_LCD_COLOR LCDOSDBuffer1[_LCD_HEIGHT][_LCD_WIDTH];
 //unsigned short __align(32) JpgBuff[_LCD_HEIGHT][_LCD_WIDTH];
 //extern __align(32) unsigned short OSD_FrameRGB565[_LCD_HEIGHT*_LCD_WIDTH*2];
@@ -43,6 +43,7 @@ char JpegOldDecHeaderComplete(void)
 	if(jpegInfo.jpeg_width == 0 || jpegInfo.jpeg_height == 0)	
 		return FALSE;		
 	
+	//sysprintf("\tW:%d H:%d\n",jpegInfo.jpeg_width , jpegInfo.jpeg_height );	
 	if(1)
 	{
 				/* Allocate the Raw Data Buffer for Decode Operation */	
@@ -60,12 +61,12 @@ char JpegOldDecHeaderComplete(void)
 			u32FrameBuffer =  (UINT32)LCDOSDBuffer2 | 0x80000000;
 		else
 			u32FrameBuffer =  (UINT32)_VpostFrameBufferPool | 0x80000000;
-	//	sysprintf("\tThe decoded data starts from 0x%X, Size is 0x%X\n", u32FrameBuffer,u32BufferSize);	
+		sysprintf("\tThe decoded data starts from 0x%X, Size is 0x%X\n", u32FrameBuffer,u32BufferSize);	
 		/* DownScale size control */	 
 #if 1	
 		if(jpegInfo.jpeg_width > jpegInfo.jpeg_height)
 		{
-		//	sysprintf("1.0..\n");
+			sysprintf("1.0..\n");
 			if((jpegInfo.jpeg_width > PANEL_WIDTH || jpegInfo.jpeg_height > PANEL_HEIGHT))	
 			{
 	
@@ -73,14 +74,14 @@ char JpegOldDecHeaderComplete(void)
 				jpegIoctl(JPEG_IOCTL_SET_DECODE_DOWNSCALE, TARGET_HEIGHT, TARGET_WIDTH);
 				u32TargetHeight = TARGET_HEIGHT;
 				u32TargetWidth = TARGET_WIDTH;	
-				//sysprintf("2.0..ratio u32TargetHeight%d u32TargetWidth:%d \n",u32TargetHeight,u32TargetWidth);	
+				sysprintf("2.0..ratio u32TargetHeight%d u32TargetWidth:%d \n",u32TargetHeight,u32TargetWidth);	
 			}
 			else
 			{
 		
 				u32TargetHeight = jpegInfo.jpeg_height;
 				u32TargetWidth = jpegInfo.jpeg_width;		
-			//	sysprintf("3.0..ratio u32TargetHeight%d u32TargetWidth:%d \n",u32TargetHeight,u32TargetWidth);					
+				sysprintf("3.0..ratio u32TargetHeight%d u32TargetWidth:%d \n",u32TargetHeight,u32TargetWidth);					
 			}			 
 		}
 		else

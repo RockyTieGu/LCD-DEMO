@@ -26,7 +26,7 @@ extern unsigned int g_u32EncWidth, g_u32EncHeight;
 
 extern unsigned int g_u32DecFormat;
 
-extern unsigned char * g_pu8JpegBuffer;						/* The source bit stream data for decoding */
+extern volatile unsigned char * g_pu8JpegBuffer;						/* The source bit stream data for decoding */
 extern unsigned char * g_pu8DecFrameBuffer;					/* The buffer for decoding output */
 
         

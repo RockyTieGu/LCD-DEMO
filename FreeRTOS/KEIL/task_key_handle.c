@@ -13,7 +13,7 @@ void  Task6_Key_Fun (void *pvParameters)
 		key = boardKeyMSG_handle();
 		if(key)//按键被按下
 		{	
-			sysprintf("Task6_Key_Fun key:%d mainMenuIndex:%d \n", key,mainMenuIndex);
+		//	sysprintf("Task6_Key_Fun key:%d mainMenuIndex:%d \n", key,mainMenuIndex);
 			switch((char)mainMenuIndex) 
 			{
 				case MENU_IDLE:	

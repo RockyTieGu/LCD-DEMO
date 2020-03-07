@@ -148,49 +148,109 @@ void LCD_CELL_INIT()
 	SET_LCD_RST(1);
 	sysDelay(1000);//100ms
 
-	 SPI_WriteComm(0x0028);SPI_WriteData(0x00);SPI_WriteData(0x06); // set SS and SM bit
-	SPI_WriteComm(0x0000);SPI_WriteData(0x00);SPI_WriteData(0x01);// SPI_Write_Data(0x0001); // set 1 line inversion
-	SPI_WriteComm(0x0010);SPI_WriteData(0x00);SPI_WriteData(0x00); // set GRAM write direction and BGR=1.
-	SPI_WriteComm(0x0007);SPI_WriteData(0x00);SPI_WriteData(0x33); // Resize register
-	SPI_WriteComm(0x0011);SPI_WriteData(0x4e);SPI_WriteData(0x70); // set the back porch and front porch
-	SPI_WriteComm(0x0002);SPI_WriteData(0x06);SPI_WriteData(0x00); // RGB interface setting
-	SPI_WriteComm(0x0003);SPI_WriteData(0x6e);SPI_WriteData(0x68); // Frame marker Position  0x686a
 
-	SPI_WriteComm(0x0001);SPI_WriteData(0x72);SPI_WriteData(0xef); //72 RGB interface polarity      
-	SPI_WriteComm(0x0012);SPI_WriteData(0x09);SPI_WriteData(0x99);
-	SPI_WriteComm(0x0026);SPI_WriteData(0x38);SPI_WriteData(0x00);
+	//CMI3.47									
+	SPI_WriteComm(0x11); //Sleep Out				
+	sysDelay(300);						
+	SPI_WriteComm(0xB9); //SET password			
+	SPI_WriteData(0xFF);					
+	SPI_WriteData(0x83);					
+	SPI_WriteData(0x57);					
+	sysDelay(500);//50ms					
+	SPI_WriteComm(0xB1); //SETPower				
+	SPI_WriteData(0x00); //STB		
+	SPI_WriteData(0x16); //				
+	SPI_WriteData(0x1C); //VSPR = 4.41V			
+	SPI_WriteData(0x1C); //VSNR = -4.41V			
+	SPI_WriteData(0xC3); //AP 0xc3				
+	SPI_WriteData(0x5C); //FS 0x44					
+	sysDelay(500);//50ms	
 
+	SPI_WriteComm(0xB3);
+	SPI_WriteData(0x43);
+	SPI_WriteData(0x00);
+	SPI_WriteData(0x06);
+	SPI_WriteData(0x06);
+	sysDelay(500);//50ms		//VPL[5:0]
+						
+	SPI_WriteComm(0xB4); //SETCYC				
+	SPI_WriteData(0x32); //2-dot				
+	SPI_WriteData(0x40); //RTN					
+	SPI_WriteData(0x00); //DIV					
+	SPI_WriteData(0x2A); //N_DUM				
+	SPI_WriteData(0x2A); //I_DUM				
+	SPI_WriteData(0x0D); //GDON				
+	SPI_WriteData(0x78); //GDOFF				
+	sysDelay(500);//50ms				
+	SPI_WriteComm(0xB6); //VCOMDC				
+	SPI_WriteData(0x3c);				
+	sysDelay(500);//50ms	
+	SPI_WriteComm(0xB5);
+	SPI_WriteData(0x0B);//08
+	SPI_WriteData(0x0B);//08
+	sysDelay(500);//50ms					
+						
+	SPI_WriteComm(0xC0); //SETSTBA				
+	SPI_WriteData(0x70); //N_OPON				
+	SPI_WriteData(0x50); //I_OPON				
+	SPI_WriteData(0x01); //STBA				
+	SPI_WriteData(0x3C); //STBA				
+	SPI_WriteData(0xC8); //STBA				
+	SPI_WriteData(0x08); //GENON				
+	sysDelay(500);//50ms		
+	SPI_WriteComm(0xCC); //Set Panel		
+	SPI_WriteData(0x0B); 		
+	sysDelay(500);//50ms		
+	SPI_WriteComm(0xB6); //VCOMDC				
+	SPI_WriteData(0x40);  //0x40
 
-	//*************Power On sequence ****************
-	SPI_WriteComm(0x000c);SPI_WriteData(0x00);SPI_WriteData(0x05); // VDV[4:0] for VCOM amplitude
-	SPI_WriteComm(0x002a);SPI_WriteData(0x09);SPI_WriteData(0xd5);
-	SPI_WriteComm(0x000d);SPI_WriteData(0x00);SPI_WriteData(0x0a); // SAP);SPI_WriteData(BT[3:0]);SPI_WriteData(AP);SPI_WriteData(DSTB);SPI_WriteData(SLP);SPI_WriteData(STB
-	SPI_WriteComm(0x000e);SPI_WriteData(0x25);SPI_WriteData(0x00); // DC1[2:0]);SPI_WriteData(DC0[2:0]);SPI_WriteData(VC[2:0]    0X2100
-	SPI_WriteComm(0x001e);SPI_WriteData(0x00);SPI_WriteData(0xaf); // Internal reference voltage= Vci;
-	SPI_WriteComm(0x0015);SPI_WriteData(0x00);SPI_WriteData(0x58);
-
-
-
-	//--------------- Gamma control---------------//
-	SPI_WriteComm(0x0030);SPI_WriteData(0x00);SPI_WriteData(0x00); // GRAM horizontal Address
-	SPI_WriteComm(0x0031);SPI_WriteData(0x01);SPI_WriteData(0x01); // GRAM Vertical Address
-	SPI_WriteComm(0x0032);SPI_WriteData(0x01);SPI_WriteData(0x00);
-	SPI_WriteComm(0x0033);SPI_WriteData(0x03);SPI_WriteData(0x05);
-	SPI_WriteComm(0x0034);SPI_WriteData(0x07);SPI_WriteData(0x07);
-	SPI_WriteComm(0x0035);SPI_WriteData(0x03);SPI_WriteData(0x05);
-	SPI_WriteComm(0x0036);SPI_WriteData(0x07);SPI_WriteData(0x07);
-	SPI_WriteComm(0x0037);SPI_WriteData(0x02);SPI_WriteData(0x01);
-	SPI_WriteComm(0x003a);SPI_WriteData(0x12);SPI_WriteData(0x00);
-	SPI_WriteComm(0x003b);SPI_WriteData(0x09);SPI_WriteData(0x00);
-
-	 SPI_WriteComm(0x0044);SPI_WriteData(0xef);SPI_WriteData(0x00);	   //Vertical RAM address position	
-	SPI_WriteComm(0x0045);SPI_WriteData(0x00);SPI_WriteData(0x00);	   //Horizontal RAM address position
-	SPI_WriteComm(0x0046);SPI_WriteData(0x01);SPI_WriteData(0x3f);	   //VHorizontal RAM address position
-	SPI_WriteComm(0x004e);SPI_WriteData(0x00);SPI_WriteData(0x00);	   //Horizontal start position
-	SPI_WriteComm(0x004f);SPI_WriteData(0x00);SPI_WriteData(0x00);	   //VHorizontal start position
-	SPI_WriteComm(0x0022);	
+	SPI_WriteComm(0xE0); //Set Gamma		
+	SPI_WriteData(0x02);		
+	SPI_WriteData(0x0A);		
+	SPI_WriteData(0x10);		
+	SPI_WriteData(0x1A);		
+	SPI_WriteData(0x22);		
+	SPI_WriteData(0x34);		
+	SPI_WriteData(0x41);		
+	SPI_WriteData(0x4A);		
+	SPI_WriteData(0x4D);		
+	SPI_WriteData(0x44);		
+	SPI_WriteData(0x3A);		
+	SPI_WriteData(0x23);		
+	SPI_WriteData(0x19);		
+	SPI_WriteData(0x08);		
+	SPI_WriteData(0x09);		
+	SPI_WriteData(0x03);		
+	SPI_WriteData(0x02);		
+	SPI_WriteData(0x0A);		
+	SPI_WriteData(0x10);		
+	SPI_WriteData(0x1A);		
+	SPI_WriteData(0x22);		
+	SPI_WriteData(0x34);		
+	SPI_WriteData(0x41);		
+	SPI_WriteData(0x4A);		
+	SPI_WriteData(0x4D);		
+	SPI_WriteData(0x44);		
+	SPI_WriteData(0x3A);		
+	SPI_WriteData(0x23);		
+	SPI_WriteData(0x19);		
+	SPI_WriteData(0x08);		
+	SPI_WriteData(0x09);		
+	SPI_WriteData(0x03);		
+	SPI_WriteData(0x00);		
+	SPI_WriteData(0x01);		
+	sysDelay(50);//50ms		
+	SPI_WriteComm(0x3A); //COLMOD		
+	SPI_WriteData(0x66); //RGB888		
+	SPI_WriteComm(0xE9); //SETIMAGE		
+	SPI_WriteData(0x00); //DBbus24_EN=1		
+	sysDelay(500);//50ms		
+	SPI_WriteComm(0x29); //Display On		
+	sysDelay(500);//50ms		
+	SPI_WriteComm(0x2C); //Write SRAM Data		
 
 }
+
 /*
 
 PA2 SPI_CS

@@ -1,7 +1,7 @@
 #ifndef _XBF_FONT_H_H_
 #define _XBF_FONT_H_H_
-#include "GUIDEMO.h"
-
+//#include "GUIDEMO.h"
+#include "GUI.h"
 
 int _cbGetData(U32 Off, U16 NumBytes, void * pVoid, void * pBuffer);
 void _ShowXBF(void) ;

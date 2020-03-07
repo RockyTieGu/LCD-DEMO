@@ -5,7 +5,7 @@
 #include "nvtfat.h"
 #include "stdio.h"
 #include "string.h"
-#include "graph.h"
+//#include "graph.h"
 #include "GUI.h"
 
 static volatile PLAY_CTRL_E videoPlayStatus = PLAY_CTRL_STOP;
@@ -16,7 +16,7 @@ void videoPlay_BackGround(void)
 	
 	GUI_SetBkColor(GUI_BLUE);
 	GUI_Clear();
-	GUI_SetFont(GUI_FONT_20B_ASCII); //GUI_Font32B_1  
+	//GUI_SetFont(GUI_FONT_20B_ASCII); //GUI_Font32B_1  
 	GUI_SetColor(GUI_WHITE);
 	GUI_DrawLine(0,_LCD_HEIGHT/5, _LCD_WIDTH, _LCD_HEIGHT/5);
 	GUI_DrawLine(0,_LCD_HEIGHT*4/5, _LCD_WIDTH, _LCD_HEIGHT*4/5);
@@ -25,7 +25,7 @@ void videoPlay_BackGround(void)
 	GUI_SetColor(GUI_WHITE);
 	GUI_DispStringHCenterAt("NAND FLASH D:", _LCD_WIDTH/4 , _LCD_HEIGHT/5/3);
 	GUI_DispStringHCenterAt("MINI SD X:", _LCD_WIDTH*3/4 , _LCD_HEIGHT/5/3);
-	GUI_SetFont(GUI_FONT_24B_ASCII);
+//	GUI_SetFont(GUI_FONT_24B_ASCII);
 	GUI_DispStringHCenterAt("Video play", _LCD_WIDTH/2 , _LCD_HEIGHT*4/5 + 1);
 	GUI_UC_SetEncodeUTF8(); 
 	SetFont_Xbf();
@@ -65,9 +65,9 @@ static void startPlayMP4(char * audioFileName)
 	//char 		assicFilName[128];
 	
 	MP3Control_En();
-	GUI_SetBkColor(GUI_BLUE);								//…Ë÷√±≥æ∞—’…´ GUI_LIGHTBLUE
-	GUI_SetColor(GUI_WHITE);
-	GUI_SetFont(GUI_FONT_16_ASCII);
+	//GUI_SetBkColor(GUI_BLUE);								//…Ë÷√±≥æ∞—’…´ GUI_LIGHTBLUE
+//	GUI_SetColor(GUI_WHITE);
+	//GUI_SetFont(GUI_FONT_16_ASCII);
 	memset(suFileName,0,sizeof(suFileName));
 	if(VIDEO_FILE_LIST.diskMode == NANDFLASH_MODE)
 	{	
@@ -264,9 +264,10 @@ void Task_Play_Video(void *p_arg)
 			videoPlayStatus = PLAY_CTRL_SPEED;
 			UpdateMusicPlayStatus(musicPlayStatus, TRUE);
 			startPlayMP4(RxFileName);
-	
+			sysprintf("exit 1\r\n");
 			videoPlayStatus = PLAY_CTRL_STOP;
 			UpdateMusicPlayStatus(musicPlayStatus, TRUE);
+			sysprintf("exit 2\r\n");;
 			vTaskDelay(50);
 		}
 	}

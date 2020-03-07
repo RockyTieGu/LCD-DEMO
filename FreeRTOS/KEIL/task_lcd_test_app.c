@@ -1,7 +1,7 @@
 #include "task_lcd_test_app.h"
 #include "w55fa93_vpost.h"
 #include "jpegSample.h"
-#include "graph.h"
+//#include "graph.h"
 #include "GUI.h"
 
 #define MAX_PHOTO_NUM	(14)
@@ -77,12 +77,14 @@ void TestPhoto_Dealkey(unsigned short input)
 			sysprintf("OK curphoto:0x%x\n", curphoto);
 			break;
 		case BUTTON_RETURN:
-			//	OSTaskSuspend(APP_PLAY_MUSIC_PRIORITY);//挂起音乐播放
-			//	OSTaskSuspend(APP_LCD_TEST_PRIORITY);//挂起LCD测试播放
-			//	OSTaskSuspend(APP_PLAY_VIDEO_PRIORITY);//挂起视频播放
-			//	OSTaskSuspend(APP_DEMO_PROGRAM_PRIORITY);//挂起DEMO程序播放
-				DrawMenu(cur_item);
+				vTaskResume(Task3PlayMusic_Handler);
+				vTaskResume(Task3PlayMusicContrl_Handler);
+				vTaskResume(Task4PlayVideoContrl_Handler);
+				vTaskResume(Task4PlayVideo_Handler);
 				mainMenuIndex = MENU_IDLE;
+				sysprintf("lcd display \r\n");
+				DrawMenu(cur_item);
+				
 			//	OSTaskResume(APP_MAIN_MENU_PRIORITY);//唤醒主界面显示
 			//	OSTaskSuspend(APP_LCD_TEST_PRIORITY);//挂起LCD测试播放
 			sysprintf("return curphoto:0x%x\n", curphoto);
@@ -102,10 +104,12 @@ void Task2_LCD_Test(void *pvParameters)
 		{
 			if(xQueueReceive(LcdTestMenu_Key_Queue,&key,portMAX_DELAY))
 			{
+			//	sysprintf("Task2_LCD_Testkey:%d\r\n",key);
 				TestPhoto_Dealkey(key);
 			}
+			vTaskDelay(100);
 		}
-		vTaskDelay(50);
+		
 	}
 }
 

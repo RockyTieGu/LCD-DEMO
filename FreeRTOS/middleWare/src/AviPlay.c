@@ -29,7 +29,7 @@ unsigned int  Strsize;
 unsigned short  Strtype;
 unsigned int  Audsize;
 unsigned char   buffer_switch=1;
-unsigned char   finish=0;
+volatile unsigned char   finish=0;
 //#define FLASH_VIDEO_ADDR 0
 static unsigned char audioBuff[4][1024*80+8];
 volatile int curPost = 0;
@@ -307,13 +307,21 @@ void AVI_play(char *FilePath)
 	if(Strsize%2)Strsize++;//奇数加1		
 	addr =(mid+12);
 	finish=0;
+	//if(g_pu8JpegBuffer )
+	//	free((unsigned char *)g_pu8JpegBuffer);
 	g_pu8JpegBuffer = (unsigned char *)malloc(sizeof(CHAR) * Strsize);
+	if(g_pu8JpegBuffer == NULL)
+	{
+		sysprintf("AVI malloc merrory fail!\n");
+		return ;
+	}
 	sysprintf("video Play start!\n");
 	setBufferType = VPOST;
 #if LS_OPEN_SOUND_SWITCH	
 	spuStartPlay((PFN_DRVSPU_CB_FUNC *) playCallBack, (UINT8 *)audioBuff[0]);
 #endif
-	while(!finish){		
+	while(!finish)
+	{		
 		if(Strtype==T_vids)
 		{//显示帧
 			fsFileSeek(fil, addr, SEEK_SET);
@@ -322,37 +330,39 @@ void AVI_play(char *FilePath)
 
 			if(ParsingOldJPEG((unsigned char *)((unsigned int)g_pu8JpegBuffer | 0x80000000), Strsize, &u32Width, &u32Height, &u32Format, TRUE) == ERR_MODE){
 				sysprintf("\tNot Support the JPEG sampling\n");	
-				free(g_pu8JpegBuffer);
-				fsCloseFile(fil);
-				fsCloseFile(wrFile);
-				spuEqClose();	
-				spuClose();
-				sysprintf("Exit video play!\n");
-			//	vTaskDelay(5);
-				return ;
+//				free(g_pu8JpegBuffer);
+//				fsCloseFile(fil);
+//				fsCloseFile(wrFile);
+//				spuEqClose();	
+//				spuClose();
+//				sysprintf("Exit video play!\n");
+//			//	vTaskDelay(5);
+//				return ;
 				
-		    	//goto END_ERROR_FORMAT;
+		    	goto END_ERROR_FORMAT;
 			}
 
-			/* JPEG Init */
+			// JPEG Init
 			jpegInit();
 			
-			/* Set Bit stream Address */   
+			// Set Bit stream Address  
 			jpegIoctl(JPEG_IOCTL_SET_BITSTREAM_ADDR,(unsigned int) g_pu8JpegBuffer| 0x80000000, 0);	
 #if (LCD_BITS_MODE == 16)		          
-			/* Decode mode */	
+			// Decode mode 	
 			jpegIoctl(JPEG_IOCTL_SET_DECODE_MODE, JPEG_DEC_PRIMARY_PACKET_RGB565, 0);	
 #elif ((LCD_BITS_MODE == 18) || (LCD_BITS_MODE == 24)) 
 			jpegIoctl(JPEG_IOCTL_SET_DECODE_MODE, JPEG_DEC_PRIMARY_PACKET_RGB888, 0);	
 #endif			
-			/* Set JPEG Header Decode End Call Back Function */
+			// Set JPEG Header Decode End Call Back Function
 			jpegIoctl(JPEG_IOCTL_SET_HEADERDECODE_CALBACKFUN, (unsigned int) JpegOldDecHeaderComplete, 0);	
 			
-			/* Trigger JPEG decoder */
+			// Trigger JPEG decoder
 			jpegIoctl(JPEG_IOCTL_DECODE_TRIGGER, 0, 0);  
 		        
-			/* Wait for complete */
-			jpegWait();
+			// Wait for complete
+			res = jpegWait();
+			if(res == E_FAIL)
+				sysprintf("E_FAIL \r\n");
 	//		sysGetChar();
 		}//显示帧
 		else if(Strtype==T_auds)
@@ -417,13 +427,15 @@ END_ERROR_FORMAT:
 		Strsize=MAKEDWORD(Dbuf+4);//流大小	
 		if(Strsize%2)Strsize++;//奇数加1
 		if(addr>=fileSize)finish=1;
+		//sysprintf("addr:%d filesize:%d finish:%d\r\n", addr,fileSize,finish);
 	}
-	free(g_pu8JpegBuffer);
+	free((unsigned char *)g_pu8JpegBuffer);
 	fsCloseFile(fil);
 	fsCloseFile(wrFile);
 	spuEqClose();	
 	spuClose();
 	sysprintf("video Play end!\n");
+	//while(1);
 }
 #endif
 #endif

@@ -10,6 +10,7 @@
 #include "jpegSample.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "GUI_X.h"
 
 extern CHAR g_u8String[100];
 extern unsigned int g_u32StringIndex;
@@ -21,7 +22,7 @@ unsigned int g_u32DecFormat = JPEG_DEC_PRIMARY_PACKET_RGB565;			/* Decode Output
 unsigned int g_u32DecFormat = JPEG_DEC_PRIMARY_PACKET_RGB888;			/* Decode Output format */
 #endif
 
-unsigned char *g_pu8JpegBuffer;											/* The source bit stream data for decoding */
+volatile unsigned char *g_pu8JpegBuffer;											/* The source bit stream data for decoding */
    
 /*-----------------------------------------------------------------------*/
 /*  Decode Input Wait parameter				                             */
@@ -43,7 +44,7 @@ unsigned int g_u32OpwBufferIndex = 0;									/* Decode output Buffer index */
 /*-----------------------------------------------------------------------*/  
 int nReadLen;
 extern DX_LCD_COLOR __align(32) JpgBuff[_LCD_HEIGHT][_LCD_WIDTH];
-extern DX_LCD_COLOR   *_VpostFrameBuffer;
+extern volatile DX_LCD_COLOR   *_VpostFrameBuffer;
 extern volatile LCD_BUFFER setBufferType;
 
 //extern __align(32) unsigned short OSD_FrameRGB565[_LCD_HEIGHT*_LCD_WIDTH*2];
@@ -89,15 +90,15 @@ END_ERROR_FORMAT:
 int JpegDecTest (char *filestr, LCD_BUFFER mode)
 {	
 	unsigned int u32BitstreamSize;
-	int nStatus, nReadLen;
+	int nStatus/*, nReadLen*/;
 	int hFile=0;
 	CHAR	suFileName[100];	
 		
 /*******************************************************************/	
 /* 							Read JPEG file						   */
-/*******************************************************************/			
+/*******************************************************************/		
+	//GUI_X_Lock();	
 	strcpy(decodePath, filestr);
-	
 	fsAsciiToUnicode(decodePath, suFileName, TRUE);
 	
 	hFile = fsOpenFile(suFileName, NULL, O_RDONLY);
@@ -112,6 +113,11 @@ int JpegDecTest (char *filestr, LCD_BUFFER mode)
 	sysprintf("\tBit stream  size for Decode is %d\n", u32BitstreamSize);
 	/* Allocate the Bitstream Data Buffer for Decode Operation */	
 	g_pu8JpegBuffer = (unsigned char *)malloc(sizeof(CHAR) * u32BitstreamSize);
+	if(g_pu8JpegBuffer == NULL)
+	{
+		sysprintf("\t Malloc fail for jpeg dec!\n");
+		return 0;
+	}
     sysprintf("g_pu8JpegBuffer address:0x%x\n", g_pu8JpegBuffer);
 
 	nStatus = fsReadFile(hFile, (unsigned char *)((unsigned int)g_pu8JpegBuffer | 0x80000000), u32BitstreamSize, &nReadLen);
@@ -122,8 +128,9 @@ int JpegDecTest (char *filestr, LCD_BUFFER mode)
 	setBufferType = mode;
 	JpegDec();
 	free(g_pu8JpegBuffer);
+	g_pu8JpegBuffer = NULL;
 	sysprintf("½âÂëÍê³É!\n");
-	
+	//GUI_X_Unlock();
 	return 1;
 }
 

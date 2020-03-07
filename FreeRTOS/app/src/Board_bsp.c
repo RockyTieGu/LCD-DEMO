@@ -33,7 +33,7 @@ __align(32) DX_LCD_COLOR LCDOSDBuffer1[_LCD_HEIGHT][_LCD_WIDTH];
 __align(32) DX_LCD_COLOR LCDOSDBuffer2[_LCD_HEIGHT][_LCD_WIDTH];
 __align(32) DX_LCD_COLOR OSD_FrameRGB565[_LCD_HEIGHT*_LCD_WIDTH];
 extern __align(256) unsigned char  _VpostFrameBufferPool[VPOST_FRAME_BUFSZ];
-extern DX_LCD_COLOR   *_VpostFrameBuffer;
+extern volatile DX_LCD_COLOR   *_VpostFrameBuffer;
 void systemInit(void)
 {	
 	WB_UART_T uart;

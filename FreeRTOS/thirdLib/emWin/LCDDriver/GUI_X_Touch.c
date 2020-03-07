@@ -13,7 +13,7 @@ void GUI_TOUCH_X_ActivateY(void) {
 
 int  GUI_TOUCH_X_MeasureX(void) {
 	
-	c=adc_read(ADC_BLOCK, &x, &y);
+	//c=adc_read(ADC_BLOCK, &x, &y);
 	if(c)
 	{
 		return x;

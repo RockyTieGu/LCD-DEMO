@@ -235,13 +235,17 @@ void Select_File(FILE_LIST *typeFileList )
 	sysprintf("nandflash:%d sd:%d\r\n",typeFileList->nandflash_audio_file_num, typeFileList->sd_audio_file_num);
 	if (selectMode == IDLE_MODE)
 	{
-		GUI_SetBkColor(GUI_BLUE);								//设置背景颜色 GUI_LIGHTBLUE
-		GUI_ClearRect(0, _LCD_HEIGHT/5 + 1, _LCD_WIDTH/2 - 1, _LCD_HEIGHT*4/5 - 1);	 //清除Nanflash音频文件显示区域
-		GUI_ClearRect(_LCD_WIDTH/2+1, _LCD_HEIGHT/5 + 1, _LCD_WIDTH, _LCD_HEIGHT*4/5-1);//清除SD卡音频文件显示区域
+		GUI_SetBkColor(GUI_BLUE);	//		 GUI_BLUE					//设置背景颜色 GUI_LIGHTBLUE
+	
+		GUI_ClearRect(0, _LCD_HEIGHT/5 + 1, _LCD_WIDTH/2-2, _LCD_HEIGHT*4/5 - 1);	 //清除Nanflash音频文件显示区域
+			
+		GUI_ClearRect(_LCD_WIDTH/2, _LCD_HEIGHT/5 + 1, _LCD_WIDTH, _LCD_HEIGHT*4/5-1);//清除SD卡音频文件显示区域
 		GUI_SetColor(GUI_WHITE);
 	//	GUI_SetFont(GUI_FONT_24B_ASCII);
+	//	GUI_SetFont(&GUI_Font24_ASCII);
 		GUI_UC_SetEncodeUTF8(); 
 		SetFont_Xbf();
+	
 		if(typeFileList->nandflash_audio_file_num == 0)
 			GUI_DispStringHCenterAt("No audio file found!",_LCD_WIDTH/4 ,_LCD_HEIGHT/2);
 		if(typeFileList->sd_audio_file_num == 0)
@@ -321,9 +325,10 @@ void Select_File(FILE_LIST *typeFileList )
 			GUI_SetBkColor(GUI_LIGHTBLUE);
 			GUI_SetColor(GUI_WHITE);
 	//		GUI_SetFont(GUI_FONT_24B_ASCII);
+			//GUI_SetFont(&GUI_Font24_ASCII);
 			GUI_UC_SetEncodeUTF8(); 
 			SetFont_Xbf();
-			GUI_ClearRect(0, _LCD_HEIGHT/5 + 1, _LCD_WIDTH/2 - 1, _LCD_HEIGHT*4/5 - 1);	 			//清除Nanflash音频文件显示区域
+			GUI_ClearRect(0, _LCD_HEIGHT/5 + 1, _LCD_WIDTH/2 - 2, _LCD_HEIGHT*4/5 - 1);	 			//清除Nanflash音频文件显示区域
 			
 			if(typeFileList->nandflash_audio_file_num == 0)
 			GUI_DispStringHCenterAt("No  file found!",_LCD_WIDTH/4 ,_LCD_HEIGHT/2);
@@ -358,6 +363,7 @@ void Select_File(FILE_LIST *typeFileList )
 			GUI_SetBkColor(GUI_BLUE);
 			GUI_SetColor(GUI_WHITE);
 //			GUI_SetFont(GUI_FONT_24B_ASCII);
+		//	GUI_SetFont(&GUI_Font24_ASCII);
 			GUI_ClearRect(_LCD_WIDTH/2+1, _LCD_HEIGHT/5 + 1, _LCD_WIDTH, _LCD_HEIGHT*4/5-1);//清除SD卡音频文件显示区域
 			GUI_ClearRect(0, _LCD_HEIGHT*4/5 + 1, _LCD_WIDTH, _LCD_HEIGHT*4/5 + 24);	 //清除正在播放音乐背景
 			if(typeFileList->sd_audio_file_num == 0)
@@ -402,9 +408,10 @@ void Select_File(FILE_LIST *typeFileList )
 			GUI_SetBkColor(GUI_BLUE);
 			GUI_SetColor(GUI_WHITE);
 //			GUI_SetFont(GUI_FONT_24B_ASCII);
+		//	GUI_SetFont(&GUI_Font24_ASCII);
 			GUI_UC_SetEncodeUTF8(); 
 			SetFont_Xbf();
-			GUI_ClearRect(0, _LCD_HEIGHT/5 + 1, _LCD_WIDTH/2 - 1, _LCD_HEIGHT*4/5 - 1);	 //清除Nanflash音频文件显示区域
+			GUI_ClearRect(0, _LCD_HEIGHT/5 + 1, _LCD_WIDTH/2 - 2, _LCD_HEIGHT*4/5 - 1);	 //清除Nanflash音频文件显示区域
 			GUI_ClearRect(0, _LCD_HEIGHT*4/5 + 1, _LCD_WIDTH, _LCD_HEIGHT*4/5 + 24);	 //清除正在播放音乐背景
 			if(typeFileList->nandflash_audio_file_num == 0)
 			GUI_DispStringHCenterAt("No  file found!",_LCD_WIDTH/4 ,_LCD_HEIGHT/2);
@@ -439,6 +446,7 @@ void Select_File(FILE_LIST *typeFileList )
 			GUI_SetBkColor(GUI_LIGHTBLUE);//GUI_BLUE
 			GUI_SetColor(GUI_WHITE);
 			//GUI_SetFont(GUI_FONT_24B_ASCII);
+		//	GUI_SetFont(&GUI_Font24_ASCII);
 			GUI_ClearRect(_LCD_WIDTH/2+1, _LCD_HEIGHT/5 + 1, _LCD_WIDTH, _LCD_HEIGHT*4/5-1);//清除SD卡音频文件显示区域
 			if(typeFileList->sd_audio_file_num == 0)
 				GUI_DispStringHCenterAt("No  file found!",_LCD_WIDTH*3/4 ,_LCD_HEIGHT/2);

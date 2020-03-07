@@ -41,8 +41,9 @@ Purpose     : Template driver, could be used as starting point for new
 #include "wbtypes.h"
 #include "w55fa93_vpost.h"
 //#include "lcd9341.h"
-
-extern DX_LCD_COLOR  *_VpostFrameBuffer;
+#include "FreeRTOS.h"
+#include "task.h"
+extern volatile DX_LCD_COLOR  *_VpostFrameBuffer;
 /*********************************************************************
 *
 *       Defines
@@ -220,31 +221,34 @@ static void _XorPixel(GUI_DEVICE * pDevice, int x, int y) {
 static void _FillRect(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1) {
   LCD_PIXELINDEX PixelIndex;
 //  int x;
-  UINT32  i,l,x,y;
-
-	DX_LCD_COLOR *T_BT;
+  volatile UINT32  i,l,x,y;
+  static volatile DX_LCD_COLOR *T_BT;
 	
-  PixelIndex = LCD__GetColorIndex();
- if (GUI_pContext->DrawMode & LCD_DRAWMODE_XOR) 
+	sysprintf("hello Enter\r\n");
+	taskEXIT_CRITICAL();	
+	PixelIndex = LCD__GetColorIndex();
+	if (GUI_pContext->DrawMode & LCD_DRAWMODE_XOR) 
+	{
+	   for (; y0 <= y1; y0++) {
+		 for (x = x0; x <= x1; x++) {
+		   _XorPixel(pDevice, x, y0);
+		 }
+	   }
+	 } 
+	 else 
 	 {
-   for (; y0 <= y1; y0++) {
-     for (x = x0; x <= x1; x++) {
-       _XorPixel(pDevice, x, y0);
-     }
-   }
- } 
- else 
- {
 
 		 y=(y1-y0)+1;
 		 x=(x1-x0)+1;
 	 
-				 for(i=0;i<y;i++)
-	       {			
-					 T_BT=(_VpostFrameBuffer+(y0+i)*_LCD_WIDTH+x0); 
-						for(l=0;l<x;l++)*(T_BT+l)= PixelIndex;						 
-				 }
-}
+		for(i=0;i<y;i++)
+		{			
+		 T_BT=(_VpostFrameBuffer+(y0+i)*_LCD_WIDTH+x0); 
+			for(l=0;l<x;l++)*(T_BT+l)= PixelIndex;						 
+		}
+	}
+ taskEXIT_CRITICAL();
+	sysprintf("hello Exit\r\n");
 }
 
 /*********************************************************************
@@ -512,15 +516,16 @@ static void _DrawBitLine16BPP(GUI_DEVICE * pDevice, int x, int y, U16 const * p,
 //    _SetPixelIndex(pDevice, x, y, *p++);
 //  }
 	
-int i;
-DX_LCD_COLOR *T_BT ; 
+	int i;
+	DX_LCD_COLOR *T_BT ; 
 	
+	taskENTER_CRITICAL();
 	T_BT = _VpostFrameBuffer+y*_LCD_WIDTH+x;
 	
 	  for (i=0;i<xsize;i++)
 				*(T_BT+i) = *p++;			   //连续写入图片数据	  
 	
-	
+	taskEXIT_CRITICAL();
 }
 
 /*********************************************************************

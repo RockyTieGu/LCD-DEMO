@@ -166,13 +166,9 @@ int main( void )
 	//WM_SetCreateFlags(WM_CF_MEMDEV); //开启STemWin多缓冲,RGB屏可能会用到
 	GUI_Init();
 //	WM_MULTIBUF_Enable(1);  		//开启STemWin多缓冲,RGB屏可能会用到
-//	sysStopTimer(TIMER0);			//只开启定时器1,关闭定时器0，减小定时器对任务切换影响。只有在用到定时器再打开相应的定时器。
-//	sysSetTimerReferenceClock (TIMER0, 12000000);
-//	sysStartTimer(TIMER0, 5000, PERIODIC_MODE);
-//	BackLightAdj(50);
-//	lcd_gay();
-//	LCDUpdateScreen(BUFF0);
-//	while(1);
+	sysStopTimer(TIMER0);			//只开启定时器1,关闭定时器0，减小定时器对任务切换影响。只有在用到定时器再打开相应的定时器。
+	sysSetTimerReferenceClock (TIMER0, 12000000);
+	sysStartTimer(TIMER0, 5000, PERIODIC_MODE);
 	sysprintf("start the FreeRTOS demo\n");
 	Task_Create();
 	/* Start the demo/test application tasks. */

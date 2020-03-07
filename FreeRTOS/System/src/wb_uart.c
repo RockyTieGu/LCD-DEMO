@@ -23,7 +23,8 @@
 #include <string.h>
 #include <stdio.h>
 #include "wblib.h"
-
+#include "FreeRTOS.h"
+#include "task.h"
 #ifdef	__HW_SIM__
 #undef 	REG_UART_THR                       
 #define	REG_UART_THR  	(0xFFF04400)		// TUBE ON
@@ -660,7 +661,7 @@ VOID sysprintf(PINT8 pcStr,...)
 		uart.uiRxTriggerLevel = LEVEL_1_BYTE;
 		sysInitializeUART(&uart);
 	}
-
+//	taskENTER_CRITICAL();
 	vaStart(argP, pcStr);       /* point at the end of the format string */
 	while (*pcStr)
 	{                       /* this works because args are all ints */
@@ -669,6 +670,7 @@ VOID sysprintf(PINT8 pcStr,...)
 		else
 		    	_PutChar_f(*pcStr++);
 	}
+	//taskEXIT_CRITICAL();
 }
 
 

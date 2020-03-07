@@ -5,9 +5,8 @@
 #include "w55fa93_vpost.h"
 #include "jpegSample.h"
 #include "xbf_font.h"
-#include "graph.h"
 #include "GUI.h"
-
+#include "GUIDEMO.h"
 volatile char cur_item = 0;
 void DrawMenu(char n)
 {
@@ -18,39 +17,43 @@ void DrawMenu(char n)
 	start_x = _LCD_WIDTH/4;
 	start_y = _LCD_HEIGHT/4;
 	
-	//GUI_SetColor(GUI_BLUE);
 	GUI_SetBkColor(GUI_WHITE);
-	//GUI_Clear();
 	JpegDecTest(MAIN_PAGE_BACKGROUND_PICTURE_PATH, BUFF0);
 	LCDUpdateScreen(BUFF0);
-	
+	sysprintf("DrawMenu start! 1\r\n");
+	GUI_SetColor(GUI_BLUE);
+
+	sysprintf("DrawMenu start! 2\r\n");
+	//GUI_Clear();
+	sysprintf("DrawMenu start!4\r\n");
 	for(i = 0; i < 4; i++)
 	{	start_x =  _LCD_WIDTH/6 + _LCD_WIDTH/2 *(i%2);
 		start_y = _LCD_HEIGHT/6 + _LCD_HEIGHT/2 *(i/2);
 		if(i != n)
 		{
 			GUI_SetColor(GUI_LIGHTRED);
-			GUI_FillRoundedRect( start_x, start_y, start_x + _LCD_WIDTH/6, start_y +  _LCD_HEIGHT/6, 10);
+			GUI_FillRect( start_x, start_y, start_x + _LCD_WIDTH/6, start_y +  _LCD_HEIGHT/6);
 			GUI_SetColor(GUI_WHITE);
-			GUI_FillRoundedRect( start_x+10, start_y+10, start_x + _LCD_WIDTH/6 - 10, start_y+ _LCD_HEIGHT/6 -10 , 10);
+			GUI_FillRect( start_x+10, start_y+10, start_x + _LCD_WIDTH/6 - 10, start_y+ _LCD_HEIGHT/6 -10);
 		
 			GUI_SetColor(GUI_BLUE);
-			GUI_SetFont(GUI_FONT_10S_ASCII); //GUI_FONT_20B_ASCII
+	//		GUI_SetFont(GUI_FONT_10S_ASCII); //GUI_FONT_20B_ASCII
 			//GUI_DispStringAt(menuName[i],start_x+20,start_y + 40);
 			GUI_DispStringHCenterAt(menuName[i], start_x + _LCD_WIDTH/12 , start_y + _LCD_HEIGHT/12);
 		}else
 		{
 			GUI_SetColor(GUI_DARKRED);
-			GUI_FillRoundedRect( start_x, start_y, start_x + _LCD_WIDTH/6, start_y +  _LCD_HEIGHT/6, 10);;
+			GUI_FillRect( start_x, start_y, start_x + _LCD_WIDTH/6, start_y +  _LCD_HEIGHT/6);;
 			GUI_SetColor(GUI_WHITE);
-			GUI_FillRoundedRect( start_x+10, start_y+10, start_x + _LCD_WIDTH/6 - 10, start_y+ _LCD_HEIGHT/6 -10 , 10);
+			GUI_FillRect( start_x+10, start_y+10, start_x + _LCD_WIDTH/6 - 10, start_y+ _LCD_HEIGHT/6 -10 );
 		
 			GUI_SetColor(GUI_BLUE);
-			GUI_SetFont(GUI_FONT_10S_ASCII); //GUI_FONT_24B_ASCII
+			//GUI_SetFont(GUI_FONT_10S_ASCII); //GUI_FONT_24B_ASCII
 		//	GUI_DispStringAt(menuName[i],start_x+20,start_y + 40);
 			GUI_DispStringHCenterAt(menuName[i], start_x + _LCD_WIDTH/12 , start_y + _LCD_HEIGHT/12);
 		}
 	}
+	sysprintf("DrawMenu end!\r\n");
 }
 
 static void Menu_Dealkey(unsigned short input)
@@ -75,8 +78,15 @@ static void Menu_Dealkey(unsigned short input)
 			sysprintf("BUTTON_OK curphoto:0x%x\n", cur_item);
 			if(cur_item == 0)
 			{
+				//vTaskSuspend(Task2LCDTest_Handler);
+				vTaskSuspend(Task3PlayMusic_Handler);
+				vTaskSuspend(Task3PlayMusicContrl_Handler);
+				vTaskSuspend(Task4PlayVideoContrl_Handler);
+				vTaskSuspend(Task4PlayVideo_Handler);
 				mainMenuIndex = MENU_LCD_TEST;
 				Test_LCDMENU(0);
+				//vTaskResume(Task2LCDTest_Handler);
+
 				sysprintf("LCD TEST\r\n");
 			}else if(cur_item == 1)
 			{
@@ -136,7 +146,8 @@ static void Menu_Dealkey(unsigned short input)
 				vTaskSuspend(Task3PlayMusicContrl_Handler);
 				vTaskSuspend(Task4PlayVideoContrl_Handler);
 				vTaskSuspend(Task4PlayVideo_Handler);
-				GUIDEMO_Main();
+				//GUIDEMO_Main();
+				MainTask();
 				vTaskResume(Task2LCDTest_Handler);
 				vTaskResume(Task3PlayMusic_Handler);
 				vTaskResume(Task3PlayMusicContrl_Handler);

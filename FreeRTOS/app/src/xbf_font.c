@@ -11,7 +11,8 @@
 1.emwin 所用得的字库文件是UTF-8格式的，而KIEL5 文本是用GB2312码。因此在使用emwin 字库接口函数，应该转化
 */
 static INT  handle;
-GUI_XBF_DATA XBF_Data;
+//GUI_XBF_DATA XBF_Data;
+INT XBF_Data;
 GUI_FONT     XBF_Font;
 INT bw;
 #define SIF_Font_song20 &XBF_Font

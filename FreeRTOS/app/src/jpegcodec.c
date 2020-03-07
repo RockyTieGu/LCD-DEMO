@@ -332,7 +332,12 @@ INT jpegWait(VOID)
 	while(1)
 	{
 		if(g_bWait == FALSE)
-			break;
+		{
+			
+	;	//	sysDelay(3);
+		
+		break;
+			}
 	}
 	
 	if(g_jpegError)
@@ -411,7 +416,7 @@ INT jpegOpen(VOID)
 	}
 	outp32(REG_CLKDIV4, (inp32(REG_CLKDIV4) & ~JPG_N) | ((u32JPGDiv & 0x7) << 24));
 
-	sysInstallISR(IRQ_LEVEL_3, IRQ_JPG, (PVOID)jpegISR);	
+	sysInstallISR(IRQ_LEVEL_1, IRQ_JPG, (PVOID)jpegISR);	
 	sysSetLocalInterrupt(ENABLE_IRQ);
 	sysEnableInterrupt(IRQ_JPG);
 			
