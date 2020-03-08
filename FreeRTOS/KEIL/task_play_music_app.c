@@ -52,7 +52,7 @@ void UpdateMusicPlayStatus(PLAY_CTRL_E status, BOOL updateFlag)
 	GUI_SetColor(GUI_WHITE);
 	GUI_SetFont(GUI_FONT_16_ASCII);//GUI_FONT_24B_ASCII
 	
-	taskENTER_CRITICAL();
+	//taskENTER_CRITICAL();
 	if(updateFlag == TRUE)
 		GUI_ClearRect(_LCD_WIDTH/4, _LCD_HEIGHT*4/5 + 24, _LCD_WIDTH*3/4, _LCD_HEIGHT);//清除SD卡音频文件显示区域
 	
@@ -64,7 +64,7 @@ void UpdateMusicPlayStatus(PLAY_CTRL_E status, BOOL updateFlag)
 		GUI_DispStringHCenterAt("Play  STOP\r\n",_LCD_WIDTH/2,_LCD_HEIGHT*4/5 + _LCD_HEIGHT/10);
 	else if(status == PLAY_CTRL_SPEED)
 		GUI_DispStringHCenterAt("Play  START\r\n",_LCD_WIDTH/2,_LCD_HEIGHT*4/5 + _LCD_HEIGHT/10);
-	taskEXIT_CRITICAL() ;
+	//taskEXIT_CRITICAL() ;
 }
 
 void  mp3_play_callback(MV_CFG_T *ptMvCfg)
@@ -76,7 +76,7 @@ void  mp3_play_callback(MV_CFG_T *ptMvCfg)
 	
 	mflGetMovieInfo(ptMvCfg, &ptMvInfo);
 
-	if ((sysGetTicks(TIMER0) - last_time > 500) &&
+	if ((sysGetTicks(TIMER0) - last_time >250) &&
 		ptMvInfo->uAuTotalFrames)
 	{
 		memset(buffer, 0 , sizeof(buffer));
@@ -88,8 +88,8 @@ void  mp3_play_callback(MV_CFG_T *ptMvCfg)
 					ptMvInfo->uPlayCurTimePos / 6000, (ptMvInfo->uPlayCurTimePos / 100) % 60,
 					ptMvInfo->uMovieLength / 6000, (ptMvInfo->uMovieLength / 100) % 60);
 		last_time = sysGetTicks(TIMER0);
-	//	GUI_FillRectEx(&Rect);
-		GUI_ClearRectEx(&Rect);
+
+//		GUI_ClearRectEx(&Rect);
 		//GUI_DispStringInRectEx(buffer,&Rect,GUI_TA_HCENTER | GUI_TA_VCENTER,strlen(buffer),GUI_ROTATE_0);
 	//	GUI_DispStringAt("        ",_LCD_WIDTH*3/4,_LCD_HEIGHT*4/5 + _LCD_HEIGHT/10);
 		GUI_DispStringAt(buffer,_LCD_WIDTH*3/4,_LCD_HEIGHT*4/5 + _LCD_HEIGHT/10);
@@ -324,8 +324,9 @@ void Task_Play_Music(void *p_arg)
 	
 			musicPlayStatus = PLAY_CTRL_STOP;
 			UpdateMusicPlayStatus(musicPlayStatus, TRUE);
-			vTaskDelay(50);
+			
 		}
+		vTaskDelay(50);
 	}
 }
 

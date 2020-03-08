@@ -22,7 +22,7 @@ extern DX_LCD_COLOR  *_VpostFrameBuffer;
 extern __align(32) DX_LCD_COLOR LCDOSDBuffer1[_LCD_HEIGHT][_LCD_WIDTH];
 //unsigned short __align(32) JpgBuff[_LCD_HEIGHT][_LCD_WIDTH];
 //extern __align(32) unsigned short OSD_FrameRGB565[_LCD_HEIGHT*_LCD_WIDTH*2];
-extern __align(32) DX_LCD_COLOR _VpostFrameBufferPool[_LCD_HEIGHT*_LCD_WIDTH];
+extern __align(256) unsigned char  _VpostFrameBufferPool[VPOST_FRAME_BUFSZ];
 volatile LCD_BUFFER setBufferType = VPOST;
 /*-----------------------------------------------------------------------*/
 /*  Header Decode Complete Callback function                             */

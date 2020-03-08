@@ -64,7 +64,7 @@ static void startPlayMP4(char * audioFileName)
 	char		suFileName[256] ;
 	//char 		assicFilName[128];
 	
-	MP3Control_En();
+	//MP3Control_En();
 	GUI_SetBkColor(GUI_BLUE);								//…Ë÷√±≥æ∞—’…´ GUI_LIGHTBLUE
 	GUI_SetColor(GUI_WHITE);
 	GUI_SetFont(GUI_FONT_16_ASCII);
@@ -85,12 +85,12 @@ static void startPlayMP4(char * audioFileName)
 		return; 
 	}
 	sysprintf("startPlayMP4 %s\r\n", suFileName);
-	AVI_play(suFileName);//AVI_play("D:\\girlMV.avi");
+	AVI_play(suFileName);
  // fsAsciiToUnicode("D:\\1.avi", suFileName, TRUE);
 //if (aviPlayFile(suFileName, 0, 0, 1, avi_play_control) < 0)
 //	sysprintf("Playback failed, code \n");
 		
-	MP3Control_Dis();
+	//MP3Control_Dis();
 	loadPlayVideo_Menu();
 }
 

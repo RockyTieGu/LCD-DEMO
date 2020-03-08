@@ -113,8 +113,6 @@ void GUI_X_Delay(int ms)
 
 void GUI_X_Init(void) 
 {
-	//osMutex=xSemaphoreCreateMutex();		//创建互斥信号量
-sysprintf("GUI_X_Init enter\n");
 }
 
 
@@ -128,56 +126,44 @@ sysprintf("GUI_X_Init enter\n");
 
 void GUI_X_ExecIdle(void) 
 {
-	//sysprintf("GUI_X_ExecIdle enter\n");
 	vTaskDelay(3);
-	//sysprintf("GUI_X_ExecIdle exit\n");
 }
 
 	
  void GUI_X_Unlock(void)
  { 
-//	 static short i = 0;
-//	 
-//	 i++;
-//	// if(i > 256)
-//	 {
-////		 sysprintf("GUI_X_Unlock enter\n");
-////		 xSemaphoreGive(osMutex);				//释放信号量
-////		  sysprintf("GUI_X_Unlock exit\n");
-//		//taskEXIT_CRITICAL();            //退出临界区
-//		 i = 257;
-//	 }
-	 
+	xSemaphoreGive(osMutex);				//释放信号量
+ 
  }
  void GUI_X_Lock     (void)
  {
-//	 static short i = 0;
-//	 
-//	 i++;
-//	 if(i > 256)
-//	 {
-////	  sysprintf("GUI_X_Lock enter\n");
-////	 xSemaphoreTake(osMutex,portMAX_DELAY);	//请求信号量
-////	  sysprintf("GUI_X_Lock exit\n");
-//	//taskENTER_CRITICAL();		//临界区
-//		  i = 257;
-//	 }
+
+	xSemaphoreTake(osMutex,portMAX_DELAY);	//请求信号量
+
  }
  
  
 unsigned long GUI_X_GetTaskId(void)
  { 
 	return 0;
-	return ((uint32_t)xTaskGetCurrentTaskHandle()); 	//获取任务ID
+	//return ((uint32_t)xTaskGetCurrentTaskHandle()); 	//获取任务ID
  }
  
 
 void GUI_X_InitOS   (void)
 {
-	sysprintf("GUI_X_InitOS enter\n");
-//	osMutex=xSemaphoreCreateMutex();		//创建互斥信号量
-	sysprintf("GUI_X_InitOS exit\n");
+	osMutex=xSemaphoreCreateMutex();		//创建互斥信号量
 	//vSemaphoreCreateBinary(osSemaphore);	//创建二值信号量
+}
+
+void GUI_X_WaitEvent(void)
+{
+	//xSemaphoreTake(osSemaphore,portMAX_DELAY);//请求信号量
+}
+
+void GUI_X_SignalEvent(void)
+{
+	//xSemaphoreGive(osSemaphore);			 //释放信号量
 }
 
 /*********************************************************************
