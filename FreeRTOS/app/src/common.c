@@ -61,12 +61,12 @@ char JpegOldDecHeaderComplete(void)
 			u32FrameBuffer =  (UINT32)LCDOSDBuffer2 | 0x80000000;
 		else
 			u32FrameBuffer =  (UINT32)_VpostFrameBufferPool | 0x80000000;
-		sysprintf("\tThe decoded data starts from 0x%X, Size is 0x%X\n", u32FrameBuffer,u32BufferSize);	
+		//sysprintf("\tThe decoded data starts from 0x%X, Size is 0x%X\n", u32FrameBuffer,u32BufferSize);	
 		/* DownScale size control */	 
 #if 1	
 		if(jpegInfo.jpeg_width > jpegInfo.jpeg_height)
 		{
-			sysprintf("1.0..\n");
+			//sysprintf("1.0..\n");
 			if((jpegInfo.jpeg_width > PANEL_WIDTH || jpegInfo.jpeg_height > PANEL_HEIGHT))	
 			{
 	
@@ -74,14 +74,14 @@ char JpegOldDecHeaderComplete(void)
 				jpegIoctl(JPEG_IOCTL_SET_DECODE_DOWNSCALE, TARGET_HEIGHT, TARGET_WIDTH);
 				u32TargetHeight = TARGET_HEIGHT;
 				u32TargetWidth = TARGET_WIDTH;	
-				sysprintf("2.0..ratio u32TargetHeight%d u32TargetWidth:%d \n",u32TargetHeight,u32TargetWidth);	
+			//	sysprintf("2.0..ratio u32TargetHeight%d u32TargetWidth:%d \n",u32TargetHeight,u32TargetWidth);	
 			}
 			else
 			{
 		
 				u32TargetHeight = jpegInfo.jpeg_height;
 				u32TargetWidth = jpegInfo.jpeg_width;		
-				sysprintf("3.0..ratio u32TargetHeight%d u32TargetWidth:%d \n",u32TargetHeight,u32TargetWidth);					
+			//	sysprintf("3.0..ratio u32TargetHeight%d u32TargetWidth:%d \n",u32TargetHeight,u32TargetWidth);					
 			}			 
 		}
 		else
@@ -94,7 +94,7 @@ char JpegOldDecHeaderComplete(void)
 				ratio = jpegInfo.jpeg_height / PANEL_HEIGHT + 1;
 				//sysprintf("5.0..ratio:%d\n",ratio);
 				/* Set Downscale to QVGA */
-				sysprintf("\tJpeg wisth is smaller than height -> Can't downscale to QVGA -> downscale to %dx%d\n",jpegInfo.jpeg_width / ratio,jpegInfo.jpeg_height / ratio);
+			//	sysprintf("\tJpeg wisth is smaller than height -> Can't downscale to QVGA -> downscale to %dx%d\n",jpegInfo.jpeg_width / ratio,jpegInfo.jpeg_height / ratio);
 				jpegIoctl(JPEG_IOCTL_SET_DECODE_DOWNSCALE, jpegInfo.jpeg_height / ratio, jpegInfo.jpeg_width / ratio);
 				u32TargetHeight = jpegInfo.jpeg_height / ratio;
 				u32TargetWidth = jpegInfo.jpeg_width / ratio;	

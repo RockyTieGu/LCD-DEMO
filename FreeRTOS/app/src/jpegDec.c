@@ -53,7 +53,7 @@ void JpegDec(void)
 	//unsigned int i,j;
 	unsigned int u32Width,u32Height,u32Format;	
 	
-	sysprintf("JpegDec\r\n");
+	//sysprintf("JpegDec\r\n");
 	if(ParsingOldJPEG((unsigned char *)((unsigned int)g_pu8JpegBuffer | 0x80000000), nReadLen, &u32Width, &u32Height, &u32Format, TRUE) == ERR_MODE)
 	{
 		sysprintf("\tNot Support the JPEG sampling\n");	
