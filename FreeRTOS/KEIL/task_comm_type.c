@@ -209,7 +209,13 @@ int  SearcheSpecifiedDirectory_filePath(char *suDirName)
 	return 0;
 }
 
-
+void LoadDiskFile(void)
+{
+	SearcheSpecifiedDirectory_filePath("D:\\music\\");
+	SearcheSpecifiedDirectory_filePath("X:\\music\\");
+	SearcheSpecifiedDirectory_filePath("D:\\video\\");
+	SearcheSpecifiedDirectory_filePath("X:\\video\\");
+}
 
 //选择音频文件
 void Select_File(FILE_LIST *typeFileList )
@@ -219,13 +225,14 @@ void Select_File(FILE_LIST *typeFileList )
 	static SELECT_DISK lastSelectMode = IDLE_MODE;
 	short sd_tempIndex,nandflash_tempIndex;
 	SELECT_DISK selectMode;
-	short index;
+	short index = 0;
 	
 	selectMode = typeFileList->diskMode;
 	if(selectMode == NANDFLASH_MODE) index = typeFileList->nandflash_audioFile_curPos;
 	else if(selectMode == SD_MODE) index = typeFileList->sd_audioFile_curPos;
 	
-	sysprintf("Select_AudioFile index:%d mode:%d\r\n", index,selectMode);
+	sysprintf("index:%d mode:%d\r\n", index,selectMode);
+	sysprintf("nandflash:%d sd:%d\r\n",typeFileList->nandflash_audio_file_num, typeFileList->sd_audio_file_num);
 	if (selectMode == IDLE_MODE)
 	{
 		GUI_SetBkColor(GUI_BLUE);								//设置背景颜色 GUI_LIGHTBLUE
@@ -239,14 +246,14 @@ void Select_File(FILE_LIST *typeFileList )
 			GUI_DispStringHCenterAt("No audio file found!",_LCD_WIDTH/4 ,_LCD_HEIGHT/2);
 		if(typeFileList->sd_audio_file_num == 0)
 			GUI_DispStringHCenterAt("No audio file found!",_LCD_WIDTH*3/4 ,_LCD_HEIGHT/2);
-		if((typeFileList->nandflash_audio_file_num == 0) ||\
-			(index > typeFileList->nandflash_audio_file_num))
+		if((typeFileList->nandflash_audio_file_num == 0)/* ||\
+			(index > typeFileList->nandflash_audio_file_num)*/)
 		{
 			sysprintf("Fail Select_AudioFile index:%d nandflash_audio_file_num:%d\r\n", index, typeFileList->nandflash_audio_file_num);
 			//return ;
 		}
-		if((typeFileList->sd_audio_file_num == 0) ||\
-			(index > typeFileList->sd_audio_file_num))
+		if((typeFileList->sd_audio_file_num == 0)/* ||\
+			(index > typeFileList->sd_audio_file_num)*/)
 		{
 			sysprintf("Fail Select_AudioFile index:%d sd_audio_file_num:%d\r\n", index, typeFileList->sd_audio_file_num);
 			//return ;
@@ -352,7 +359,7 @@ void Select_File(FILE_LIST *typeFileList )
 			GUI_SetColor(GUI_WHITE);
 //			GUI_SetFont(GUI_FONT_24B_ASCII);
 			GUI_ClearRect(_LCD_WIDTH/2+1, _LCD_HEIGHT/5 + 1, _LCD_WIDTH, _LCD_HEIGHT*4/5-1);//清除SD卡音频文件显示区域
-			GUI_ClearRect(_LCD_WIDTH/4, _LCD_HEIGHT*4/5 + 1, _LCD_WIDTH*3/4, _LCD_HEIGHT*4/5 + 24);	 //清除正在播放音乐背景
+			GUI_ClearRect(0, _LCD_HEIGHT*4/5 + 1, _LCD_WIDTH, _LCD_HEIGHT*4/5 + 24);	 //清除正在播放音乐背景
 			if(typeFileList->sd_audio_file_num == 0)
 				GUI_DispStringHCenterAt("No audio  found!",_LCD_WIDTH*3/4 ,_LCD_HEIGHT/2);
 			if(typeFileList->sd_audio_file_num == 0)
@@ -385,6 +392,7 @@ void Select_File(FILE_LIST *typeFileList )
 			if(typeFileList->nandflash_audio_file_num)
 			{
 				GUI_SetBkColor(GUI_BLUE);
+				GUI_SetColor(GUI_RED);
 				GUI_DispStringHCenterAt(typeFileList->nandflash_audio_name[typeFileList->nandflash_audioFile_curPos], _LCD_WIDTH/2 , _LCD_HEIGHT*4/5 + 1);
 			}
 			
@@ -397,7 +405,7 @@ void Select_File(FILE_LIST *typeFileList )
 			GUI_UC_SetEncodeUTF8(); 
 			SetFont_Xbf();
 			GUI_ClearRect(0, _LCD_HEIGHT/5 + 1, _LCD_WIDTH/2 - 1, _LCD_HEIGHT*4/5 - 1);	 //清除Nanflash音频文件显示区域
-			GUI_ClearRect(_LCD_WIDTH/4, _LCD_HEIGHT*4/5 + 1, _LCD_WIDTH*3/4, _LCD_HEIGHT*4/5 + 24);	 //清除正在播放音乐背景
+			GUI_ClearRect(0, _LCD_HEIGHT*4/5 + 1, _LCD_WIDTH, _LCD_HEIGHT*4/5 + 24);	 //清除正在播放音乐背景
 			if(typeFileList->nandflash_audio_file_num == 0)
 			GUI_DispStringHCenterAt("No  file found!",_LCD_WIDTH/4 ,_LCD_HEIGHT/2);
 			if(typeFileList->nandflash_audio_file_num == 0)
@@ -467,6 +475,7 @@ void Select_File(FILE_LIST *typeFileList )
 			if(typeFileList->sd_audio_file_num)
 			{
 				GUI_SetBkColor(GUI_BLUE);
+				GUI_SetColor(GUI_RED);
 				GUI_DispStringHCenterAt(typeFileList->sd_audio_name[typeFileList->sd_audioFile_curPos], _LCD_WIDTH/2 , _LCD_HEIGHT*4/5 + 1);
 			}
 			

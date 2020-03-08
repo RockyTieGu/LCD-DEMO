@@ -98,23 +98,17 @@
 #include <stdlib.h>
 
 /* Scheduler includes. */
-//#include "FreeRTOS.h"
-//#include "task.h"
-
+#include "FreeRTOS.h"
+#include "task.h"
+#include "GUI.h"
+#include "wm.h"
 /* Nuvoton includes. */
 #include "wblib.h"
-
-/* Demo application includes. */
-#include "wb_include.h"
+#include "task_comm_type.h"
 #include "Board_bsp.h"
-#include "GUI.h"
-#include "GUIDEMO.h"
-#include "RTP.h"
-#include "Midd_uart.h"
-#include "hmi.h"
+/* Demo application includes. */
 
 
-//extern	unsigned short   *_VpostFrameBuffer;
 /*-----------------------------------------------------------*/
 
 /* Priorities for the demo application tasks. */
@@ -155,7 +149,7 @@ static void vErrorChecks( void *pvParameters );
 static void prvSetupHardware( void );
 
 /*-----------------------------------------------------------*/
-
+//extern void prvSetupTimerInterrupt( void );
 
 /*
  * Application entry point:
@@ -166,12 +160,14 @@ int main( void )
 	__use_two_region_memory();	//定义堆栈为双区，以免堆栈错误
 	sys_Init();
 	OtherPeripheral_Init();
-	//ReadImageDirectory_Path("C:\\photo\\");
-	SearcheSpecifiedDirectory_filePath("D:\\music\\");
-	SearcheSpecifiedDirectory_filePath("X:\\music\\");
-	SearcheSpecifiedDirectory_filePath("D:\\video\\");
-	SearcheSpecifiedDirectory_filePath("X:\\video\\");
+	LoadDiskFile();
+	sysprintf("GUI_Init start\n");
+	//WM_SetCreateFlags(WM_CF_MEMDEV); //开启STemWin多缓冲,RGB屏可能会用到
 	GUI_Init();
+//	WM_MULTIBUF_Enable(1);  		//开启STemWin多缓冲,RGB屏可能会用到
+//	sysStopTimer(TIMER0);			//只开启定时器1,关闭定时器0，减小定时器对任务切换影响。只有在用到定时器再打开相应的定时器。
+	//sysSetTimerReferenceClock (TIMER0, 12000000);
+	//sysStartTimer(TIMER0, 5000, PERIODIC_MODE);
 	sysprintf("start the FreeRTOS demo\n");
 	Task_Create();
 	/* Start the demo/test application tasks. */
@@ -230,36 +226,3 @@ static void prvSetupHardware( void )
 	sysInitializeUART(&uart);
 	sysSetLocalInterrupt(ENABLE_IRQ);
 }
-/*-----------------------------------------------------------*/
-#if 0
-static long prvCheckOtherTasksAreStillRunning( void )
-{
-	long lReturn = pdPASS;
-
-	/* Check all the demo tasks (other than the flash tasks) to ensure
-	that they are all still running, and that none of them have detected
-	an error. */
-	if( xArePollingQueuesStillRunning() != pdTRUE )
-	{
-		lReturn = pdFAIL;
-	}
-
-	if( xAreBlockingQueuesStillRunning() != pdTRUE )
-	{
-		lReturn = pdFAIL;
-	}
-
-	if( xAreSemaphoreTasksStillRunning() != pdTRUE )
-	{
-		lReturn = pdFAIL;
-	}
-
-	if( xAreDynamicPriorityTasksStillRunning() != pdTRUE )
-	{
-		lReturn = pdFAIL;
-	}
-
-	return lReturn;
-}
-/*-----------------------------------------------------------*/
-#endif

@@ -240,7 +240,7 @@ void AVI_play(char *FilePath)
 	spuEqOpen(eDRVSPU_EQBAND_2, eDRVSPU_EQGAIN_P7DB);
 	spuDacOn(1);
 #endif
-	sysDelay(30);
+	//sysDelay(30);
 		
 	if(!FilePath)
 	{
@@ -260,8 +260,7 @@ void AVI_play(char *FilePath)
 	Dbuf=Frame_buf;
 	fsReadFile(fil, (unsigned char *)Dbuf, sizeof(Frame_buf), &realLen);
 	sysprintf("read Dbuf %d len", realLen);
-//	addr = FLASH_VIDEO_ADDR;
-//	spiFlashRead(addr, 20480, (unsigned int)Dbuf);
+
 	res=AVI_Parser(Dbuf);//解析AVI文件格式
 	if(res)
 	{
@@ -320,9 +319,10 @@ void AVI_play(char *FilePath)
 			fsReadFile(fil, ((unsigned char *)(g_pu8JpegBuffer+0x80000000)), Strsize, &realLen);
 			addr +=Strsize;	
 
-			if(ParsingOldJPEG((unsigned char *)((unsigned int)g_pu8JpegBuffer | 0x80000000), Strsize, &u32Width, &u32Height, &u32Format, TRUE) == ERR_MODE){
+			if(ParsingOldJPEG((unsigned char *)((unsigned int)g_pu8JpegBuffer | 0x80000000), Strsize, &u32Width, &u32Height, &u32Format, TRUE) == ERR_MODE)
+			{
 				sysprintf("\tNot Support the JPEG sampling\n");	
-		    		goto END_ERROR_FORMAT;
+		    	goto END_ERROR_FORMAT;
 			}
 
 			/* JPEG Init */
@@ -330,10 +330,12 @@ void AVI_play(char *FilePath)
 			
 			/* Set Bit stream Address */   
 			jpegIoctl(JPEG_IOCTL_SET_BITSTREAM_ADDR,(unsigned int) g_pu8JpegBuffer| 0x80000000, 0);	
-		          
+#if (LCD_BITS_MODE == 16)		          
 			/* Decode mode */	
 			jpegIoctl(JPEG_IOCTL_SET_DECODE_MODE, JPEG_DEC_PRIMARY_PACKET_RGB565, 0);	
-			
+#elif ((LCD_BITS_MODE == 18) || (LCD_BITS_MODE == 24)) 
+			jpegIoctl(JPEG_IOCTL_SET_DECODE_MODE, JPEG_DEC_PRIMARY_PACKET_RGB888, 0);	
+#endif			
 			/* Set JPEG Header Decode End Call Back Function */
 			jpegIoctl(JPEG_IOCTL_SET_HEADERDECODE_CALBACKFUN, (unsigned int) JpegOldDecHeaderComplete, 0);	
 			
@@ -359,8 +361,10 @@ void AVI_play(char *FilePath)
 				Dbuf=Sound_buf2;				
 				addr +=Strsize;	   
 				u32TestChannel=0;
+#if LS_OPEN_SOUND_SWITCH				
 				spuStartPlay(NULL, (UINT8 *)Sound_buf2);	 
 				DrvSPU_StartPlay();
+#endif
 			}
 			 else { 
 #if LS_OPEN_SOUND_SWITCH				 
@@ -389,14 +393,16 @@ void AVI_play(char *FilePath)
 			free(g_pu8JpegBuffer);
 			fsCloseFile(fil);
 			fsCloseFile(wrFile);
+#if LS_OPEN_SOUND_SWITCH	
 			spuEqClose();	
 			spuClose();
+#endif
 			sysprintf("Exit video play!\n");
 		//	vTaskDelay(5);
 			return ;
 		}
 		
-		vTaskDelay(5);
+		vTaskDelay(2);
 END_ERROR_FORMAT:	
 		fsFileSeek(fil, addr, SEEK_SET);
 		fsReadFile(fil, (unsigned char *)Dbuf, 8, &realLen);
@@ -410,8 +416,10 @@ END_ERROR_FORMAT:
 	free(g_pu8JpegBuffer);
 	fsCloseFile(fil);
 	fsCloseFile(wrFile);
+#if LS_OPEN_SOUND_SWITCH	
 	spuEqClose();	
 	spuClose();
+#endif
 	sysprintf("video Play end!\n");
 }
 #endif

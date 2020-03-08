@@ -35,7 +35,7 @@ void DrawMenu(char n)
 			GUI_FillRoundedRect( start_x+10, start_y+10, start_x + _LCD_WIDTH/6 - 10, start_y+ _LCD_HEIGHT/6 -10 , 10);
 		
 			GUI_SetColor(GUI_BLUE);
-			GUI_SetFont(GUI_FONT_20B_ASCII); 
+			GUI_SetFont(GUI_FONT_10S_ASCII); //GUI_FONT_20B_ASCII
 			//GUI_DispStringAt(menuName[i],start_x+20,start_y + 40);
 			GUI_DispStringHCenterAt(menuName[i], start_x + _LCD_WIDTH/12 , start_y + _LCD_HEIGHT/12);
 		}else
@@ -46,7 +46,7 @@ void DrawMenu(char n)
 			GUI_FillRoundedRect( start_x+10, start_y+10, start_x + _LCD_WIDTH/6 - 10, start_y+ _LCD_HEIGHT/6 -10 , 10);
 		
 			GUI_SetColor(GUI_BLUE);
-			GUI_SetFont(GUI_FONT_24B_ASCII); 
+			GUI_SetFont(GUI_FONT_10S_ASCII); //GUI_FONT_24B_ASCII
 		//	GUI_DispStringAt(menuName[i],start_x+20,start_y + 40);
 			GUI_DispStringHCenterAt(menuName[i], start_x + _LCD_WIDTH/12 , start_y + _LCD_HEIGHT/12);
 		}
@@ -139,7 +139,6 @@ static void Menu_Dealkey(unsigned short input)
 				vTaskResume(Task4PlayVideoContrl_Handler);
 				vTaskResume(Task4PlayVideo_Handler);
 			}
-			
 			break;
 		case BUTTON_RETURN:
 				mainMenuIndex = MENU_IDLE;

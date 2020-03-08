@@ -19,7 +19,7 @@ static void musicPlay_BackGround(void)
 	
 	GUI_SetBkColor(GUI_BLUE);
 	GUI_Clear();
-	GUI_SetFont(GUI_FONT_32B_ASCII); //GUI_Font32B_1  
+	GUI_SetFont(GUI_FONT_20B_ASCII); //GUI_Font32B_1   GUI_FONT_32B_ASCII
 	GUI_SetColor(GUI_WHITE);
 	GUI_DrawLine(0,_LCD_HEIGHT/5, _LCD_WIDTH, _LCD_HEIGHT/5);
 	GUI_DrawLine(0,_LCD_HEIGHT*4/5, _LCD_WIDTH, _LCD_HEIGHT*4/5);
@@ -40,7 +40,7 @@ void Audio_AdjustVolume(void)
 	
 	GUI_SetBkColor(GUI_BLUE);								//设置背景颜色 GUI_LIGHTBLUE
 	GUI_SetColor(GUI_WHITE);
-	GUI_SetFont(GUI_FONT_24B_ASCII);
+	GUI_SetFont(GUI_FONT_16_ASCII);//GUI_FONT_24B_ASCII
 	GUI_ClearRect(0, _LCD_HEIGHT*4/5 + 1, _LCD_WIDTH/4 - 1, _LCD_HEIGHT);	 //清除Nanflash音频文件显示区域
 	sprintf(volumBuff, "Volum:%d", nAudioPlayVolume);
 	GUI_DispStringHCenterAt(volumBuff, _LCD_WIDTH/8 , _LCD_HEIGHT*4/5 + _LCD_HEIGHT/10);
@@ -50,9 +50,9 @@ void UpdateMusicPlayStatus(PLAY_CTRL_E status, BOOL updateFlag)
 {
 	GUI_SetBkColor(GUI_BLUE);								//设置背景颜色 GUI_LIGHTBLUE
 	GUI_SetColor(GUI_WHITE);
-	GUI_SetFont(GUI_FONT_24B_ASCII);
+	GUI_SetFont(GUI_FONT_16_ASCII);//GUI_FONT_24B_ASCII
 	
-	taskENTER_CRITICAL();
+	//taskENTER_CRITICAL();
 	if(updateFlag == TRUE)
 		GUI_ClearRect(_LCD_WIDTH/4, _LCD_HEIGHT*4/5 + 24, _LCD_WIDTH*3/4, _LCD_HEIGHT);//清除SD卡音频文件显示区域
 	
@@ -64,20 +64,22 @@ void UpdateMusicPlayStatus(PLAY_CTRL_E status, BOOL updateFlag)
 		GUI_DispStringHCenterAt("Play  STOP\r\n",_LCD_WIDTH/2,_LCD_HEIGHT*4/5 + _LCD_HEIGHT/10);
 	else if(status == PLAY_CTRL_SPEED)
 		GUI_DispStringHCenterAt("Play  START\r\n",_LCD_WIDTH/2,_LCD_HEIGHT*4/5 + _LCD_HEIGHT/10);
-	taskEXIT_CRITICAL() ;
+	//taskEXIT_CRITICAL() ;
 }
 
 void  mp3_play_callback(MV_CFG_T *ptMvCfg)
 {
 	MV_INFO_T 	*ptMvInfo;
 	static INT	last_time = 0;
-	char buffer[50];
+	char buffer[50];//_LCD_HEIGHT/10
+	GUI_RECT Rect = {_LCD_WIDTH*3/4,_LCD_HEIGHT*4/5 + 16,_LCD_WIDTH,_LCD_HEIGHT};
 	
 	mflGetMovieInfo(ptMvCfg, &ptMvInfo);
 
-	if ((sysGetTicks(TIMER0) - last_time > 500) &&
+	if ((sysGetTicks(TIMER0) - last_time >250) &&
 		ptMvInfo->uAuTotalFrames)
 	{
+		memset(buffer, 0 , sizeof(buffer));
 //		sprintf(buffer,"T=%d, Progress = %02d:%02d / %02d:%02d\n", 
 //					sysGetTicks(TIMER0) / 100,
 //					ptMvInfo->uPlayCurTimePos / 6000, (ptMvInfo->uPlayCurTimePos / 100) % 60,
@@ -86,9 +88,14 @@ void  mp3_play_callback(MV_CFG_T *ptMvCfg)
 					ptMvInfo->uPlayCurTimePos / 6000, (ptMvInfo->uPlayCurTimePos / 100) % 60,
 					ptMvInfo->uMovieLength / 6000, (ptMvInfo->uMovieLength / 100) % 60);
 		last_time = sysGetTicks(TIMER0);
+
+//		GUI_ClearRectEx(&Rect);
+		//GUI_DispStringInRectEx(buffer,&Rect,GUI_TA_HCENTER | GUI_TA_VCENTER,strlen(buffer),GUI_ROTATE_0);
+	//	GUI_DispStringAt("        ",_LCD_WIDTH*3/4,_LCD_HEIGHT*4/5 + _LCD_HEIGHT/10);
 		GUI_DispStringAt(buffer,_LCD_WIDTH*3/4,_LCD_HEIGHT*4/5 + _LCD_HEIGHT/10);
 		vTaskDelay(5);
 	}
+	
 }
 
 static void MP3_Dealkey(unsigned short input)
@@ -182,7 +189,7 @@ static void MP3_Dealkey(unsigned short input)
 				{
 					memset(audioFilePath, 0, sizeof(audioFilePath));
 					//sprintf(audioFilePath, "%s%s", AUDIO_FILE_NANDFLASH_PATH, AUDIO_FILE_LIST.nandflash_audio_name[AUDIO_FILE_LIST.nandflash_audioFile_curPos]);
-					sysprintf("play music nandflash:%s\r\n",AUDIO_FILE_LIST.nandflash_audio_name[AUDIO_FILE_LIST.nandflash_audioFile_curPos]);
+					//sysprintf("play music nandflash:%s\r\n",AUDIO_FILE_LIST.nandflash_audio_name[AUDIO_FILE_LIST.nandflash_audioFile_curPos]);
 					ptr = (char *)AUDIO_FILE_LIST.nandflash_audio_name[AUDIO_FILE_LIST.nandflash_audioFile_curPos];
 					num = GUI_UC_ConvertUTF82UC((const char *)ptr, strlen(ptr), (U16 * )audioFilePath, 80/2);
 					sysprintf("NandFlash num:%d [0]:%x [1]:%x [2]:%x [3]:%x [4]:%x [5]:%x [6]:%x [7]:%x [8]:%x [9]:%x [10]:%x [11]:%x [12]:%x [13]:%x [14]:%x\r\n", \
@@ -197,7 +204,7 @@ static void MP3_Dealkey(unsigned short input)
 					memset(audioFilePath, 0, sizeof(audioFilePath));
 					ptr = (char *)AUDIO_FILE_LIST.sd_audio_name[AUDIO_FILE_LIST.sd_audioFile_curPos];
 					num = GUI_UC_ConvertUTF82UC((const char *)ptr, strlen(ptr), (U16 * )audioFilePath, 80/2);
-					sysprintf("SD num:%d [0]:%x [1]:%x [2]:%x [3]:%x [4]:%x [5]:%x [6]:%x [7]:%x [8]:%x [9]:%x [10]:%x [11]:%x [12]:%x [13]:%x [14]:%x\r\n", \
+				//	sysprintf("SD num:%d [0]:%x [1]:%x [2]:%x [3]:%x [4]:%x [5]:%x [6]:%x [7]:%x [8]:%x [9]:%x [10]:%x [11]:%x [12]:%x [13]:%x [14]:%x\r\n", \
 					num, p[0],p[1],p[2],p[3],p[4],p[5],p[6],p[7],p[8],p[9],p[10],p[11],p[12],p[13],p[14]);
 					if (xQueueSend(PlayMusicName_Message,audioFilePath,strlen(audioFilePath) + 1) == errQUEUE_FULL)
 					{
@@ -221,6 +228,7 @@ static void MP3_Dealkey(unsigned short input)
 				
 				mflPlayControl(&_tMvCfg,PLAY_CTRL_STOP,1);
 				sysprintf("MP3 PLAY_CTRL_STOP\r\n");
+//				sysStopTimer(TIMER0);
 				DrawMenu((char )cur_item);
 				mainMenuIndex = MENU_IDLE;
 			}
@@ -240,7 +248,7 @@ void Task3_Play_Music_Contrl(void *p_arg)
 {
 	static unsigned int key=0;
 	
-	sysprintf("%s task creation\r\n", (char *)p_arg);
+	sysprintf("%s task creation\r\n", (char *)Task3_Play_Music_Contrl);
 	while(1)
 	{
 		if(PlayMusicMenu_Key_Queue != NULL)
@@ -262,7 +270,7 @@ static void startPlayMP3(char * audioFileName)
 
 	GUI_SetBkColor(GUI_BLUE);								//设置背景颜色 GUI_LIGHTBLUE
 	GUI_SetColor(GUI_WHITE);
-	GUI_SetFont(GUI_FONT_24B_ASCII);
+	GUI_SetFont(GUI_FONT_16_ASCII);//GUI_FONT_24B_ASCII
 	memset(suFileName,0,sizeof(suFileName));
 	if(AUDIO_FILE_LIST.diskMode == NANDFLASH_MODE)
 	{	
@@ -316,8 +324,9 @@ void Task_Play_Music(void *p_arg)
 	
 			musicPlayStatus = PLAY_CTRL_STOP;
 			UpdateMusicPlayStatus(musicPlayStatus, TRUE);
-			vTaskDelay(50);
+			
 		}
+		vTaskDelay(50);
 	}
 }
 

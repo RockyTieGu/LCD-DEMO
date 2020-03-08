@@ -14,7 +14,13 @@
 extern CHAR g_u8String[100];
 extern unsigned int g_u32StringIndex;
 //CHAR decodePath[100];
+
+#if (LCD_BITS_MODE == 16)
 unsigned int g_u32DecFormat = JPEG_DEC_PRIMARY_PACKET_RGB565;			/* Decode Output format */
+#elif ((LCD_BITS_MODE == 18) || (LCD_BITS_MODE == 24)) 
+unsigned int g_u32DecFormat = JPEG_DEC_PRIMARY_PACKET_RGB888;			/* Decode Output format */
+#endif
+
 unsigned char *g_pu8JpegBuffer;											/* The source bit stream data for decoding */
    
 /*-----------------------------------------------------------------------*/
@@ -36,8 +42,8 @@ unsigned int g_u32OpwBufferIndex = 0;									/* Decode output Buffer index */
 /*  Decode Function          				                             */
 /*-----------------------------------------------------------------------*/  
 int nReadLen;
-extern unsigned short __align(32) JpgBuff[_LCD_HEIGHT][_LCD_WIDTH];
-extern unsigned short   *_VpostFrameBuffer;
+extern DX_LCD_COLOR __align(32) JpgBuff[_LCD_HEIGHT][_LCD_WIDTH];
+extern DX_LCD_COLOR   *_VpostFrameBuffer;
 extern volatile LCD_BUFFER setBufferType;
 
 //extern __align(32) unsigned short OSD_FrameRGB565[_LCD_HEIGHT*_LCD_WIDTH*2];

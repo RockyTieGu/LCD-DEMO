@@ -18,11 +18,11 @@
   
 CHAR g_u8String[100];
 unsigned int g_u32StringIndex;
-extern unsigned short   *_VpostFrameBuffer;
-extern __align(32) unsigned short LCDOSDBuffer1[_LCD_HEIGHT][_LCD_WIDTH];
+extern DX_LCD_COLOR  *_VpostFrameBuffer;
+extern __align(32) DX_LCD_COLOR LCDOSDBuffer1[_LCD_HEIGHT][_LCD_WIDTH];
 //unsigned short __align(32) JpgBuff[_LCD_HEIGHT][_LCD_WIDTH];
 //extern __align(32) unsigned short OSD_FrameRGB565[_LCD_HEIGHT*_LCD_WIDTH*2];
-extern __align(32) unsigned short _VpostFrameBufferPool[_LCD_HEIGHT*_LCD_WIDTH*2];
+extern __align(256) unsigned char  _VpostFrameBufferPool[VPOST_FRAME_BUFSZ];
 volatile LCD_BUFFER setBufferType = VPOST;
 /*-----------------------------------------------------------------------*/
 /*  Header Decode Complete Callback function                             */

@@ -437,11 +437,6 @@
               <FilePath>.\task_lcd_test_app.c</FilePath>
             </File>
             <File>
-              <FileName>task_play_music_app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\task_play_music_app.c</FilePath>
-            </File>
-            <File>
               <FileName>task_play_video_app.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\task_play_video_app.c</FilePath>
@@ -450,6 +445,11 @@
               <FileName>task_comm_type.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\task_comm_type.c</FilePath>
+            </File>
+            <File>
+              <FileName>task_play_music_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\task_play_music_app.c</FilePath>
             </File>
             <File>
               <FileName>task_main_menu_app.c</FileName>
@@ -670,16 +670,6 @@
               <FileName>Bimp_Decode.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\middleWare\src\Bimp_Decode.c</FilePath>
-            </File>
-            <File>
-              <FileName>BlitAlpha.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\middleWare\src\BlitAlpha.c</FilePath>
-            </File>
-            <File>
-              <FileName>BlitOp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\middleWare\src\BlitOp.c</FilePath>
             </File>
             <File>
               <FileName>CommFunc.c</FileName>

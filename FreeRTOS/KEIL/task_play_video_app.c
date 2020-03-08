@@ -16,7 +16,7 @@ void videoPlay_BackGround(void)
 	
 	GUI_SetBkColor(GUI_BLUE);
 	GUI_Clear();
-	GUI_SetFont(GUI_FONT_32B_ASCII); //GUI_Font32B_1  
+	GUI_SetFont(GUI_FONT_20B_ASCII); //GUI_Font32B_1  
 	GUI_SetColor(GUI_WHITE);
 	GUI_DrawLine(0,_LCD_HEIGHT/5, _LCD_WIDTH, _LCD_HEIGHT/5);
 	GUI_DrawLine(0,_LCD_HEIGHT*4/5, _LCD_WIDTH, _LCD_HEIGHT*4/5);
@@ -34,7 +34,7 @@ void videoPlay_BackGround(void)
 void loadPlayVideo_Menu()
 {
 	videoPlay_BackGround();
-	Select_File(&VIDEO_FILE_LIST);
+	Select_File((FILE_LIST *)(&VIDEO_FILE_LIST));
 	Audio_AdjustVolume();
 }
 
@@ -62,12 +62,12 @@ static void startPlayMP4(char * audioFileName)
 {
 	int			nStatus;
 	char		suFileName[256] ;
-	char 		assicFilName[128];
+	//char 		assicFilName[128];
 	
-	MP3Control_En();
+	//MP3Control_En();
 	GUI_SetBkColor(GUI_BLUE);								//…Ë÷√±≥æ∞—’…´ GUI_LIGHTBLUE
 	GUI_SetColor(GUI_WHITE);
-	GUI_SetFont(GUI_FONT_24B_ASCII);
+	GUI_SetFont(GUI_FONT_16_ASCII);
 	memset(suFileName,0,sizeof(suFileName));
 	if(VIDEO_FILE_LIST.diskMode == NANDFLASH_MODE)
 	{	
@@ -84,12 +84,13 @@ static void startPlayMP4(char * audioFileName)
 		sysprintf("AUDIO_FILE_LIST.diskMode error!\r\n");
 		return; 
 	}
-	AVI_play(suFileName);//AVI_play("D:\\girlMV.avi");
+	sysprintf("startPlayMP4 %s\r\n", suFileName);
+	AVI_play(suFileName);
  // fsAsciiToUnicode("D:\\1.avi", suFileName, TRUE);
 //if (aviPlayFile(suFileName, 0, 0, 1, avi_play_control) < 0)
 //	sysprintf("Playback failed, code \n");
 		
-	MP3Control_Dis();
+	//MP3Control_Dis();
 	loadPlayVideo_Menu();
 }
 
@@ -224,6 +225,7 @@ static void MP4_Dealkey(unsigned short input)
 				vTaskResume(Task3PlayMusic_Handler);
 				vTaskResume(Task3PlayMusicContrl_Handler);
 				sysprintf("MP4 PLAY_CTRL_STOP\r\n");
+//				sysStopTimer(TIMER0);
 				DrawMenu(cur_item);
 				mainMenuIndex = MENU_IDLE;
 			}

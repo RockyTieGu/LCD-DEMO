@@ -53,12 +53,16 @@ Purpose     : Config / System dependent externals for GUI
 
 #include "GUI.h"
 //#include "wb_timer.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "semphr.h"
 /*********************************************************************
 *
 *       Global data
 */
 volatile GUI_TIMER_TIME OS_TimeMS;
-
+static SemaphoreHandle_t osMutex;
+  SemaphoreHandle_t osSemaphore;
 /*********************************************************************
 *
 *      Timing:
@@ -72,14 +76,23 @@ volatile GUI_TIMER_TIME OS_TimeMS;
 
 GUI_TIMER_TIME GUI_X_GetTime(void) 
 {
+#if 1
+	return ((int)xTaskGetTickCount());
+	
+#else
 	return OS_TimeMS; 
-	//return 0;
+#endif
+
 }
 
 void GUI_X_Delay(int ms) 
 { 
+#if 1
+	vTaskDelay(ms);
+#else
   int tEnd = OS_TimeMS + ms;
   while ((tEnd - OS_TimeMS) > 0);
+#endif
 }
 
 
@@ -98,7 +111,9 @@ void GUI_X_Delay(int ms)
 *     If not required, leave this routine blank.
 */
 
-void GUI_X_Init(void) {}
+void GUI_X_Init(void) 
+{
+}
 
 
 /*********************************************************************
@@ -109,28 +124,46 @@ void GUI_X_Init(void) {}
 *  Called if WM is in idle state
 */
 
-void GUI_X_ExecIdle(void) {}
+void GUI_X_ExecIdle(void) 
+{
+	vTaskDelay(3);
+}
 
 	
  void GUI_X_Unlock(void)
  { 
-	//OSSemPost(dispSem);
+	xSemaphoreGive(osMutex);				//释放信号量
+ 
  }
  void GUI_X_Lock     (void)
  {
- 
+
+	xSemaphoreTake(osMutex,portMAX_DELAY);	//请求信号量
+
  }
  
  
 unsigned long GUI_X_GetTaskId(void)
  { 
-     return 0;//((U32)(OSTCBCur->OSTCBPrio));
+	return 0;
+	//return ((uint32_t)xTaskGetCurrentTaskHandle()); 	//获取任务ID
  }
  
 
 void GUI_X_InitOS   (void)
 {
+	osMutex=xSemaphoreCreateMutex();		//创建互斥信号量
+	//vSemaphoreCreateBinary(osSemaphore);	//创建二值信号量
+}
 
+void GUI_X_WaitEvent(void)
+{
+	//xSemaphoreTake(osSemaphore,portMAX_DELAY);//请求信号量
+}
+
+void GUI_X_SignalEvent(void)
+{
+	//xSemaphoreGive(osSemaphore);			 //释放信号量
 }
 
 /*********************************************************************

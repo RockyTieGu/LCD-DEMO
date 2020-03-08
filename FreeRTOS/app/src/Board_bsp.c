@@ -29,11 +29,11 @@
 #include "LCD_Power.h"
 #include "key.h"
 
-__align(32) unsigned short LCDOSDBuffer1[_LCD_HEIGHT][_LCD_WIDTH];
-__align(32) unsigned short LCDOSDBuffer2[_LCD_HEIGHT][_LCD_WIDTH];
-__align(32) unsigned short OSD_FrameRGB565[_LCD_HEIGHT*_LCD_WIDTH*2];
-extern __align(256) unsigned short  _VpostFrameBufferPool[VPOST_FRAME_BUFSZ];
-
+__align(32) DX_LCD_COLOR LCDOSDBuffer1[_LCD_HEIGHT][_LCD_WIDTH];
+__align(32) DX_LCD_COLOR LCDOSDBuffer2[_LCD_HEIGHT][_LCD_WIDTH];
+__align(32) DX_LCD_COLOR OSD_FrameRGB565[_LCD_HEIGHT*_LCD_WIDTH];
+extern __align(256) unsigned char  _VpostFrameBufferPool[VPOST_FRAME_BUFSZ];
+extern DX_LCD_COLOR   *_VpostFrameBuffer;
 void systemInit(void)
 {	
 	WB_UART_T uart;
@@ -50,7 +50,7 @@ void systemInit(void)
 	sysprintf("CENTRY LCD_DEMO SW Version: %s\r\n",CENTRY_LCD_SW_VERSION);
 	sysprintf("CENTRY CURRENT LCD TYPE: %s\r\n",CENTRY_LCD_TYPE);
 #if 0
-	_VpostFrameBuffer = (unsigned short *)((unsigned int)_VpostFrameBufferPool | 0x80000000);
+	_VpostFrameBuffer = (DX_LCD_COLOR *)((unsigned int)_VpostFrameBufferPool | 0x80000000);
 	lcdformatex.ucVASrcFormat = DRVVPOST_FRAME_RGB565;
 	vpostLCMInit(&lcdformatex, (unsigned int *)_VpostFrameBuffer);
 	/*     UIÏÔÊ¾¸ÄÎªOSD²ã*/	
@@ -82,7 +82,6 @@ void sys_Init(void)
 						120000,		//unsigned int u32CpuKHz,
 						120000,		//unsigned int u32HclkKHz,
 						 60000);		//unsigned int u32ApbKHz	
-
 	systemInit();
 	sysprintf("sys_Init !\n");
 }
@@ -91,8 +90,7 @@ void OtherPeripheral_Init(void)
 {
 	sysSetTimerReferenceClock (TIMER0, 60000000);
 	sysStartTimer(TIMER0, 50000, PERIODIC_MODE);	//100us
-	//sysSetTimerReferenceClock (TIMER0, 12000000);
-	//sysStartTimer(TIMER0, 100, PERIODIC_MODE);
+	
 	PWM_Open();
 	spuOpen(eDRVSPU_FREQ_8000);
 	//RTP_Init();

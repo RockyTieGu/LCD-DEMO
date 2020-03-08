@@ -2360,7 +2360,7 @@ static void _DemoSkinning(void) {
   FRAMEWIN_SetSkin(hWin, _DrawSkin);
   GUI_MEMDEV_MoveInWindow(hWin, 0, 0, -90, 500);
   while ((_ReadyDialogOrder == 0) && (GUIDEMO_CheckCancel() == 0)) {
-    GUI_Delay(100);
+    GUI_Delay(500);
   }
   //
   // Undo changes to GUI

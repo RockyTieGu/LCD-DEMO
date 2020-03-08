@@ -11,7 +11,7 @@
 
 #define MESSAGE_FILE_NAME_LEN	(80)
 
-#define MAX_AUDIO_FILE_NUM		(100)
+#define MAX_AUDIO_FILE_NUM		(50)
 #define MAX_AUDIO_NAME_LEN		(80)
 
 #define MAIN_PAGE_BACKGROUND_PICTURE_PATH				"C:\\1.jpg"
@@ -89,8 +89,8 @@ extern TaskHandle_t Task4PlayVideo_Handler;
 void MP3Control_Init(void);
 void MP3Control_En(void);
 void MP3Control_Dis(void);
-
+void LoadDiskFile(void);
 void Select_File(FILE_LIST *typeFileList );
 void DrawMenu(char n);
-
+void Task_Create(void);
 #endif

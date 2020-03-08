@@ -62,11 +62,12 @@ Purpose     : Display controller initialization
 *   Called during the initialization process in order to set up the
 *   available memory for the GUI.
 */
+  static U32 aMemory[GUI_NUMBYTES / 4];
 void GUI_X_Config(void) {
   //
   // 32 bit aligned memory area
   //
-  static U32 aMemory[GUI_NUMBYTES / 4];
+
   //
   // Assign memory to emWin
   //

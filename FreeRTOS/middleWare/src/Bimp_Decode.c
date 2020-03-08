@@ -1,13 +1,14 @@
 #include "Bimp_Decode.h"
 #include "w55fa93_vpost.h"
+#include "dx_lcdconfig.h"
 #include "Nvtfat.h"
 #include <string.h>
 
 #define DebugBimp sysprintf
 unsigned char bmp_buffer[1600];
 PIC_POS PICINFO;//ÕºœÒŒª÷√–≈œ¢
-extern __align(32) unsigned short OSD_FrameRGB565[_LCD_HEIGHT*_LCD_WIDTH*2];
-extern __align(32) unsigned short LCDOSDBuffer1[_LCD_HEIGHT][_LCD_WIDTH];
+extern __align(32) DX_LCD_COLOR OSD_FrameRGB565[_LCD_HEIGHT*_LCD_WIDTH];
+extern __align(32) DX_LCD_COLOR LCDOSDBuffer1[_LCD_HEIGHT][_LCD_WIDTH];
 #ifdef	BMPONLY
 #define	TOTAL_EXT	4
 const char* IMAGE_FILE[TOTAL_EXT] = {"bmp","BMP","bin","BIN"};

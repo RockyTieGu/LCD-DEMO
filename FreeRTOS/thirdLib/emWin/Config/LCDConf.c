@@ -37,6 +37,7 @@ Purpose     : Display controller configuration (single layer)
 //#include "ucos_ii.h"
 #include "w55fa93_osd.h"
 #include "w55fa93_vpost.h"
+#include "dx_lcdconfig.h"
 /*********************************************************************
 *
 *       Layer configuration (to be modified)
@@ -52,8 +53,13 @@ Purpose     : Display controller configuration (single layer)
 //
 // Color conversion		  GUICC_M565 /* M 带 红蓝交换，无M不交换*/  
 //
+#if (LCD_BITS_MODE==18) 
+#define COLOR_CONVERSION GUICC_M888 //GUICC_M888  GUICC_8888
+#elif (LCD_BITS_MODE==16)
 #define COLOR_CONVERSION GUICC_M565
-
+#else
+#define COLOR_CONVERSION GUICC_M565
+#endif
 //
 // Display driver
 //
@@ -62,8 +68,8 @@ Purpose     : Display controller configuration (single layer)
 //
 // Buffers / VScreens
 //
-#define NUM_BUFFERS  1 // Number of multiple buffers to be used
-#define NUM_VSCREENS 2 // Number of virtual screens to be used  有些Dome需要设置这里 虚拟屏幕大小设计
+#define NUM_BUFFERS  2 // Number of multiple buffers to be used
+#define NUM_VSCREENS 1 // Number of virtual screens to be used  有些Dome需要设置这里 虚拟屏幕大小设计
 
 /*********************************************************************
 *
@@ -101,37 +107,28 @@ Purpose     : Display controller configuration (single layer)
 //__align(256) unsigned short LCDbuff[480*272*2]={0};
 //unsigned short * BT;//显存;	
 
- __align(256) unsigned short  _VpostFrameBufferPool[VPOST_FRAME_BUFSZ];
-volatile unsigned short   *_VpostFrameBuffer;
+ __align(256) unsigned char  _VpostFrameBufferPool[VPOST_FRAME_BUFSZ];
+volatile DX_LCD_COLOR  *_VpostFrameBuffer;
 //VOID * g_VAFrameBuf = 0;
 
 void lcd_init(void)
 {  
 	LCDFORMATEX lcdformatex;
 	OSDFORMATEX osdFormat;
- /*   BT=(unsigned short*)((UINT32)LCDbuff | 0x80000000);//显存;	
-    lcdFormat.ucVASrcFormat = DRVVPOST_FRAME_RGB565;
-    lcdFormat.nScreenWidth = 480;
-	lcdFormat.nScreenHeight = 272;
 
-    vpostLCMInit(&lcdFormat, (UINT32*)(BT)) ;
-*/
-    lcdformatex.ucVASrcFormat = DRVVPOST_FRAME_RGB565;
-    lcdformatex.nScreenWidth = 800;
-	lcdformatex.nScreenHeight = 480;
-	_VpostFrameBuffer = (unsigned short *)((unsigned int)_VpostFrameBufferPool | 0x80000000);
-	lcdformatex.ucVASrcFormat = DRVVPOST_FRAME_RGB565;
-	vpostLCMInit(&lcdformatex, (unsigned int *)_VpostFrameBuffer);
-	sysprintf("_VpostFrameBuffer:%x \r\n", _VpostFrameBuffer);
-#if 0
-	osdFormat.ucOSDSrcFormat = DRVVPOST_OSD_RGB565;
-	osdFormat.nOSDScreenWidth = _LCD_WIDTH;
-	osdFormat.nOSDScreenHeight = _LCD_HEIGHT;	
-	osdFormat.nOSDX1StartPixel = 0;		
-	osdFormat.nOSDY1StartPixel = 0;		
-	vpostOSDInit(&osdFormat, (unsigned int*)OSD_FrameRGB565);			
-	vpostOSDControl(eOSD_SHOW, 0);
+#if (LCD_BITS_MODE==18)
+   lcdformatex.ucVASrcFormat = DRVVPOST_FRAME_RGBx888;//DRVVPOST_FRAME_RGBx888
+#elif (LCD_BITS_MODE==16)
+   lcdformatex.ucVASrcFormat = DRVVPOST_FRAME_RGB565;
+#else
+   lcdformatex.ucVASrcFormat = DRVVPOST_FRAME_RGB565;
 #endif
+    lcdformatex.nScreenWidth = XSIZE_PHYS;
+	lcdformatex.nScreenHeight = YSIZE_PHYS;
+	_VpostFrameBuffer = (DX_LCD_COLOR *)((unsigned int)_VpostFrameBufferPool | 0x80000000);
+	vpostLCMInit(&lcdformatex, (unsigned int *)_VpostFrameBuffer);
+	//sysprintf("_VpostFrameBuffer:%x \r\n", _VpostFrameBuffer);
+
 	//EDMA_Init();
 }		
 	
@@ -224,8 +221,8 @@ int LCD_X_DisplayDriver(unsigned LayerIndex, unsigned Cmd, void * pData) {
     // Required for setting the address of the video RAM for drivers
     // with memory mapped video RAM which is passed in the 'pVRAM' element of p
     //
-    LCD_X_SETVRAMADDR_INFO * p;
-    p = (LCD_X_SETVRAMADDR_INFO *)pData;
+//    LCD_X_SETVRAMADDR_INFO * p;
+//    p = (LCD_X_SETVRAMADDR_INFO *)pData;
     //...
     return 0;
   }
@@ -233,10 +230,10 @@ int LCD_X_DisplayDriver(unsigned LayerIndex, unsigned Cmd, void * pData) {
     //
     // Required for setting the display origin which is passed in the 'xPos' and 'yPos' element of p
     //
-    LCD_X_SETORG_INFO * p;
-    p = (LCD_X_SETORG_INFO *)pData;
-	  
-    outpw(REG_LCM_FSADDR, (UINT32)(_VpostFrameBuffer+p->yPos*XSIZE_PHYS));
+//    LCD_X_SETORG_INFO * p;
+//    p = (LCD_X_SETORG_INFO *)pData;
+//	  
+//    outpw(REG_LCM_FSADDR, (UINT32)(_VpostFrameBuffer+p->yPos*XSIZE_PHYS));
 
     return 0;
   }
