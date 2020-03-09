@@ -12,7 +12,7 @@
 #define CENTRY_LCD_SW_VERSION	"V0.1"
 
 //Current LCD type name
-#define CENTRY_LCD_TYPE			"C035QC05N"
+#define CENTRY_LCD_TYPE			"C035QL01N"
 
 //Set lcd color bits ,16BIT 18BITS .defautlt lcd color is 16 bits
 #define LCD_BITS_MODE			(16)

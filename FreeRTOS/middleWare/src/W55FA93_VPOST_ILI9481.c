@@ -130,7 +130,7 @@ static void SPI_WriteData(unsigned char i)
 	SET_LCD_SDI(1);
 	LCDDelay(500);
 	SET_LCD_SCLK(1);
-		LCDDelay(500);
+	LCDDelay(500);
 	SPI_SendData(i);
 	LCDDelay(500);
 	SET_LCD_CS(1);
@@ -140,13 +140,13 @@ static void SPI_WriteData(unsigned char i)
 void LCD_CELL_INIT()
 {
 	SET_LCD_CS(0);
-	sysDelay(1000);//100ms
+	LCDDelay(10000);//100ms
 	SET_LCD_RST(1);
-	sysDelay(1000);//100ms
+	LCDDelay(10000);//100ms
 	SET_LCD_RST(0);
-	sysDelay(500);//50ms
+	LCDDelay(10000);//50ms
 	SET_LCD_RST(1);
-	sysDelay(1000);//100ms
+	LCDDelay(10000);//100ms
 
 	 SPI_WriteComm(0x0028);SPI_WriteData(0x00);SPI_WriteData(0x06); // set SS and SM bit
 	SPI_WriteComm(0x0000);SPI_WriteData(0x00);SPI_WriteData(0x01);// SPI_Write_Data(0x0001); // set 1 line inversion
@@ -221,7 +221,7 @@ int vpostLCMInit_CENTRY(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf)
 
 	LCD_Control_En();
 	LCDDelay(500);
-	//SPI_INIT_LCD();
+	SPI_INIT_LCD();
 	// VPOST clock control
 	outpw(REG_AHBCLK, inpw(REG_AHBCLK) | VPOST_CKE | HCLK4_CKE);
 	outpw(REG_AHBIPRST, inpw(REG_AHBIPRST) | VPOSTRST);
@@ -278,7 +278,6 @@ int vpostLCMInit_CENTRY(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf)
 	vpostSetSyncLCM_ImageWindow(&sWindow);
 	vpostSetSyncLCM_SignalPolarity(&sPolarity);  	
     
-  	sysprintf("Lcd init step 1.0\n");
     // set frambuffer base address
 	if(pFramebuf != NULL) {
 		vpostAllocVABufferFromAP(pFramebuf);
@@ -286,15 +285,13 @@ int vpostLCMInit_CENTRY(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf)
     	if( vpostAllocVABuffer(plcdformatex, nBytesPixel)==FALSE)
     		return ERR_NULL_BUF;
 	} 
-		sysprintf("Lcd init step 1.1\n");
 	// set frame buffer data format
 	vpostSetFrameBuffer_DataType((E_DRVVPOST_FRAME_DATA_TYPE)(plcdformatex->ucVASrcFormat));
-	sysprintf("Lcd init step 1.2\n");
+
 	vpostSetYUVEndianSelect(eDRVVPOST_YUV_LITTLE_ENDIAN);
-	sysprintf("Lcd init step 1.3\n");
+
 	// enable MPU LCD controller
 	vpostVAStartTrigger();
-	sysprintf("Lcd init step 1.4\n");
 	return 0;
 }
 
