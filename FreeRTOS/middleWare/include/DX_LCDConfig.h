@@ -2,8 +2,8 @@
 #define _DX_LCDConfig_H_
 #include "wbtypes.h"
 
-#define	_LCD_WIDTH				(1024)
-#define	_LCD_HEIGHT				(600)
+#define	_LCD_WIDTH				(800)
+#define	_LCD_HEIGHT				(480)
 
 //System  hardware version
 #define CENTRY_LCD_HW_VERSION	"V2.0"
@@ -12,7 +12,7 @@
 #define CENTRY_LCD_SW_VERSION	"V0.1"
 
 //Current LCD type name
-#define CENTRY_LCD_TYPE			"C070WSH01"
+#define CENTRY_LCD_TYPE			"C043WVH02NE"
 
 //Set lcd color bits ,16BIT 18BITS .defautlt lcd color is 16 bits
 #define LCD_BITS_MODE			(16)
@@ -26,7 +26,7 @@
 
 /*To drive the C035QC05N lcd ,the DE pin must be forced to GND */
 // lcd clock frequency[1~120]MHZ
-#define LCD_CLOCK_FREQUENCY			(30)
+#define LCD_CLOCK_FREQUENCY			(20)
 
 //Specify the number of pixel clock in each line
 #define LCD_PIXEL_PER_LINE			(_LCD_WIDTH)
