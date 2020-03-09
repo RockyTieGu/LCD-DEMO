@@ -221,7 +221,7 @@ int vpostLCMInit_CENTRY(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf)
 
 	LCD_Control_En();
 	LCDDelay(500);
-	SPI_INIT_LCD();
+	//SPI_INIT_LCD();
 	// VPOST clock control
 	outpw(REG_AHBCLK, inpw(REG_AHBCLK) | VPOST_CKE | HCLK4_CKE);
 	outpw(REG_AHBIPRST, inpw(REG_AHBIPRST) | VPOSTRST);
