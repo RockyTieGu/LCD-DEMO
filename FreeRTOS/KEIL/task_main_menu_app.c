@@ -132,12 +132,15 @@ static void Menu_Dealkey(unsigned short input)
 				vTaskSuspend(Task3PlayMusicContrl_Handler);
 				vTaskSuspend(Task4PlayVideoContrl_Handler);
 				vTaskSuspend(Task4PlayVideo_Handler);
+				mainMenuIndex = MENU_DEMO_PROGRAM;
 				GUIDEMO_Main();
 				vTaskResume(Task2LCDTest_Handler);
 				vTaskResume(Task3PlayMusic_Handler);
 				vTaskResume(Task3PlayMusicContrl_Handler);
 				vTaskResume(Task4PlayVideoContrl_Handler);
 				vTaskResume(Task4PlayVideo_Handler);
+				mainMenuIndex = MENU_IDLE;
+			//	DrawMenu(cur_item);
 			}
 			break;
 		case BUTTON_RETURN:
@@ -156,7 +159,6 @@ void Task1_Main_Menu(void *p_arg)
 	DrawMenu(cur_item);
 	
 	sysprintf("Task1_Main_Menu task creation\r\n");
-	
 	while(1)
 	{
 		if(MenuKey_Queue != NULL)

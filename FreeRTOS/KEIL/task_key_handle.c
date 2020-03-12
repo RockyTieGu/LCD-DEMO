@@ -1,12 +1,12 @@
 #include "task_key_handle.h"
-
-
+#include "GUIDEMO.h"
+#include "GUI.h"
 
 void  Task6_Key_Fun (void *pvParameters)
 {
 	static int key = 0;
 	mainMenuIndex = MENU_IDLE;
-	
+	WM_MESSAGE message;
 	sysprintf("Task6_Key_Fun task has creation\r\n");
 	while (1) 
 	{                                             
@@ -45,6 +45,7 @@ void  Task6_Key_Fun (void *pvParameters)
 						{
 							sysprintf("DemoMenu_Key_Queue Key_Queue is full, send message fail!\r\n");
 						}
+						
 						break;
 			}
 		}	

@@ -87,15 +87,15 @@ static const GUI_WIDGET_CREATE_INFO _aFrameWinInfo[] = {
 **********************************************************************
 */
 static GUIDEMO_CONFIG _GUIDemoConfig;
-static WM_HWIN        _hDialogControl;
-static WM_HWIN        _hDialogInfo;
+WM_HWIN        _hDialogControl;
+WM_HWIN        _hDialogInfo;
 
 static void (* _pfDrawBk)(int DrawLogo);
 static int     _iDemo;
 static int     _iDemoMinor;
 static int     _HaltTime;
 static int     _HaltTimeStart;
-static int     _Halt;
+volatile int     _Halt;
 static int     _Next;
 static int     _Pressed;
 static U8      _DrawLogo;
@@ -296,7 +296,7 @@ static int _cbEffect(int TimeRem, void * pVoid) {
 *
 *       _cbFrameWinControl
 */
-static void _cbFrameWinControl(WM_MESSAGE * pMsg) {
+void _cbFrameWinControl(WM_MESSAGE * pMsg) {
   WM_HWIN hItem;
   int     xSize;
   int     ySize;
@@ -305,9 +305,11 @@ static void _cbFrameWinControl(WM_MESSAGE * pMsg) {
 
   switch (pMsg->MsgId) {
   case WM_KEY:
+//	sysprintf("WM_KEY\r\n");
     WM_SendMessage(WM_HBKWIN, pMsg);
     break;
   case WM_INIT_DIALOG:
+	//  sysprintf("WM_INIT_DIALOG\r\n");
     hItem = WM_GetDialogItem(pMsg->hWin, GUI_ID_PROGBAR0);
     PROGBAR_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);
     PROGBAR_SetFont(hItem, &GUI_FontD6x8);
@@ -320,30 +322,40 @@ static void _cbFrameWinControl(WM_MESSAGE * pMsg) {
     TEXT_SetFont(hItem, &GUI_Font8_ASCII);
     break;
   case WM_PAINT:
+	//  sysprintf("WM_PAINT\r\n");
     xSize = WM_GetWindowSizeX(pMsg->hWin);
     ySize = WM_GetWindowSizeY(pMsg->hWin);
     GUI_DrawGradientV(0, 0, xSize - 1, ySize - 1, 0xFFFFFF, 0xDCCEC0);
     break;
   case WM_NOTIFY_PARENT:
+	//    sysprintf("WM_NOTIFY_PARENT\r\n");
     Id    = WM_GetId(pMsg->hWinSrc);
+//      sysprintf("WM_NOTIFY_PARENT10\r\n");
     NCode = pMsg->Data.v;
     switch (NCode) {
     case WM_NOTIFICATION_RELEASED:
+//		sysprintf("WM_NOTIFICATION_RELEASED \r\n");
       switch (Id) {
       case GUI_ID_HALT:
         if (_Halt) {
+			sysprintf("aaaa\r\n");
           _Halt          = 0;
           _HaltTime      = GUI_GetTime() - _HaltTimeStart;
           WM_MakeModal(0);
+			sysprintf("bbbbb\r\n");
         } else {
+			sysprintf("1112\r\n");
           _Halt          = 1;
           _HaltTimeStart = GUI_GetTime() - _HaltTime;
           WM_MakeModal(pMsg->hWin);
+			sysprintf("2221\r\n");
         }
         break;
       case GUI_ID_NEXT:
+		  sysprintf("111\r\n");
         _Next = 1;    // Will be set to 0 by GUIDEMO_GetNextState()
         _ClearHalt(); // Clear _Halt, so the next sample demonstrates immediately
+		//	sysprintf("222\r\n");
         break;
       }
       break;
@@ -364,13 +376,16 @@ static void _cbFrameWinInfo(WM_MESSAGE * pMsg) {
 
   switch (pMsg->MsgId) {
   case WM_KEY:
+	//sysprintf("_cbFrameWinInfo WM_KEY!\r\n");
     WM_SendMessage(WM_HBKWIN, pMsg);
     break;
   case WM_CREATE:
+	 // sysprintf("_cbFrameWinInfo WM_CREATE!\r\n");
     xSize = LCD_GetXSize();
     WM_SetWindowPos(pMsg->hWin, xSize >> 1, 0, xSize >> 1, INFO_SIZE_Y);
     break;
   case WM_PAINT:
+	 // sysprintf("_cbFrameWinInfo WM_PAINT!\r\n");
     xSize = WM_GetWindowSizeX(pMsg->hWin);
     ySize = WM_GetWindowSizeY(pMsg->hWin);
     GUI_DrawGradientV(0, 0, xSize - 1, ySize - 1, 0xFFFFFF, 0xDCCEC0);
@@ -394,6 +409,20 @@ static int _FRAMEWIN_DrawSkinFlex(const WIDGET_ITEM_DRAW_INFO * pDrawItemInfo) {
     return FRAMEWIN_DrawSkinFlex(pDrawItemInfo);
   }
   return 0;
+}
+
+
+void _SendKeyvalue(void)
+{
+    WM_MESSAGE Message;
+
+	Message.MsgId =  WM_NOTIFY_PARENT;
+    Message.Data.p = &_cbFrameWinControl;
+	Message.Data.v = WM_NOTIFICATION_RELEASED;
+	Message.hWinSrc = WM_GetDialogItem(_hDialogControl, GUI_ID_HALT);
+    WM_SendMessage(WM_GetClientWindow(_hDialogControl),&Message);
+  //  WM_InvalidateWindow(_hDialogControl);
+	
 }
 
 /*********************************************************************
@@ -435,7 +464,8 @@ static void _Main(void) {
   //
   // Run the demos
   //
-    //	sysprintf("_Main f!\n");
+   sysprintf("_Main f!\n");
+   //_SendKeyvalue((char *)(&_cbFrameWinControl));
   for (_iDemo = 0; _GUIDemoConfig.apFunc[_iDemo]; _iDemo++) {
     _ClearHalt();
     GUIDEMO_UpdateControlText();
@@ -444,6 +474,7 @@ static void _Main(void) {
     _Pressed    = 0;
 	  vTaskDelay(50);
   }
+  
   _iDemo = 0;
   //
   // Cleanup

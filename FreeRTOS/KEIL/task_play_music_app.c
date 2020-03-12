@@ -89,7 +89,7 @@ void  mp3_play_callback(MV_CFG_T *ptMvCfg)
 					ptMvInfo->uMovieLength / 6000, (ptMvInfo->uMovieLength / 100) % 60);
 		last_time = sysGetTicks(TIMER0);
 
-//		GUI_ClearRectEx(&Rect);
+		GUI_ClearRectEx(&Rect);
 		//GUI_DispStringInRectEx(buffer,&Rect,GUI_TA_HCENTER | GUI_TA_VCENTER,strlen(buffer),GUI_ROTATE_0);
 	//	GUI_DispStringAt("        ",_LCD_WIDTH*3/4,_LCD_HEIGHT*4/5 + _LCD_HEIGHT/10);
 		GUI_DispStringAt(buffer,_LCD_WIDTH*3/4,_LCD_HEIGHT*4/5 + _LCD_HEIGHT/10);

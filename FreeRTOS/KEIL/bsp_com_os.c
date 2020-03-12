@@ -2,6 +2,7 @@
 #include "task_play_music_app.h"
 #include "task_play_video_app.h"
 #include "task_main_menu_app.h"
+#include "task_emwin_demo_app.h"
 #include "task_key_handle.h"
 #include "task_comm_type.h"
 #include "ctp.h"
@@ -37,19 +38,11 @@ TaskHandle_t Task3PlayMusic_Handler;
 TaskHandle_t Task4PlayVideoContrl_Handler;
 //播放视频任务句柄
 TaskHandle_t Task4PlayVideo_Handler;
+//EMWIN DEMO任务句柄
+TaskHandle_t Task5PlayEmwin_Handler;
 
  SemaphoreHandle_t osMutex;
-#if 0
-//任务堆栈大小	
-#define START_STK_SIZE 						(1024*20)
-#define APP_MAIN_MENU_STK_SIZE        		(1024*20)	
-#define APP_LCD_TEST_STK_SIZE         		(1024)
-#define APP_PLAY_VIDEO_CONTROL_STK_SIZE     (1024*30)
-#define APP_PLAY_VIDEO_STK_SIZE          	(1024*30)
-#define APP_PLAY_MUSIC_CONTROL_STK_SIZE     (1024*30)
-#define APP_PLAY_MUSIC_STK_SIZE          	(1024*30)
-#define	APP_DEMO_PROGRAM_STK_SIZE          	(1024)
-#else
+
 //任务堆栈大小	
 #define START_STK_SIZE 						(1024)
 #define APP_MAIN_MENU_STK_SIZE        		(1024*30)	
@@ -60,7 +53,7 @@ TaskHandle_t Task4PlayVideo_Handler;
 #define APP_PLAY_MUSIC_STK_SIZE          	(1024*15)
 #define	APP_DISPLAY_PHOTO_STK_SIZE          (1024)
 #define	APP_DEMO_PROGRAM_STK_SIZE          	(1024)
-#endif
+
 //按键任务堆栈大小	
 #define APP_KEY_FUN_STK_SIZE          		(1024*6)
 
@@ -147,6 +140,14 @@ static void start_task(void *pvParameters)
                 (void*          )NULL,                  
                 (UBaseType_t    )APP_PLAY_VIDEO_PRIORITY,        
                 (TaskHandle_t*  )&Task4PlayVideo_Handler);  
+	
+	//创建音乐播放任务
+    xTaskCreate((TaskFunction_t )Task_EMWIN_DEMO,             
+                (const char*    )"Task_EMWIN_DEMO",           
+                (uint16_t       )APP_DEMO_PROGRAM_STK_SIZE,        
+                (void*          )NULL,                  
+                (UBaseType_t    )APP_DEMO_PROGRAM_PRIORITY,        
+                (TaskHandle_t*  )&Task5PlayEmwin_Handler);  
 				
 		taskEXIT_CRITICAL();            //退出临界区
 	   vTaskDelete(StartTask_Handler); //删除开始任务

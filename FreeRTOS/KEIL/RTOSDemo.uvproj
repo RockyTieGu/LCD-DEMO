@@ -452,6 +452,11 @@
               <FilePath>.\task_play_music_app.c</FilePath>
             </File>
             <File>
+              <FileName>task_emwin_demo_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\task_emwin_demo_app.c</FilePath>
+            </File>
+            <File>
               <FileName>task_main_menu_app.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\task_main_menu_app.c</FilePath>
@@ -795,11 +800,6 @@
               <FileName>xbf_font.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\app\src\xbf_font.c</FilePath>
-            </File>
-            <File>
-              <FileName>jpegdisplay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\app\src\jpegdisplay.c</FilePath>
             </File>
             <File>
               <FileName>jpegcodec.c</FileName>

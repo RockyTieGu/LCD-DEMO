@@ -230,7 +230,8 @@ void AVI_play(char *FilePath)
 	UINT32	nr; 
 	unsigned char u8SrcFormat;
 	int wrFile;
-
+	int err_time = 0;
+	
 #if LS_OPEN_SOUND_SWITCH
 	spuOpen(eDRVSPU_FREQ_44100);
 	
@@ -322,7 +323,23 @@ void AVI_play(char *FilePath)
 			if(ParsingOldJPEG((unsigned char *)((unsigned int)g_pu8JpegBuffer | 0x80000000), Strsize, &u32Width, &u32Height, &u32Format, TRUE) == ERR_MODE)
 			{
 				sysprintf("\tNot Support the JPEG sampling\n");	
-		    	goto END_ERROR_FORMAT;
+				err_time++;
+				if(err_time > 5) //The number of errors is greater than 5 . 
+				{
+					err_time = 0;
+					free(g_pu8JpegBuffer);
+					fsCloseFile(fil);
+					fsCloseFile(wrFile);
+		#if LS_OPEN_SOUND_SWITCH	
+					spuEqClose();	
+					spuClose();
+		#endif
+					sysprintf("Exit video play!\n");
+					return ;
+				}else
+				{
+					goto END_ERROR_FORMAT;
+				}
 			}
 
 			/* JPEG Init */

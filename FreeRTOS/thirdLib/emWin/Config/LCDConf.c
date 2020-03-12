@@ -114,7 +114,6 @@ volatile DX_LCD_COLOR  *_VpostFrameBuffer;
 void lcd_init(void)
 {  
 	LCDFORMATEX lcdformatex;
-	OSDFORMATEX osdFormat;
 
 #if (LCD_BITS_MODE==18)
    lcdformatex.ucVASrcFormat = DRVVPOST_FRAME_RGBx888;//DRVVPOST_FRAME_RGBx888
@@ -241,8 +240,8 @@ int LCD_X_DisplayDriver(unsigned LayerIndex, unsigned Cmd, void * pData) {
     //
     // Required if multiple buffers are used. The 'Index' element of p contains the buffer index.
     //
-    LCD_X_SHOWBUFFER_INFO * p;
-    p = (LCD_X_SHOWBUFFER_INFO *)pData;
+   // LCD_X_SHOWBUFFER_INFO * p;
+   // p = (LCD_X_SHOWBUFFER_INFO *)pData;
     //...
     return 0;
   }
