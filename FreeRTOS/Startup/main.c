@@ -106,6 +106,7 @@
 #include "wblib.h"
 #include "task_comm_type.h"
 #include "Board_bsp.h"
+#include "rtp.h"
 /* Demo application includes. */
 
 
@@ -164,6 +165,7 @@ int main( void )
 	sysprintf("GUI_Init start\n");
 	//WM_SetCreateFlags(WM_CF_MEMDEV); //开启STemWin多缓冲,RGB屏可能会用到
 	GUI_Init();
+	//startupCalibrateTP();
 //	WM_MULTIBUF_Enable(1);  		//开启STemWin多缓冲,RGB屏可能会用到
 //	sysStopTimer(TIMER0);			//只开启定时器1,关闭定时器0，减小定时器对任务切换影响。只有在用到定时器再打开相应的定时器。
 	//sysSetTimerReferenceClock (TIMER0, 12000000);

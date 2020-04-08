@@ -54,7 +54,7 @@ Purpose     : Display controller configuration (single layer)
 // Color conversion		  GUICC_M565 /* M 带 红蓝交换，无M不交换*/  
 //
 #if (LCD_BITS_MODE==18) 
-#define COLOR_CONVERSION GUICC_M888 //GUICC_M888  GUICC_8888
+#define COLOR_CONVERSION GUICC_M888  //GUICC_M888 //GUICC_M888  GUICC_8888
 #elif (LCD_BITS_MODE==16)
 #define COLOR_CONVERSION GUICC_M565
 #else

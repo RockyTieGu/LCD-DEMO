@@ -33,7 +33,7 @@
 /* Verbose debug information */
 #define DBG_PRintF(...)		//sysprintf 
 
-#define SORT_FIFO			4	
+#define SORT_FIFO			15	
 
 /* Define the operation state machine */
 #define E_ADC_UNINIT	0
@@ -678,7 +678,7 @@ int adc_read_init(unsigned char mode)
  return 1;
 }
 
-#if 1
+#if 0
 /*-----------------------------------------------------------------------------------------------------------
 	Function adc_read.
 		Get touch panel position. 
@@ -820,8 +820,9 @@ int adc_read(unsigned char mode, unsigned short *x, unsigned short *y)
 	
 
 	//OSTimeDly(1);
-	sys5msDelay(200);
-	
+	//sys5msDelay(200);
+		u32Idx = 0x100;
+	while(u32Idx--);
 	for(u32Idx = 0; u32Idx<SORT_FIFO; u32Idx=u32Idx+1)	//6´Î
 	{	
 

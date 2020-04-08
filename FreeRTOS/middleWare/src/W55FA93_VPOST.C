@@ -583,14 +583,19 @@ void Vpost_DrawHLine(unsigned short sx,unsigned short ex,unsigned short y,unsign
 
 	if(sx>(_LCD_WIDTH-1) ||ex>(_LCD_WIDTH-1))return;
 	if(y>(_LCD_HEIGHT-1) ||y>(_LCD_HEIGHT-1))return;
-	if(buff==BUFF0){
+	if(buff==BUFF0)
+	{
 		for(j=sx;j<ex;j++)
 			LCDOSDBuffer1[y][j]=color;
-		}
-	else{
+	}
+	else if(buff == VPOST)
+	{
+		for(j=sx;j<ex;j++)
+			_VpostFrameBuffer[y*_LCD_WIDTH+j] = color;
+	}else{
 		for(j=sx;j<ex;j++)
 			LCDOSDBuffer2[y][j]=color;
-		}
+	}
 }
 
 void Vpost_DrawVLine(unsigned short x,unsigned short sy,unsigned short ey,unsigned short color,unsigned short buff)
@@ -603,6 +608,10 @@ void Vpost_DrawVLine(unsigned short x,unsigned short sy,unsigned short ey,unsign
 		for(j=sy;j<ey;j++)
 			LCDOSDBuffer1[j][x]=color;
 		}
+	else if(buff==BUFF0){
+		for(j=sy;j<ey;j++)
+			_VpostFrameBuffer[j*_LCD_WIDTH+x] = color;
+	}
 	else{
 		for(j=sy;j<ey;j++)
 			LCDOSDBuffer2[j][x]=color;
@@ -634,7 +643,8 @@ void LCD_DrawLine(unsigned short x1, unsigned short y1, unsigned short x2, unsig
 	if( delta_x>delta_y)distance=delta_x; //选取基本增量坐标轴 
 	else distance=delta_y; 
 	for(t=0;t<=distance+1;t++ ){//画线输出 
-		LCDOSDBuffer1[uCol][uRow]=dcolor;
+		//LCDOSDBuffer1[uCol][uRow]=dcolor;
+		_VpostFrameBuffer[uCol*_LCD_WIDTH+uRow] = dcolor;
 	//	LCD_DrawPoint(uRow,uCol,dcolor);//画点 
 		xerr+=delta_x ; 
 		yerr+=delta_y ; 
@@ -698,8 +708,8 @@ void Draw_Circle(unsigned short x0,unsigned short y0,unsigned short r,unsigned s
 			di+=10+4*(a-b);   
 			b--;
 		} 
-	//	LCD_DrawPoint(x0+a,y0+b,dcolor);
-		LCDOSDBuffer1[y0+b][x0+a]=dcolor;  
+		_VpostFrameBuffer[(y0+b)*_LCD_WIDTH+(x0+a)]  = dcolor;
+		//LCDOSDBuffer1[y0+b][x0+a]=dcolor;  
 	}
 } 
 

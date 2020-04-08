@@ -177,7 +177,7 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 #endif
 
 #ifndef   SHOW_GUIDEMO_FADING
-  #define SHOW_GUIDEMO_FADING            (0)
+  #define SHOW_GUIDEMO_FADING            (0)///
 #endif
 
 #ifndef   SHOW_GUIDEMO_SKINNING
@@ -185,7 +185,7 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 #endif
 
 #ifndef   SHOW_GUIDEMO_SPEEDOMETER
-  #define SHOW_GUIDEMO_SPEEDOMETER       (0)
+  #define SHOW_GUIDEMO_SPEEDOMETER       (0)   ///
 #endif
 
 #ifndef   SHOW_GUIDEMO_IMAGEFLOW

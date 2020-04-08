@@ -1,7 +1,7 @@
-#include "key.h"
+
 #include "wb_include.h"
 #include "W55FA93_adc.h"
-
+#include "key.h"
 #define AIN_AD_CHANNEL	3		//读取模拟量通道3
 #define KEY_SCANTIME	200//(10)	//20ms
 static unsigned int key_time;
@@ -11,17 +11,7 @@ key_enum cur_key_status = BUTTON_IDLE;
 //GPA7	UP
 //GPB0	OK
 //GPB5	LOCK
-#define DOWN_GPIO_PORT		(GPIO_PORTD)
-#define UP_GPIO_PORT		(GPIO_PORTA)
-#define OK_GPIO_PORT		(GPIO_PORTB)
-#define LOCK_GPIO_PORT		(GPIO_PORTB)
-#define IMPORT_GPIO_PORT	(GPIO_PORTD)
 
-#define	DOWN_GPIO_BIT		(BIT4)
-#define	UP_GPIO_BIT			(BIT7)
-#define	OK_GPIO_BIT			(BIT0)
-#define	LOCK_GPIO_BIT		(BIT5)
-#define IMPORT_GPIO_BIT		(BIT3)
 
 void ADCKEY_Init()
 {

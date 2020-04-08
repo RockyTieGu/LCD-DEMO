@@ -28,6 +28,7 @@
 #include "Board_bsp.h"
 #include "LCD_Power.h"
 #include "key.h"
+#include "GUI.h"
 
 __align(32) DX_LCD_COLOR LCDOSDBuffer1[_LCD_HEIGHT][_LCD_WIDTH];
 __align(32) DX_LCD_COLOR LCDOSDBuffer2[_LCD_HEIGHT][_LCD_WIDTH];
@@ -55,7 +56,9 @@ void systemInit(void)
 	vpostLCMInit(&lcdformatex, (unsigned int *)_VpostFrameBuffer);
 	/*     UIÏÔÊ¾¸ÄÎªOSD²ã*/	
 #endif
-	RTC_Init();					
+	
+	RTC_Init();	
+	CTP_Init();	
 	EDMA_Init();
 	fsInitFileSystem();
 	spiFlashInit();
@@ -90,10 +93,10 @@ void OtherPeripheral_Init(void)
 {
 	sysSetTimerReferenceClock (TIMER0, 60000000);
 	sysStartTimer(TIMER0, 50000, PERIODIC_MODE);	//100us
-	
+
 	PWM_Open();
 	spuOpen(eDRVSPU_FREQ_8000);
-	//RTP_Init();
+	RTP_Init();
 	MP3Control_Init();
 	//ADCKEY_Init();
 	//CTP_Init();

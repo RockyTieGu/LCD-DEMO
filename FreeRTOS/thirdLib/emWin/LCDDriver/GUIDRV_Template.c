@@ -41,14 +41,16 @@ Purpose     : Template driver, could be used as starting point for new
 #include "wbtypes.h"
 #include "w55fa93_vpost.h"
 //#include "lcd9341.h"
-
+//#define LCD_COLOR_CONV24_18BIN(x)	(x&0x3f) | (((x >> 8)&0x3f) << 6) | (x >> 16)&0x
+#define LCD_COLOR_CONV24_18BIN(x) (x)//(((x)&0x3f) | (((x)&0x3f00) >> 2) | (((x)&0x3f0000) >> 4))
 extern DX_LCD_COLOR  *_VpostFrameBuffer;
 /*********************************************************************
 *
 *       Defines
 *
 **********************************************************************
-*/
+*///  r r r r r r r r g g g g g g g g b b b b b b b b 
+//	            r r r r r r g g g g g g b b b b b b
 /*********************************************************************
 *
 *       Macros for MIRROR_, SWAP_ and LUT_
@@ -144,7 +146,7 @@ static void _SetPixelIndex(GUI_DEVICE * pDevice, int x, int y, int PixelIndex) {
    GUI_USE_PARA(y);
    GUI_USE_PARA(PixelIndex);
    {
-		 *(_VpostFrameBuffer+(y*_LCD_WIDTH+x)) = PixelIndex;
+		 *(_VpostFrameBuffer+(y*_LCD_WIDTH+x)) = LCD_COLOR_CONV24_18BIN(PixelIndex);
    }
    #if (LCD_MIRROR_X == 0) && (LCD_MIRROR_Y == 0) && (LCD_SWAP_XY == 0)
      #undef xPhys
@@ -188,8 +190,8 @@ static unsigned int _GetPixelIndex(GUI_DEVICE * pDevice, int x, int y)
    GUI_USE_PARA(y);
    {
 
-     PixelIndex = *(_VpostFrameBuffer+(y*_LCD_WIDTH+x));
-		 	
+    // PixelIndex = *(_VpostFrameBuffer+(y*_LCD_WIDTH+x));
+	 PixelIndex = LCD_COLOR_CONV24_18BIN(*(_VpostFrameBuffer+(y*_LCD_WIDTH+x)));	 	
    }
    #if (LCD_MIRROR_X == 0) && (LCD_MIRROR_Y == 0) && (LCD_SWAP_XY == 0)
      #undef xPhys
@@ -242,7 +244,7 @@ static void _FillRect(GUI_DEVICE * pDevice, int x0, int y0, int x1, int y1) {
 				 for(i=0;i<y;i++)
 	       {			
 					 T_BT=(_VpostFrameBuffer+(y0+i)*_LCD_WIDTH+x0); 
-						for(l=0;l<x;l++)*(T_BT+l)= PixelIndex;						 
+						for(l=0;l<x;l++)*(T_BT+l)= LCD_COLOR_CONV24_18BIN(PixelIndex); 						 
 				 }
 }
 }

@@ -169,6 +169,7 @@ void Task1_Main_Menu(void *p_arg)
 			}
 		}
 		vTaskDelay(50);
+		
 	}
 }
 

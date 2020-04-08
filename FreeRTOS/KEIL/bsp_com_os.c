@@ -200,7 +200,7 @@ void Task_Create(void)
                 (uint16_t       )START_STK_SIZE,        //任务堆栈大小
                 (void*          )NULL,                  //传递给任务函数的参数
                 (UBaseType_t    )START_TASK_PRIO,       //任务优先级
-                (TaskHandle_t*  )&StartTask_Handler);   //任务句柄   v
+                (TaskHandle_t*  )&StartTask_Handler);   //任务句柄
 
 	BackLightAdj(50);
 

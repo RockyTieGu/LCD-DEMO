@@ -12,6 +12,17 @@ typedef enum aa
 	BUTTON_RETURN		
 }key_enum;
 
+#define DOWN_GPIO_PORT		(GPIO_PORTD)
+#define UP_GPIO_PORT		(GPIO_PORTA)
+#define OK_GPIO_PORT		(GPIO_PORTB)
+#define LOCK_GPIO_PORT		(GPIO_PORTB)
+#define IMPORT_GPIO_PORT	(GPIO_PORTD)
+
+#define	DOWN_GPIO_BIT		(BIT4)
+#define	UP_GPIO_BIT			(BIT7)
+#define	OK_GPIO_BIT			(BIT0)
+#define	LOCK_GPIO_BIT		(BIT5)
+#define IMPORT_GPIO_BIT		(BIT3)
 
 //¿ÕÏÐ×´Ì¬
 //=>IMPORT
@@ -31,4 +42,5 @@ extern key_enum GetKey_Value(void);
 extern void ClearKey_Value(void);
 extern void boardKey_Init(void);
 extern key_enum boardKeyMSG_handle(void);
+unsigned char readGPIOKey_Value(void);
 #endif

@@ -17,5 +17,6 @@ typedef struct
 	int touchtype;
 }Pen_Holder;
 
-
+unsigned char TP_Scan(unsigned char  tp);
+void startupCalibrateTP(void);
 #endif

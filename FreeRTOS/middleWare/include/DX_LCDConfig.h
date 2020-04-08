@@ -19,19 +19,19 @@ enum CENTRY_LCD_TYPE1
   C070WSH01HH_RGB_NOINIT_1024_600_KEY =4	
 };
 
-#define SELECT_LCD_TYPE 			(0)
+#define SELECT_LCD_TYPE 				(3)
 
 #if (SELECT_LCD_TYPE == 0)	
-	#define	_LCD_WIDTH				(320)
-	#define	_LCD_HEIGHT				(240)
+	#define	_LCD_WIDTH					(320)
+	#define	_LCD_HEIGHT					(240)
 
 	// lcd clock frequency[1~120]MHZ
 	#define LCD_CLOCK_FREQUENCY			(7)
 
 	//Current LCD type name
-	#define CENTRY_LCD_TYPE			"S035QL01N" 				
+	#define CENTRY_LCD_TYPE				"S035QL01N" 				
 	//system  software version
-	#define CENTRY_LCD_SW_VERSION	"V0.1"
+	#define CENTRY_LCD_SW_VERSION		"V0.1"
 	// Horizontal sync pulse width value: [0~255]
 	#define LCD_RGB_HPW 				(50)
 	// Horizontal back porch value: [0~255]
