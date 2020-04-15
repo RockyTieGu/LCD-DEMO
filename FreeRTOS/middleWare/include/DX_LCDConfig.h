@@ -12,14 +12,16 @@ S035QL01H :  CENTRY LCD TYPE NAME.
 */
 enum CENTRY_LCD_TYPE1
 {
-  C035QL01N_RGB_SPINIT_320_240_KEY = 0,
-  C035QC05N_RGB_NOINIT_320_240_KEY = 1,
-  C043WVH02NE_RGB_NOINIT_800_480_KEY =2 ,
-  C050WQ01_RGB_NOINIT_480_272_KEY = 3,
-  C070WSH01HH_RGB_NOINIT_1024_600_KEY =4	
+  S024QC05N_RGB_SPINIT_320_240_KEY = 0,
+  C035QL01N_RGB_SPINIT_320_240_KEY = 1,
+  C035QC05N_RGB_NOINIT_320_240_KEY = 2,
+  C035HVC01N_RGB_INIT_320_480_KEY = 3,
+  C043WVH02NE_RGB_NOINIT_800_480_KEY =4 ,
+  C050WQ01_RGB_NOINIT_480_272_KEY = 5,
+  C070WSH01HH_RGB_NOINIT_1024_600_KEY =6	
 };
 
-#define SELECT_LCD_TYPE 				(3)
+#define SELECT_LCD_TYPE 				(4)
 
 #if (SELECT_LCD_TYPE == 0)	
 	#define	_LCD_WIDTH					(320)
@@ -29,21 +31,52 @@ enum CENTRY_LCD_TYPE1
 	#define LCD_CLOCK_FREQUENCY			(7)
 
 	//Current LCD type name
-	#define CENTRY_LCD_TYPE				"S035QL01N" 				
+	#define CENTRY_LCD_TYPE				"S024QC05N" 				
 	//system  software version
 	#define CENTRY_LCD_SW_VERSION		"V0.1"
 	// Horizontal sync pulse width value: [0~255]
-	#define LCD_RGB_HPW 				(50)
+	#define LCD_RGB_HPW 				(40)
 	// Horizontal back porch value: [0~255]
-	#define LCD_RGB_HBP 				(18) 
+	#define LCD_RGB_HBP 				(40) 
 	// Horizontal front porch value: [0~255]
 	#define LCD_RGB_HFP 				(10)
 	// Vertical sync pulse width value: [0~255]
-	#define LCD_RGB_VPW 				(3)
+	#define LCD_RGB_VPW 				(13)
 	// Vertical back porch value: [0~255]
-	#define LCD_RGB_VBW 				(17)
+	#define LCD_RGB_VBW 				(10)
 	// Vertical front porch width value: [0~255]
-	#define LCD_RGB_VFW 				(16) 
+	#define LCD_RGB_VFW 				(1) 
+	// Vsync polarity (TRUE  or FALSE)
+	#define LCD_RGB_VSYNC_POL	 		(TRUE)
+	// Hsync polarity (TRUE  or FALSE)
+	#define LCD_RGB_HSYNC_POL	 		(TRUE)
+	// VDEN polarity  (TRUE  or FALSE)
+	#define LCD_RGB_DE_POL				(FALSE)
+	// CLOCK polarity (TRUE  or FALSE)
+	#define LCD_RGB_CLOCK_POL			(TRUE)
+#elif (SELECT_LCD_TYPE == 1)
+	#define	_LCD_WIDTH					(320)
+	#define	_LCD_HEIGHT					(240)
+
+	// lcd clock frequency[1~120]MHZ
+	#define LCD_CLOCK_FREQUENCY			(7)
+
+	//Current LCD type name
+	#define CENTRY_LCD_TYPE				"S035QL01N" 			
+	//system  software version
+	#define CENTRY_LCD_SW_VERSION		"V0.1"
+	// Horizontal sync pulse width value: [0~255]
+	#define LCD_RGB_HPW 				(40)
+	// Horizontal back porch value: [0~255]
+	#define LCD_RGB_HBP 				(40) 
+	// Horizontal front porch value: [0~255]
+	#define LCD_RGB_HFP 				(10)
+	// Vertical sync pulse width value: [0~255]
+	#define LCD_RGB_VPW 				(13)
+	// Vertical back porch value: [0~255]
+	#define LCD_RGB_VBW 				(10)
+	// Vertical front porch width value: [0~255]
+	#define LCD_RGB_VFW 				(1) 
 	// Vsync polarity (TRUE  or FALSE)
 	#define LCD_RGB_VSYNC_POL	 		(TRUE)
 	// Hsync polarity (TRUE  or FALSE)
@@ -52,8 +85,7 @@ enum CENTRY_LCD_TYPE1
 	#define LCD_RGB_DE_POL				(TRUE)
 	// CLOCK polarity (TRUE  or FALSE)
 	#define LCD_RGB_CLOCK_POL			(TRUE)
-
-#elif (SELECT_LCD_TYPE == 1)
+#elif (SELECT_LCD_TYPE == 2)
 	#define	_LCD_WIDTH				(320)
 	#define	_LCD_HEIGHT				(240)
 	
@@ -84,8 +116,38 @@ enum CENTRY_LCD_TYPE1
 	#define LCD_RGB_DE_POL				(TRUE)
 	// CLOCK polarity (TRUE  or FALSE)
 	#define LCD_RGB_CLOCK_POL			(TRUE)
-
-#elif (SELECT_LCD_TYPE == 2)
+#elif (SELECT_LCD_TYPE == 3)
+	#define	_LCD_WIDTH				(320)
+	#define	_LCD_HEIGHT				(480)
+	
+	// lcd clock frequency[1~120]MHZ
+	#define LCD_CLOCK_FREQUENCY			(12)
+	
+	//Current LCD type name
+	#define CENTRY_LCD_TYPE			"C035HVC01N" 				
+	//system  software version
+	#define CENTRY_LCD_SW_VERSION	"V0.1"
+	// Horizontal sync pulse width value: [0~255]
+	#define LCD_RGB_HPW 				(2)
+	// Horizontal back porch value: [0~255]
+	#define LCD_RGB_HBP 				(2) 
+	// Horizontal front porch value: [0~255]
+	#define LCD_RGB_HFP 				(1)
+	// Vertical sync pulse width value: [0~255]
+	#define LCD_RGB_VPW 				(2)
+	// Vertical back porch value: [0~255]
+	#define LCD_RGB_VBW 				(2)
+	// Vertical front porch width value: [0~255]
+	#define LCD_RGB_VFW 				(5) 
+	// Vsync polarity (TRUE  or FALSE)
+	#define LCD_RGB_VSYNC_POL	 		(TRUE)
+	// Hsync polarity (TRUE  or FALSE)
+	#define LCD_RGB_HSYNC_POL	 		(TRUE)
+	// VDEN polarity  (TRUE  or FALSE)
+	#define LCD_RGB_DE_POL				(TRUE)
+	// CLOCK polarity (TRUE  or FALSE)
+	#define LCD_RGB_CLOCK_POL			(TRUE)
+#elif (SELECT_LCD_TYPE == 4)
 	#define	_LCD_WIDTH				(800)
 	#define	_LCD_HEIGHT				(480)
 	
@@ -118,7 +180,7 @@ enum CENTRY_LCD_TYPE1
 	#define LCD_RGB_CLOCK_POL			(FALSE)
 
 
-#elif (SELECT_LCD_TYPE == 3)
+#elif (SELECT_LCD_TYPE == 5)
 	#define	_LCD_WIDTH				(480)
 	#define	_LCD_HEIGHT				(272)
 	
@@ -151,7 +213,7 @@ enum CENTRY_LCD_TYPE1
 	#define CENTRY_LCD_SW_VERSION	"V0.1"
 	
 	
-#elif (SELECT_LCD_TYPE == 4)
+#elif (SELECT_LCD_TYPE == 6)
 	#define	_LCD_WIDTH				(1024)
 	#define	_LCD_HEIGHT				(600)
 	

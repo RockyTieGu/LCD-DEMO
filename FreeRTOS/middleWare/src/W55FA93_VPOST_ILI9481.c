@@ -83,6 +83,18 @@ PA6	REST
 #define SET_LCD_SD0(x)		gpio_setportval(GPIO_PORTA, BIT5,	(x) ? BIT5 : 0)
 #define SET_LCD_SDI(x)		gpio_setportval(GPIO_PORTA, BIT4,	(x) ? BIT4 : 0);
 
+#define SET_LCD_SDI_DIR(x)  gpio_setportdir(GPIO_PORTB, BIT4, (x) ? BIT4 : 0);	//x:0 output 1:input
+
+char Get_LCD_SDI_Value(void)
+{
+	unsigned short value = 0;
+	
+	gpio_readport(GPIO_PORTB, &value);
+	if(value & BIT4)
+		return 1;
+	else
+		return 0;
+}
 
 
 static void SPI_SendData(unsigned char l)
@@ -121,6 +133,7 @@ static void SPI_WriteComm(unsigned char i)
 	LCDDelay(500);
 }
 
+
 static void SPI_WriteData(unsigned char i)
 { 
 	SET_LCD_CS(0);
@@ -135,10 +148,48 @@ static void SPI_WriteData(unsigned char i)
 	LCDDelay(500);
 	SET_LCD_CS(1);
 	LCDDelay(500);
-} 
+}
 
+unsigned int ReadID(unsigned char cmd)
+{
+   unsigned char n;
+   unsigned int i = 0;
+	
+	SET_LCD_CS(0);
+	LCDDelay(500);
+	SET_LCD_SCLK(0);
+	LCDDelay(500);
+	SET_LCD_SDI(0);
+	LCDDelay(500);
+	SET_LCD_SCLK(1);
+	LCDDelay(500);
+	SPI_SendData(cmd);
+
+  // SET_LCD_SDI_DIR(0);
+   for(n=0; n<24; n++)			
+   {       
+	SET_LCD_SCLK(0);
+	LCDDelay(500);
+	if(Get_LCD_SDI_Value())
+		{i |= 1;}
+
+	LCDDelay(500);
+	SET_LCD_SCLK(1);
+	i<<=1;
+	LCDDelay(500);
+   }
+   
+
+	LCDDelay(500);
+	SET_LCD_CS(1);
+//    SET_LCD_SDI_DIR(1);;
+   return i;
+}
 void LCD_CELL_INIT()
 {
+	unsigned int id = 0;
+	
+#if	(SELECT_LCD_TYPE == 1)
 	SET_LCD_CS(0);
 	LCDDelay(10000);//100ms
 	SET_LCD_RST(1);
@@ -189,7 +240,226 @@ void LCD_CELL_INIT()
 	SPI_WriteComm(0x004e);SPI_WriteData(0x00);SPI_WriteData(0x00);	   //Horizontal start position
 	SPI_WriteComm(0x004f);SPI_WriteData(0x00);SPI_WriteData(0x00);	   //VHorizontal start position
 	SPI_WriteComm(0x0022);	
+#elif	(SELECT_LCD_TYPE == 0)
+	SET_LCD_CS(0);
+	
+	SET_LCD_RST(1);
+	LCDDelay(5000);
+	SET_LCD_RST(0);
+    LCDDelay(10000);
+    SET_LCD_RST(1);
+	LCDDelay(50000);
 
+	id = ReadID(0x04);
+	sysprintf("read id:%d\r\n", id);
+	SPI_WriteComm( 0x11);//退出睡眠模式
+	LCDDelay(20000); //Delay 120ms
+	LCDDelay(20000); //Delay 120ms
+	 //------------------------------display and color format setting--------------------------------//
+	SPI_WriteComm( 0x36);	//设置从主机处理器到帧缓冲区顺序
+	SPI_WriteData(0xA0);	//设置为从下到上
+	 SPI_WriteComm( 0x3a);	//设置为保留
+	SPI_WriteData(0x55);//SPI_WriteData(0x66);	//
+	//--------------------------------ST7789S Frame rate setting----------------------------------//
+	SPI_WriteComm( 0xb0);
+	SPI_WriteData(0x10);//SPI_WriteData(0x10);
+	SPI_WriteData(0xF0);//SPI_WriteData(0x60);
+	LCDDelay(10000);
+
+
+	SPI_WriteComm( 0xb1);
+	SPI_WriteData(0x40);//SPI_WriteData(0x10);
+	SPI_WriteData(0x10);//SPI_WriteData(0x00);
+	SPI_WriteData(0x12);
+	 LCDDelay(10000);
+
+	 
+	//--------------------------------ST7789V Frame rate setting----------------------------------//
+	 SPI_WriteComm( 0xb2);
+	SPI_WriteData(0x0c);
+	SPI_WriteData(0x0c);
+	SPI_WriteData(0x00);
+	SPI_WriteData(0x33);
+	SPI_WriteData(0x33);
+	 SPI_WriteComm( 0xb7);
+	SPI_WriteData(0x35);
+	//---------------------------------ST7789V Power setting--------------------------------------//
+	 SPI_WriteComm( 0xbb);
+	SPI_WriteData(0x2b);
+	 SPI_WriteComm( 0xc0);
+	SPI_WriteData(0x2c);
+	 SPI_WriteComm( 0xc2);
+	SPI_WriteData(0x01);
+	 SPI_WriteComm( 0xc3);
+	SPI_WriteData(0x11);
+	 SPI_WriteComm( 0xc4);
+
+
+	SPI_WriteData(0x20);
+	 SPI_WriteComm( 0xc6);
+	SPI_WriteData(0x0f);
+	 SPI_WriteComm( 0xd0);
+	SPI_WriteData(0xa4);
+	SPI_WriteData(0xa1);
+	//--------------------------------ST7789V gamma setting---------------------------------------//
+	 SPI_WriteComm( 0xe0);
+	SPI_WriteData(0xd0);
+	SPI_WriteData(0x00);
+	SPI_WriteData(0x05);
+	SPI_WriteData(0x0e);
+	SPI_WriteData(0x15);
+	SPI_WriteData(0x0d);
+	SPI_WriteData(0x37);
+	SPI_WriteData(0x43);
+	SPI_WriteData(0x47);
+	SPI_WriteData(0x09);
+	SPI_WriteData(0x15);
+	SPI_WriteData(0x12);
+	SPI_WriteData(0x16);
+	SPI_WriteData(0x19);
+	 SPI_WriteComm( 0xe1);
+	SPI_WriteData(0xd0);
+	SPI_WriteData(0x00);
+	SPI_WriteData(0x05);
+	SPI_WriteData(0x0d);
+	SPI_WriteData(0x0c);
+	SPI_WriteData(0x06);
+	SPI_WriteData(0x2d);
+	SPI_WriteData(0x44);
+	SPI_WriteData(0x40);
+	SPI_WriteData(0x0e);
+	SPI_WriteData(0x1c);
+	SPI_WriteData(0x18);
+	SPI_WriteData(0x16);
+	SPI_WriteData(0x19);
+	SPI_WriteComm( 0x29);
+
+	SPI_WriteComm(0x2A);
+
+	SPI_WriteData(0x00);
+	SPI_WriteData(0x00);
+	SPI_WriteData(0x01);
+	SPI_WriteData(0x3F);
+
+	SPI_WriteComm(0x2B);
+	SPI_WriteData(0x00);
+	SPI_WriteData(0x00);
+	SPI_WriteData(0x00);
+	SPI_WriteData(0xEF);
+	SPI_WriteComm( 0x2c);
+#elif (SELECT_LCD_TYPE == 3)
+	SET_LCD_CS(0);
+	
+	SET_LCD_RST(1);
+	LCDDelay(5000);
+	LCDDelay(5000);
+	SET_LCD_RST(0);
+    LCDDelay(10000);
+	 LCDDelay(10000);
+    SET_LCD_RST(1);
+	LCDDelay(50000);
+
+	//CMI3.47									
+	SPI_WriteComm(0x11); //Sleep Out				
+	LCDDelay(10000);						
+	SPI_WriteComm(0xB9); //SET password			
+	SPI_WriteData(0xFF);					
+	SPI_WriteData(0x83);					
+	SPI_WriteData(0x57);					
+	LCDDelay(10000);						
+	SPI_WriteComm(0xB1); //SETPower				
+	SPI_WriteData(0x00); //STB		
+	SPI_WriteData(0x16); //				
+	SPI_WriteData(0x1C); //VSPR = 4.41V			
+	SPI_WriteData(0x1C); //VSNR = -4.41V			
+	SPI_WriteData(0xC3); //AP 0xc3				
+	SPI_WriteData(0x5C); //FS 0x44					
+	LCDDelay(10000);	
+
+	SPI_WriteComm(0xB3);
+	SPI_WriteData(0x43);
+	SPI_WriteData(0x00);
+	SPI_WriteData(0x06);
+	SPI_WriteData(0x06);
+	LCDDelay(10000);		//VPL[5:0]
+						
+	SPI_WriteComm(0xB4); //SETCYC				
+	SPI_WriteData(0x32); //2-dot				
+	SPI_WriteData(0x40); //RTN					
+	SPI_WriteData(0x00); //DIV					
+	SPI_WriteData(0x2A); //N_DUM				
+	SPI_WriteData(0x2A); //I_DUM				
+	SPI_WriteData(0x0D); //GDON				
+	SPI_WriteData(0x78); //GDOFF				
+	LCDDelay(10000);				
+	SPI_WriteComm(0xB6); //VCOMDC				
+	SPI_WriteData(0x3c); //3c 	-1.3V			
+	LCDDelay(10000);	
+	SPI_WriteComm(0xB5);
+	SPI_WriteData(0x0B);//08
+	SPI_WriteData(0x0B);//08
+	LCDDelay(10000);				
+						
+	SPI_WriteComm(0xC0); //SETSTBA				
+	SPI_WriteData(0x70); //N_OPON				
+	SPI_WriteData(0x50); //I_OPON				
+	SPI_WriteData(0x01); //STBA				
+	SPI_WriteData(0x3C); //STBA				
+	SPI_WriteData(0xC8); //STBA				
+	SPI_WriteData(0x08); //GENON				
+	LCDDelay(10000);		
+	SPI_WriteComm(0xCC); //Set Panel		
+	SPI_WriteData(0x0B); 		
+	LCDDelay(10000);	
+	SPI_WriteComm(0xB6); //VCOMDC				
+	SPI_WriteData(0x40);  //0x40
+
+	SPI_WriteComm(0xE0); //Set Gamma		
+	SPI_WriteData(0x02);		
+	SPI_WriteData(0x0A);		
+	SPI_WriteData(0x10);		
+	SPI_WriteData(0x1A);		
+	SPI_WriteData(0x22);		
+	SPI_WriteData(0x34);		
+	SPI_WriteData(0x41);		
+	SPI_WriteData(0x4A);		
+	SPI_WriteData(0x4D);		
+	SPI_WriteData(0x44);		
+	SPI_WriteData(0x3A);		
+	SPI_WriteData(0x23);		
+	SPI_WriteData(0x19);		
+	SPI_WriteData(0x08);		
+	SPI_WriteData(0x09);		
+	SPI_WriteData(0x03);		
+	SPI_WriteData(0x02);		
+	SPI_WriteData(0x0A);		
+	SPI_WriteData(0x10);		
+	SPI_WriteData(0x1A);		
+	SPI_WriteData(0x22);		
+	SPI_WriteData(0x34);		
+	SPI_WriteData(0x41);		
+	SPI_WriteData(0x4A);		
+	SPI_WriteData(0x4D);		
+	SPI_WriteData(0x44);		
+	SPI_WriteData(0x3A);		
+	SPI_WriteData(0x23);		
+	SPI_WriteData(0x19);		
+	SPI_WriteData(0x08);		
+	SPI_WriteData(0x09);		
+	SPI_WriteData(0x03);		
+	SPI_WriteData(0x00);		
+	SPI_WriteData(0x01);		
+	LCDDelay(10000);		
+	SPI_WriteComm(0x3A); //COLMOD		
+	SPI_WriteData(0x66); //RGB888		
+	//SPI_WriteComm(0xE9); //SETIMAGE		
+	//SPI_WriteData(0x00); //DBbus24_EN=1		
+	LCDDelay(10000);		
+	SPI_WriteComm(0x29); //Display On		
+	LCDDelay(10000);		
+	SPI_WriteComm(0x2C); //Write SRAM Data	
+	
+#endif
 }
 /*
 
@@ -210,20 +480,31 @@ void SPI_INIT_LCD(void)
 	
 	LCD_CELL_INIT();
 }
-
+/*	// Horizontal front porch value: [0~255]
+	#define LCD_RGB_HFP 				(5)
+	// Vertical sync pulse width value: [0~255]
+	#define LCD_RGB_VPW 				(5)
+	// Vertical back porch value: [0~255]
+	#define LCD_RGB_VBW 				(13)
+	// Vertical front porch width value: [0~255]
+	#define LCD_RGB_VFW 				(15) 
+*/
 int vpostLCMInit_CENTRY(PLCDFORMATEX plcdformatex, unsigned int *pFramebuf)
 {
 	S_DRVVPOST_SYNCLCM_WINDOW sWindow = {_LCD_WIDTH,_LCD_HEIGHT,_LCD_WIDTH};	
 	S_DRVVPOST_SYNCLCM_HTIMING sHTiming = {LCD_RGB_HPW ,LCD_RGB_HBP ,LCD_RGB_HFP };
 	S_DRVVPOST_SYNCLCM_VTIMING sVTiming = {LCD_RGB_VPW ,LCD_RGB_VBW ,LCD_RGB_VFW };
-	S_DRVVPOST_SYNCLCM_POLARITY sPolarity = {LCD_RGB_VSYNC_POL,LCD_RGB_HSYNC_POL,LCD_RGB_DE_POL,LCD_RGB_CLOCK_POL};
+
+	S_DRVVPOST_SYNCLCM_POLARITY sPolarity = {LCD_RGB_VSYNC_POL,LCD_RGB_HSYNC_POL,LCD_RGB_DE_POL,TRUE};
 	UINT32 nBytesPixel, u32PLLclk, u32ClockDivider;
 
 	LCD_Control_En();
-	LCDDelay(500);
-#if	SELECT_LCD_TYPE == S035QL01N_RGB_SPINIT_320_240_KEY
+	LCDDelay(500);     
+#if	1//((SELECT_LCD_TYPE == S035QL01N_RGB_SPINIT_320_240_KEY) || (SELECT_LCD_TYPE ==S024QC05N_RGB_SPINIT_320_240_KEY) || (SELECT_LCD_TYPE == C035HVC01N_RGB_INIT_320_480_KEY))
+	sysprintf("vpostLCMInit_CENTRY\r\n");
 	SPI_INIT_LCD();
 #endif	
+	//while(1);
 	// VPOST clock control
 	outpw(REG_AHBCLK, inpw(REG_AHBCLK) | VPOST_CKE | HCLK4_CKE);
 	outpw(REG_AHBIPRST, inpw(REG_AHBIPRST) | VPOSTRST);

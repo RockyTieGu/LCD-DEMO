@@ -52,6 +52,6 @@ void  Task6_Key_Fun (void *pvParameters)
 		vTaskDelay(50); //2
 		//GT911_Scan(0);
 		//TOUCH_Scan();
-			GUI_TOUCH_Exec();//调用触屏更新,在VOID DrvADC_PollingWT(VOID)函数有OSTimeDly更新
+			//GUI_TOUCH_Exec();//调用触屏更新,在VOID DrvADC_PollingWT(VOID)函数有OSTimeDly更新
 	}
 }
